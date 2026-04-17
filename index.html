@@ -108,29 +108,7 @@ body {
   margin-top: 6px;
   font-weight: 400;
 }
-.stats-row {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-top: 20px;
-}
-.stat-item {
-  text-align: center;
-}
-.stat-val {
-  font-family: 'Space Mono', monospace;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--fire);
-  line-height: 1.2;
-}
-.stat-lbl {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-dim);
-  font-weight: 600;
-}
+
 
 /* ─── STICKY CONTROLS ─── */
 .controls {
@@ -313,9 +291,8 @@ body {
 }
 .card-row1 {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 10px;
 }
 .card-name {
@@ -515,6 +492,63 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 .card { animation: cardIn 0.3s ease both; }
+
+/* ─── CARD ACCENT BORDERS ─── */
+.card.accent-breakfast { border-color: var(--gold); }
+.card.accent-lunch { border-color: var(--lime); }
+.card.accent-dinner { border-color: var(--fire); }
+.card.accent-dessert { border-color: var(--coral); }
+.card.accent-snack { border-color: var(--sky); }
+.card.accent-shake { border-color: var(--grape); }
+.card.accent-dip { border-color: var(--mint); }
+
+/* ─── FAVORITE BUTTON ─── */
+.fav-btn {
+  width: 32px; height: 32px;
+  border: none;
+  background: var(--surface2);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-dim);
+  transition: all 0.2s;
+  padding: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fav-btn:active { transform: scale(1.2); }
+.fav-btn.faved { background: var(--coral-soft); color: var(--coral); }
+
+/* ─── SCROLL TO TOP ─── */
+.scroll-top {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--fire);
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 200;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(255,107,53,0.3);
+}
+.scroll-top.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.scroll-top:active { transform: scale(0.9); }
 </style>
 </head>
 <body>
@@ -523,11 +557,7 @@ body {
   <span class="hero-emoji">🍱</span>
   <h1>The Snack <span class="accent">Box</span></h1>
   <div class="subtitle">Your meal prep cheat code.</div>
-  <div class="stats-row">
-    <div class="stat-item"><div class="stat-val" id="sTotal">61</div><div class="stat-lbl">Recipes</div></div>
-    <div class="stat-item"><div class="stat-val" id="sAvgP">—</div><div class="stat-lbl">Avg Protein</div></div>
-    <div class="stat-item"><div class="stat-val" id="sAvgC">—</div><div class="stat-lbl">Avg Cal</div></div>
-  </div>
+
 </div>
 
 <div class="controls">
@@ -547,6 +577,7 @@ body {
 
 <div class="recipe-list" id="recipeList"></div>
 
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <div class="footer">👹</div>
 
 <script>
@@ -734,9 +765,34 @@ const R=[
 {n:"High Protein Street Corn Dip",c:"Dip/Sauce",sv:1,cal:497,p:70,cb:24,f:15,m:"No Cook",mp:false,no:true,
  ig:["3/4 cup whole kernel corn","9 oz chicken breast","50g nonfat greek yogurt","15g light mayo","1 lime","1-2 tbsp Tajin","1/4 cup cotija cheese"],
  st:["Add all to tupperware. Cap and shake.","Serve with chips (Siete recommended) or veggies."],nt:"Great party dip — 70g protein."},
+{n:"Paleo Banana Bread",c:"Dessert",sv:10,cal:248,p:6,cb:20,f:16,m:"Oven",mp:false,no:false,
+ ig:["4 medium overripe bananas (mashed)","4 large eggs (room temp)","2 tsp vanilla extract","1/4 cup refined coconut oil (melted)","1 3/4 cups blanched almond flour","1/2 cup tapioca flour","1 tsp baking soda","1 tsp baking powder","1 tsp cinnamon","1/4 tsp fine sea salt"],
+ st:["Preheat oven to 350°F. Line loaf pan with parchment.","Mash bananas, whisk in eggs, vanilla, & melted coconut oil.","Add almond flour, tapioca flour, baking soda, baking powder, cinnamon, salt — stir to combine.","Pour into pan. Bake 50-60 min until golden.","Cool, slice, serve with sugar-free syrup."],nt:"No added sugar — sweetened only by bananas. Low protein (6g)."},
 ];
 
-const cats=["All","Breakfast","Lunch","Dinner","Dessert","Snack","Shake","Dip/Sauce"];
+
+// Favorites
+let favs = JSON.parse(localStorage.getItem('snackbox-favs') || '[]');
+let showFavsOnly = false;
+
+function toggleFav(name, e) {
+  e.stopPropagation();
+  const idx = favs.indexOf(name);
+  if (idx > -1) favs.splice(idx, 1);
+  else favs.push(name);
+  localStorage.setItem('snackbox-favs', JSON.stringify(favs));
+  render();
+}
+
+// Scroll to top button
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 600);
+});
+
+// Accent class map
+const accentMap = {"Breakfast":"accent-breakfast","Lunch":"accent-lunch","Dinner":"accent-dinner","Dessert":"accent-dessert","Snack":"accent-snack","Shake":"accent-shake","Dip/Sauce":"accent-dip"};
+
+const cats=["All","Favorites","Breakfast","Lunch","Dinner","Dessert","Snack","Shake","Dip/Sauce"];
 const badgeMap={"Breakfast":"badge-breakfast","Lunch":"badge-lunch","Dinner":"badge-dinner","Dessert":"badge-dessert","Snack":"badge-snack","Shake":"badge-shake","Dip/Sauce":"badge-dip"};
 
 let activeCat="All";
@@ -749,9 +805,10 @@ const chipBar=document.getElementById('chipBar');
 cats.forEach(cat=>{
   const el=document.createElement('span');
   el.className='chip'+(cat==='All'?' active':'');
-  el.textContent=cat;
+  el.textContent=cat==='Favorites'?'♥ Favs':cat;
   el.onclick=()=>{
     activeCat=cat;
+    showFavsOnly=(cat==='Favorites');
     document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
     el.classList.add('active');
     render();
@@ -780,7 +837,8 @@ function clearSearch(){
 function getList(){
   const q=document.getElementById('searchInput').value.toLowerCase().trim();
   let list=R.filter(r=>{
-    if(activeCat!=="All"&&r.c!==activeCat)return false;
+    if(showFavsOnly&&!favs.includes(r.n))return false;
+    if(!showFavsOnly&&activeCat!=="All"&&activeCat!=="Favorites"&&r.c!==activeCat)return false;
     if(toggles.tPrep&&!r.mp)return false;
     if(toggles.tOven&&!r.no)return false;
     if(q){
@@ -803,7 +861,7 @@ function render(){
   document.getElementById('resultTag').textContent=list.length+' recipe'+(list.length!==1?'s':'');
 
   if(!list.length){
-    el.innerHTML='<div class="empty-state"><div class="emoji">🔍</div><h3>No recipes found</h3><p>Try different filters or search terms.</p></div>';
+    el.innerHTML=showFavsOnly?'<div class="empty-state"><div class="emoji">♡</div><h3>No favorites yet</h3><p>Tap the heart on any recipe to save it.</p></div>':'<div class="empty-state"><div class="emoji">🔍</div><h3>No recipes found</h3><p>Try different filters or search terms.</p></div>';
     return;
   }
 
@@ -816,11 +874,15 @@ function render(){
     tags.push({l:r.m,g:false});
     if(r.sv>1)tags.push({l:r.sv+' servings',g:false});
 
-    return `<div class="card" style="animation-delay:${Math.min(i*0.03,0.3)}s" onclick="this.classList.toggle('open')">
+    const ac=accentMap[r.c]||'';
+    const isFav=favs.includes(r.n);
+    const safeName=r.n.replace(/'/g,"\\'");
+    return `<div class="card ${ac}" style="animation-delay:${Math.min(i*0.03,0.3)}s" onclick="this.classList.toggle('open')">
       <div class="card-main">
         <div class="card-row1">
           <div class="card-name">${r.n}</div>
           <span class="card-badge ${bc}">${r.c}</span>
+          <button class="fav-btn ${isFav?'faved':''}" onclick="toggleFav('${safeName}',event)">${isFav?'♥':'♡'}</button>
         </div>
         <div class="macro-bar">
           <span class="macro-tag m-cal">${r.cal} cal</span>
@@ -860,11 +922,7 @@ si.addEventListener('input',()=>{
 });
 
 // Stats
-(function(){
-  const meals=R.filter(r=>['Breakfast','Lunch','Dinner'].includes(r.c)&&r.p>0);
-  document.getElementById('sAvgP').textContent=Math.round(meals.reduce((s,r)=>s+r.p,0)/meals.length)+'g';
-  document.getElementById('sAvgC').textContent=Math.round(meals.reduce((s,r)=>s+r.cal,0)/meals.length);
-})();
+
 
 render();
 </script>
