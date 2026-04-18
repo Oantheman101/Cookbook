@@ -549,6 +549,45 @@ body {
   pointer-events: auto;
 }
 .scroll-top:active { transform: scale(0.9); }
+
+/* ─── SERVING ADJUSTER ─── */
+.serving-adjuster {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+}
+.serving-adjuster span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.serving-adjuster .sv-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--fire);
+  min-width: 24px;
+  text-align: center;
+}
+.sv-btn {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border-light);
+  background: var(--surface3);
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.sv-btn:active { transform: scale(0.9); background: var(--fire-soft); border-color: var(--fire); }
 </style>
 </head>
 <body>
@@ -583,191 +622,191 @@ body {
 <script>
 const R=[
 {n:"Protein Pancakes",c:"Breakfast",sv:1,cal:355,p:33,cb:31,f:11,m:"Stovetop",mp:false,no:true,
- ig:["1/2 cup rolled oats","1 scoop whey protein (vanilla)","1 egg","1/2 tsp baking powder","1/4 cup unsweetened almond milk","1/4 tsp cinnamon"],
- st:["Blend oats into flour.","Combine oat flour, protein powder, egg, baking powder, almond milk, cinnamon. Whisk smooth.","Preheat non-stick pan over medium heat, lightly coat with cooking spray.","Pour 1/4 cup batter per pancake. Cook 2-3 min each side.","Serve with sugar-free syrup or fresh fruit."],nt:""},
+ ig:["40g rolled oats", "1 scoop whey protein (vanilla)", "1 large egg", "2g baking powder", "60ml unsweetened almond milk", "1g cinnamon"],
+ st:["Blend oats into flour.", "Combine oat flour, protein powder, egg, baking powder, almond milk, cinnamon. Whisk smooth.", "Preheat non-stick pan over medium heat with cooking spray.", "Pour 60ml batter per pancake. Cook 2-3 min each side.", "Serve with sugar-free syrup or fresh fruit."],nt:""},
 {n:"Matcha Overnight Oats",c:"Breakfast",sv:1,cal:276,p:8,cb:43,f:8,m:"No Cook",mp:false,no:true,
- ig:["1/2 cup rolled oats","1 tbsp chia seeds","1 tsp cinnamon","1 tsp matcha","1/2 serving raw honey","1/2 cup unsweetened almond milk"],
- st:["Fill mason jar with all ingredients.","Stir until thick green oatmeal consistency.","Refrigerate at least 2 hours.","Top with raspberries & coconut flakes."],nt:"Low protein — add whey to boost."},
+ ig:["40g rolled oats", "10g chia seeds", "3g cinnamon", "3g matcha", "10g raw honey", "120ml unsweetened almond milk"],
+ st:["Add all ingredients to mason jar.", "Stir until thick green oatmeal consistency.", "Refrigerate at least 2 hours.", "Top with raspberries & coconut flakes."],nt:"Low protein — add whey to boost."},
 {n:"Greek Yogurt Parfait",c:"Breakfast",sv:1,cal:320,p:32,cb:21,f:12,m:"No Cook",mp:false,no:true,
- ig:["1 cup plain Greek yogurt","1/4 cup mixed berries","1 tbsp chia seeds","1 tbsp almond butter"],
- st:["Layer Greek yogurt, berries, chia seeds, and almond butter in a glass.","Repeat layers as desired.","Top with extra berries or cinnamon."],nt:""},
+ ig:["245g plain Greek yogurt", "40g mixed berries", "10g chia seeds", "16g almond butter"],
+ st:["Layer Greek yogurt, berries, chia seeds, and almond butter in a glass.", "Repeat layers as desired.", "Top with extra berries or cinnamon."],nt:""},
 {n:"High Protein Egg Bake",c:"Breakfast",sv:4,cal:454,p:59,cb:12,f:17,m:"Oven",mp:true,no:false,
- ig:["8 eggs","2 cups egg whites","2 cups lowfat cottage cheese","3 bell peppers","1/2 onion","1/2 tbsp each: salt, pepper, garlic powder","8 slices turkey bacon","1 cup fat-free shredded cheddar"],
- st:["Chop & sauté onion, bell peppers, & turkey bacon.","Mix eggs, egg whites, cottage cheese, & seasonings.","Pour into 4 glass meal prep containers on baking sheet.","Add sautéed veggies & turkey bacon evenly.","Portion cheese on top.","Bake @ 400°F for 30 minutes.","Top with hot sauce, green onions."],nt:"Requires oven @ 400°F"},
+ ig:["8 large eggs", "480ml egg whites", "450g lowfat cottage cheese", "3 bell peppers (450g)", "75g onion", "8g salt, pepper, garlic powder", "8 slices turkey bacon", "113g fat-free shredded cheddar"],
+ st:["Chop & saut\u00e9 onion, bell peppers, & turkey bacon.", "Mix eggs, egg whites, cottage cheese, & seasonings.", "Pour into 4 glass meal prep containers on baking sheet.", "Add saut\u00e9ed veggies & turkey bacon evenly.", "Portion cheese on top.", "Bake @ 400\u00b0F for 30 minutes.", "Top with hot sauce, green onions."],nt:"Requires oven @ 400°F"},
 {n:"Oats & Whey Protein Bowl",c:"Breakfast",sv:1,cal:385,p:36,cb:49,f:5,m:"Microwave / Stovetop",mp:false,no:true,
- ig:["1/2 cup oats","1 scoop whey protein (chocolate)","1 tbsp PB Fit peanut butter powder","1/2 banana"],
- st:["Cook oats per package (add water, microwave 1-2 min).","Stir in protein powder and PB Fit.","Slice banana on top."],nt:""},
+ ig:["40g oats", "1 scoop whey protein (chocolate)", "8g PB Fit peanut butter powder", "60g banana"],
+ st:["Cook oats per package (add water, microwave 1-2 min).", "Stir in protein powder and PB Fit.", "Slice banana on top."],nt:""},
 {n:"High Protein Crepes",c:"Breakfast",sv:1,cal:477,p:40,cb:50,f:12,m:"Stovetop",mp:false,no:true,
- ig:["1/4 cup flour","1 scoop vanilla whey protein","1 egg","1/4 cup almond milk","1/2 tbsp melted butter","1/4 cup nonfat plain greek yogurt","3 diced strawberries","50g blueberries","1 tbsp sugar-free maple syrup"],
- st:["Mix egg & almond milk first, then add flour, protein powder, & melted butter. Whisk thin.","Heat pan to high heat.","Pour 1/2 cup portions, tilt to spread. Cook 1-1.5 min each side.","Fold and top with yogurt, fruits, syrup, cinnamon."],nt:"Makes 2 crepes per serving."},
+ ig:["30g flour", "1 scoop vanilla whey protein", "1 large egg", "60ml almond milk", "7g melted butter", "60g nonfat plain greek yogurt", "45g diced strawberries", "50g blueberries", "15ml sugar-free maple syrup"],
+ st:["Mix egg & almond milk first, then add flour, protein powder, & melted butter. Whisk thin.", "Heat pan to high heat.", "Pour 120ml portions, tilt to spread. Cook 1-1.5 min each side.", "Fold and top with yogurt, fruits, syrup, cinnamon."],nt:"Makes 2 crepes per serving."},
 {n:"High Protein Mug Cake",c:"Breakfast",sv:1,cal:424,p:32,cb:50,f:11,m:"Microwave",mp:false,no:true,
- ig:["1 egg","1 scoop vanilla protein powder","2 tbsp flour","1/4 tsp baking powder","2 tbsp unsweetened almond milk","4 tbsp sugar-free syrup","1/4 tsp vanilla extract","Cinnamon to taste","10g chocolate chips","~4 tbsp Redi Whip"],
- st:["Add everything except Redi Whip into one mug. Mix thoroughly.","Microwave 45 sec at a time — max 1.5 min total.","Do NOT overcook. Use enough sweetener & cinnamon.","Top with Redi Whip & more cinnamon."],nt:"Watch microwave time carefully."},
+ ig:["1 large egg", "1 scoop vanilla protein powder", "16g flour", "1g baking powder", "30ml unsweetened almond milk", "60ml sugar-free syrup", "1g vanilla extract", "2g cinnamon", "10g chocolate chips", "30g Redi Whip"],
+ st:["Add everything except Redi Whip into one mug. Mix thoroughly.", "Microwave 45 sec at a time \u2014 max 1.5 min total.", "Do NOT overcook. Use enough sweetener & cinnamon.", "Top with Redi Whip & more cinnamon."],nt:"Watch microwave time carefully."},
 {n:"Loaded Sweet Potato Egg Bake",c:"Breakfast",sv:4,cal:387,p:27,cb:36,f:15,m:"Oven",mp:true,no:false,
- ig:["754g sweet potato","8 whole eggs","1/2 tsp each: salt, pepper, garlic, smoked paprika","1 cup cottage cheese","1 jalapeño","1/4 onion","1 bell pepper","3 slices turkey bacon","Handful of spinach","56g fat-free mozzarella","14g fresh parmesan"],
- st:["Preheat oven to 400°F.","Chop & boil sweet potatoes until soft.","Blend eggs with seasonings and cottage cheese.","Grease pan, mash sweet potatoes as crust.","Bake crust alone 20 min.","Add egg mixture, veggies, turkey bacon, spinach. Mix.","Top with cheeses. Bake 400°F 30-40 min.","Cut into 9 squares (serving = 2)."],nt:"Requires oven @ 400°F"},
+ ig:["754g sweet potato", "8 large eggs", "8g salt, pepper, garlic, smoked paprika", "245g cottage cheese", "1 jalape\u00f1o (15g)", "40g onion", "150g bell pepper", "3 slices turkey bacon", "30g spinach", "56g fat-free mozzarella", "14g fresh parmesan"],
+ st:["Preheat oven to 400\u00b0F.", "Chop & boil sweet potatoes until soft.", "Blend eggs with seasonings and cottage cheese.", "Grease pan, mash sweet potatoes as crust.", "Bake crust alone 20 min.", "Add egg mixture, veggies, turkey bacon, spinach. Mix.", "Top with cheeses. Bake 400\u00b0F 30-40 min.", "Cut into 9 squares (serving = 2)."],nt:"Requires oven @ 400°F"},
 {n:"Buffalo Ranch Chicken Pasta",c:"Lunch",sv:6,cal:464,p:63,cb:42,f:7,m:"Stovetop",mp:true,no:true,
- ig:["2 lb chicken breast","12 oz Banza rotini pasta","1 pack fat-free shredded cheddar","2 cups fat-free cottage cheese","1/2 cup Frank's Hot Buffalo","4 tbsp ranch seasoning","1 cup unsweetened almond milk"],
- st:["Pan fry seasoned chicken (~7 min/side). Chop into chunks.","Blend cottage cheese, buffalo sauce, & almond milk.","Boil pasta 6-8 min.","Combine chicken, cheddar, ranch seasoning, & sauce with noodles.","Portion into 6 containers."],nt:""},
+ ig:["900g chicken breast", "340g Banza rotini pasta", "225g fat-free shredded cheddar", "450g fat-free cottage cheese", "120ml Frank's Hot Buffalo", "30g ranch seasoning", "240ml unsweetened almond milk"],
+ st:["Pan fry seasoned chicken (~7 min/side). Chop into chunks.", "Blend cottage cheese, buffalo sauce, & almond milk.", "Boil pasta 6-8 min.", "Combine chicken, cheddar, ranch seasoning, & sauce with noodles.", "Portion into 6 containers."],nt:""},
 {n:"Tuna Salad Lettuce Wraps",c:"Lunch",sv:1,cal:213,p:36,cb:6,f:5,m:"No Cook",mp:false,no:true,
- ig:["1 can tuna (in water)","1.5 tbsp light mayo (Hellmann's)","1 tbsp mustard","1/4 red onion, diced","4 large lettuce leaves"],
- st:["Drain tuna. Mix with mayo, mustard, diced onion.","Spoon onto lettuce leaves and wrap."],nt:"Very low cal — pair with a side."},
+ ig:["1 can tuna in water (140g drained)", "22g light mayo", "15g mustard", "40g red onion, diced", "4 large lettuce leaves (120g)"],
+ st:["Drain tuna. Mix with mayo, mustard, diced onion.", "Spoon onto lettuce leaves and wrap."],nt:"Very low cal — pair with a side."},
 {n:"High Protein Chicken Alfredo",c:"Lunch",sv:10,cal:559,p:67,cb:39,f:15,m:"Crockpot + Stovetop",mp:true,no:true,
- ig:["15 oz (dry) Banza pasta","2 jars alfredo sauce","1 sleeve 1/3 fat cream cheese","Boneless skinless chicken breast","1 bag nonfat shredded cheddar","1 bag/63 oz broccoli","1 tbsp each: salt, pepper, garlic, onion powder","Chopped parsley"],
- st:["Season chicken, crockpot with 1/2 cup water. High 3 hours.","Boil pasta 8-10 min.","Chop parsley & microwave broccoli.","Shred chicken in crockpot.","Add pasta, cream cheese, cheddar, broccoli, alfredo.","Stir & split into 10 meals."],nt:"Big batch — crockpot 3 hrs."},
+ ig:["425g Banza pasta (dry)", "2 jars alfredo sauce (850g)", "75g 1/3 fat cream cheese", "900g chicken breast", "225g nonfat shredded cheddar", "1.8kg broccoli", "15g salt, pepper, garlic, onion powder", "20g chopped parsley"],
+ st:["Season chicken, crockpot with 120ml water. High 3 hours.", "Boil pasta 8-10 min.", "Chop parsley & microwave broccoli.", "Shred chicken in crockpot.", "Add pasta, cream cheese, cheddar, broccoli, alfredo.", "Stir & split into 10 meals."],nt:"Big batch — crockpot 3 hrs."},
 {n:"Chicken & Sweet Potato Bowl",c:"Lunch",sv:1,cal:324,p:32,cb:31,f:8,m:"Stovetop / Oven",mp:false,no:false,
- ig:["4 oz grilled chicken","1/2 cup roasted sweet potato","1 cup steamed broccoli","1/2 tbsp olive oil"],
- st:["Grill or bake chicken.","Roast sweet potato 400°F 20-25 min (or air fry).","Steam broccoli 5-7 min.","Assemble and drizzle olive oil."],nt:"Can sub air fryer for oven."},
+ ig:["115g chicken breast", "100g sweet potato", "150g broccoli", "7ml olive oil"],
+ st:["Grill or bake chicken.", "Roast sweet potato 400\u00b0F 20-25 min (or air fry).", "Steam broccoli 5-7 min.", "Assemble and drizzle olive oil."],nt:"Can sub air fryer for oven."},
 {n:"Salmon & Avocado Salad",c:"Lunch",sv:1,cal:320,p:27,cb:8,f:20,m:"Stovetop",mp:false,no:true,
- ig:["4 oz salmon","1/4 avocado","1 cup mixed greens","1 tbsp balsamic vinegar"],
- st:["Grill salmon 5-7 min per side.","Toss greens, top with avocado.","Drizzle balsamic, place salmon on top."],nt:"Higher fat — good omega-3s."},
+ ig:["115g salmon", "35g avocado", "30g mixed greens", "15ml balsamic vinegar"],
+ st:["Grill salmon 5-7 min per side.", "Toss greens, top with avocado.", "Drizzle balsamic, place salmon on top."],nt:"Higher fat — good omega-3s."},
 {n:"In-N-Out Burger Bowls",c:"Lunch",sv:6,cal:550,p:61,cb:29,f:22,m:"Stovetop + Air Fryer",mp:true,no:true,
- ig:["3 lb 93/7 ground beef","1.5 tsp each: salt, pepper, garlic, onion powder","1 tbsp paprika","1 bag fat-free cheddar","20 oz russet potatoes","Spread: 120g light mayo, 100g nonfat greek yogurt, 40g zero-sugar ketchup, 20g mustard, 2g garlic & onion powder, 1 tsp white vinegar, 4 chopped pickle chips, salt","Sides: onions, lettuce, pickles, 24 cherry tomatoes"],
- st:["Chop potatoes, spray & season. Air fry 400°F 22 min (shake halfway).","Brown seasoned beef med-high. Less stirring = more char.","Mix all spread ingredients.","Spread cheese over done meat, cover to melt.","Portion 6 containers: potatoes, meat, spread.","Keep sides in separate bag."],nt:""},
+ ig:["1360g 93/7 ground beef", "8g each: salt, pepper, garlic powder, onion powder", "15g paprika", "225g fat-free cheddar", "570g russet potatoes", "120g light mayo", "100g nonfat greek yogurt", "40g zero-sugar ketchup", "20g mustard", "2g garlic powder", "2g onion powder", "5ml white vinegar", "30g chopped pickle chips", "Sides: 100g onion, 150g lettuce, 60g pickles, 350g cherry tomatoes"],
+ st:["Chop potatoes, spray & season. Air fry 400\u00b0F 22 min (shake halfway).", "Brown seasoned beef med-high. Less stirring = more char.", "Mix all spread ingredients.", "Spread cheese over done meat, cover to melt.", "Portion 6 containers: potatoes, meat, spread.", "Keep sides in separate bag."],nt:""},
 {n:"Buffalo Ranch Chicken Wrap",c:"Lunch",sv:1,cal:247,p:42,cb:26,f:5,m:"Air Fryer + Stovetop",mp:false,no:true,
- ig:["4 oz cooked chicken breast","Seasonings: 1/4 tsp salt, pepper, garlic, onion powder, 1 tsp paprika","1 carb balance tortilla","1 cup coleslaw mix","1/4 cup nonfat greek yogurt","1 tsp ranch seasoning","20 ml Frank's hot buffalo","1/4 cup fat-free cheddar","4 pickle chips (halved)"],
- st:["Combine coleslaw, chicken, yogurt, buffalo, ranch, cheese, pickles in container.","Cap and shake.","Lay tortilla, add mix, wrap.","Pan sear until browned each side."],nt:""},
+ ig:["115g cooked chicken breast", "3g each: salt, pepper, garlic, onion powder", "5g paprika", "1 carb balance tortilla", "75g coleslaw mix", "60g nonfat greek yogurt", "5g ranch seasoning", "20ml Frank's hot buffalo", "28g fat-free cheddar", "30g pickle chips"],
+ st:["Combine coleslaw, chicken, yogurt, buffalo, ranch, cheese, pickles in container.", "Cap and shake.", "Lay tortilla, add mix, wrap.", "Pan sear until browned each side."],nt:""},
 {n:"Buffalo Chicken Mac",c:"Lunch",sv:8,cal:485,p:62,cb:42,f:9,m:"Crockpot + Stovetop",mp:true,no:true,
- ig:["3 lb chicken breast","2 tsp each: garlic, onion, salt, pepper, Italian seasoning","1.5 tbsp smoked paprika","2 cups chicken broth","16 oz protein pasta","1 lb broccoli florets","Sauce: 1 cup fat-free cottage cheese, 3/4 cup Frank's buffalo, 1 block 1/3 fat cream cheese, 1/2 bag fat-free cheddar, 1 tsp each: garlic, onion, smoked paprika, salt","Other half bag fat-free cheddar"],
- st:["Chicken + seasonings + broth in crockpot. High 3 hours.","Blend all sauce ingredients.","20 min left: add broccoli to crockpot & boil pasta.","Chop chicken. Add pasta, sauce, remaining cheddar. Stir.","Split into 8 containers."],nt:"Crockpot 3 hrs."},
+ ig:["1360g chicken breast", "10g each: garlic, onion, salt, pepper, Italian seasoning", "22g smoked paprika", "480ml chicken broth", "450g protein pasta", "450g broccoli florets", "245g fat-free cottage cheese", "180ml Frank's buffalo", "75g 1/3 fat cream cheese", "113g fat-free cheddar (sauce)", "113g fat-free cheddar (topping)", "5g each: garlic, onion, smoked paprika, salt"],
+ st:["Chicken + seasonings + broth in crockpot. High 3 hours.", "Blend all sauce ingredients.", "20 min left: add broccoli to crockpot & boil pasta.", "Chop chicken. Add pasta, sauce, remaining cheddar. Stir.", "Split into 8 containers."],nt:"Crockpot 3 hrs."},
 {n:"Sushi Bowl",c:"Lunch",sv:1,cal:481,p:35,cb:28,f:26,m:"Stovetop + Air Fryer",mp:false,no:true,
- ig:["4.5 oz salmon","Seasonings: 1/4 tsp salt, pepper, garlic, onion, paprika","1/4 tbsp olive oil","1/2 cup cooked jasmine rice","1 tsp wasabi","Sushi ginger","Chopped cucumber","Seaweed","Spicy mayo: 1/2 cup nonfat greek yogurt, 1 tsp sriracha, 1 tsp soy sauce, 1/2 tsp rice vinegar, 1/2 tsp sesame oil, 1/4 tsp garlic powder, salt"],
- st:["Cook rice: 1 cup dry + 2 cups water, oil & salt. Boil, low heat 10 min.","Cube salmon, air fry 400°F 6-8 min.","Mix spicy mayo ingredients.","Chop cucumber.","Assemble: rice, salmon, cucumber, sauce, wasabi, ginger, seaweed."],nt:"Sub tuna or lean fish to cut fat."},
+ ig:["130g salmon", "3g each: salt, pepper, garlic, onion powder, paprika", "4ml olive oil", "100g cooked jasmine rice", "5g wasabi", "15g sushi ginger", "75g cucumber", "2 sheets seaweed", "120g nonfat greek yogurt", "5ml sriracha", "5ml low-sodium soy sauce", "3ml rice vinegar", "3ml sesame oil", "1g garlic powder"],
+ st:["Cook rice: 185g dry + 480ml water, oil & salt. Boil, low heat 10 min.", "Cube salmon, air fry 400\u00b0F 6-8 min.", "Mix spicy mayo ingredients.", "Chop cucumber.", "Assemble: rice, salmon, cucumber, sauce, wasabi, ginger, seaweed."],nt:"Sub tuna or lean fish to cut fat."},
 {n:"Air Fryer Teriyaki Chicken Bowl",c:"Lunch",sv:1,cal:484,p:60,cb:55,f:2,m:"Air Fryer",mp:false,no:true,
- ig:["8 oz chicken breast","1 tsp each: salt, pepper, garlic, onion powder","1 tbsp smoked paprika","150g jasmine rice","150g broccoli","3 tbsp zero-sugar teriyaki sauce"],
- st:["Cut chicken, add broccoli — both in air fryer.","Add seasonings and teriyaki.","Air fry 375°F 16 min, mix halfway.","Serve over 150g cooked jasmine rice."],nt:"Very low fat."},
+ ig:["225g chicken breast", "5g each: salt, pepper, garlic, onion powder", "15g smoked paprika", "150g jasmine rice (cooked)", "150g broccoli", "45ml zero-sugar teriyaki sauce"],
+ st:["Cut chicken, add broccoli \u2014 both in air fryer.", "Add seasonings and teriyaki.", "Air fry 375\u00b0F 16 min, mix halfway.", "Serve over cooked jasmine rice."],nt:"Very low fat."},
 {n:"Cilantro Lime Crockpot Chicken",c:"Lunch",sv:6,cal:457,p:44,cb:52,f:7,m:"Crockpot + Stovetop",mp:true,no:true,
- ig:["2 lb chicken breast","1 can diced tomatoes (no salt added)","1 medium white onion","2 bell peppers","1 packet taco sauce","1 can diced green chiles","1 can whole kernel corn (strained)","1 can pinto beans (strained)","1 cup Mexican four cheese","1 cup jasmine rice (dry)"],
- st:["All ingredients (minus rice & cheese) in crockpot. High 3 hours.","Cook rice with ~20 min left.","Shred chicken.","Portion rice into 6 containers, top with mix, sprinkle cheese."],nt:"Simple crockpot dump."},
+ ig:["900g chicken breast", "1 can diced tomatoes (400g, no salt added)", "150g white onion", "300g bell peppers", "1 packet taco sauce (35g)", "1 can diced green chiles (120g)", "300g whole kernel corn (strained)", "440g pinto beans (strained)", "113g Mexican four cheese", "185g jasmine rice (dry)"],
+ st:["All ingredients (minus rice & cheese) in crockpot. High 3 hours.", "Cook rice with ~20 min left.", "Shred chicken.", "Portion rice into 6 containers, top with mix, sprinkle cheese."],nt:"Simple crockpot dump."},
 {n:"Mediterranean Chicken Bowl",c:"Lunch",sv:6,cal:373,p:49,cb:30,f:8,m:"Air Fryer / Oven + Stovetop",mp:true,no:true,
- ig:["32 oz chicken breast","Marinade: 1 cup nonfat greek yogurt, 1 tbsp olive oil, juice of 1/2 lemon, 1 tsp garlic, 1 tbsp paprika, 1 tsp cumin, 1 tsp salt, 1/2 tsp pepper, 1 tsp honey","1 cup quinoa (dry)","2 bell peppers, 2 zucchini, 1 large red onion","1 tbsp olive oil, salt & pepper","Tzatziki: 1.5 cup nonfat greek yogurt, 1/2 cucumber, 1 tsp garlic, 1 tbsp lemon juice, 1 tbsp dill, salt"],
- st:["Dice chicken, marinate 30+ min. Air fry 400°F 16 min to 165°F.","Chop veggies, roast or air fry 400°F 20-25 min.","Rinse quinoa, boil 2 cups water, simmer 15 min, rest 5.","Mix tzatziki.","Split into 6 containers."],nt:"Can air fry chicken 400°F 16 min."},
+ ig:["900g chicken breast", "245g nonfat greek yogurt (marinade)", "15ml olive oil", "juice of 1/2 lemon (15ml)", "5g garlic", "15g paprika", "5g cumin", "5g salt", "3g pepper", "5g honey", "185g quinoa (dry)", "300g bell peppers", "300g zucchini", "150g red onion", "15ml olive oil", "Tzatziki: 370g nonfat greek yogurt, 75g cucumber, 5g garlic, 15ml lemon juice, 5g dill, salt"],
+ st:["Dice chicken, marinate 30+ min. Air fry 400\u00b0F 16 min to 165\u00b0F.", "Chop veggies, roast or air fry 400\u00b0F 20-25 min.", "Rinse quinoa, boil 480ml water, simmer 15 min, rest 5.", "Mix tzatziki.", "Split into 6 containers."],nt:"Can air fry chicken 400°F 16 min."},
 {n:"Taco Lime Bowl",c:"Lunch",sv:4,cal:680,p:0,cb:0,f:0,m:"Stovetop",mp:true,no:true,
- ig:["2 lb 93/7 ground beef","DIY taco seasoning: 1 tbsp chili powder, 1 tsp cumin, paprika, 1/2 tsp garlic & onion powder, salt, 1/4 tsp pepper & oregano","1 can black beans","1 cup jasmine rice (dry)","2 limes","Cilantro","200g cherry tomatoes","1/2 red onion","1 can whole kernel corn"],
- st:["Brown beef, add taco seasonings.","Cook rice: 1 cup dry + 2 cups water. Boil, low 10 min.","Mix strained beans with meat at end.","Chop tomatoes & onion, mix with corn, half a lime, salt.","Add cilantro, salt, lime juice to rice.","Split into 4-5 containers with lime wedge."],nt:"Macro data incomplete in source — estimate ~50P/60C/18F."},
+ ig:["900g 93/7 ground beef", "15g chili powder", "5g cumin", "5g paprika", "3g garlic powder", "3g onion powder", "3g salt", "1g pepper", "1g oregano", "1 can black beans (425g)", "185g jasmine rice (dry)", "2 limes", "15g cilantro", "200g cherry tomatoes", "75g red onion", "300g whole kernel corn"],
+ st:["Brown beef, add taco seasonings.", "Cook rice: 185g dry + 370ml water. Boil, low 10 min.", "Mix strained beans with meat at end.", "Chop tomatoes & onion, mix with corn, half a lime, salt.", "Add cilantro, salt, lime juice to rice.", "Split into 4-5 containers with lime wedge."],nt:"Macro data incomplete in source — estimate ~50P/60C/18F."},
 {n:"Grilled Chicken & Veggie Stir Fry",c:"Dinner",sv:1,cal:233,p:33,cb:17,f:5,m:"Stovetop",mp:false,no:true,
- ig:["4 oz chicken breast","1 cup mixed bell peppers","1/2 cup broccoli","1/4 cup soy sauce","1/4 tbsp sesame oil"],
- st:["Grill chicken until cooked.","Heat sesame oil, stir-fry peppers & broccoli ~5 min.","Add soy sauce and chicken, cook 2-3 min."],nt:"Low cal — pair with rice."},
+ ig:["115g chicken breast", "150g mixed bell peppers", "75g broccoli", "60ml soy sauce", "4ml sesame oil"],
+ st:["Grill chicken until cooked.", "Heat sesame oil, stir-fry peppers & broccoli ~5 min.", "Add soy sauce and chicken, cook 2-3 min."],nt:"Low cal — pair with rice."},
 {n:"High Protein Loaded Chili Bowl",c:"Dinner",sv:6,cal:383,p:41,cb:30,f:11,m:"Stovetop / Oven",mp:true,no:false,
- ig:["2 lb 93/7 ground beef","340g nonfat greek yogurt","1 can no-salt-added tomato sauce","1 whole onion","3 tomatoes","3 yellow potatoes","1 tbsp each: chili powder, salt, pepper","Heaping scoop minced garlic"],
- st:["Bake diced potatoes 400°F ~35 min (or air fry).","Dice onion & tomatoes.","Sauté onions, add garlic, stir in tomatoes.","Brown beef, add seasonings.","Add tomato sauce, yogurt, potatoes. Simmer 20 min.","Portion into 6 containers."],nt:"Can air fry potatoes instead of oven."},
+ ig:["900g 93/7 ground beef", "340g nonfat greek yogurt", "1 can tomato sauce (425g, no salt added)", "150g onion", "450g tomatoes", "450g yellow potatoes", "15g chili powder", "15g salt", "15g pepper", "15g minced garlic"],
+ st:["Bake diced potatoes 400\u00b0F ~35 min (or air fry).", "Dice onion & tomatoes.", "Saut\u00e9 onions, add garlic, stir in tomatoes.", "Brown beef, add seasonings.", "Add tomato sauce, yogurt, potatoes. Simmer 20 min.", "Portion into 6 containers."],nt:"Can air fry potatoes instead of oven."},
 {n:"Salmon w/ Lemon Garlic Asparagus",c:"Dinner",sv:1,cal:333,p:28,cb:8,f:21,m:"Stovetop",mp:false,no:true,
- ig:["4 oz salmon","1 cup asparagus","1/2 tbsp olive oil","1/2 lemon","1 clove garlic"],
- st:["Grill salmon 5-7 min per side.","Sauté asparagus with garlic and olive oil ~5-7 min.","Squeeze lemon over everything."],nt:""},
+ ig:["115g salmon", "150g asparagus", "7ml olive oil", "juice of 1/2 lemon (15ml)", "5g garlic"],
+ st:["Grill salmon 5-7 min per side.", "Saut\u00e9 asparagus with garlic and olive oil ~5-7 min.", "Squeeze lemon over everything."],nt:""},
 {n:"Lemon Tahini Chicken Quinoa Bowl",c:"Dinner",sv:6,cal:348,p:29,cb:26,f:8,m:"Oven + Stovetop",mp:true,no:false,
- ig:["1/2 red onion, 1 zucchini, 340g cauliflower, 340g brussels sprouts","Dressing (use half): 1/4 cup olive oil, 1/4 cup tahini, 1/4 cup ACV, 2 tbsp dijon, 1 tbsp honey, 1 tsp dill, salt, pepper","24 oz chicken breast","Quinoa"],
- st:["Chop veggies, roast 400°F 25-30 min (or air fry).","Mix dressing.","Toast quinoa med-high 2 min, cool 2 min.","Rinse, boil with 1 1/4 cup water, low heat 10 min.","Portion into 6 with 4 oz chicken each."],nt:"Can sub air fryer for oven."},
+ ig:["75g red onion", "200g zucchini", "340g cauliflower", "340g brussels sprouts", "60ml olive oil (dressing, use half)", "60g tahini", "60ml apple cider vinegar", "30g dijon", "15g honey", "5g dried dill", "680g chicken breast", "185g quinoa (dry)"],
+ st:["Chop veggies, roast 400\u00b0F 25-30 min (or air fry).", "Mix dressing.", "Toast quinoa med-high 2 min, cool 2 min.", "Rinse, boil with 300ml water, low heat 10 min.", "Portion into 6 with 115g chicken each."],nt:"Can sub air fryer for oven."},
 {n:"Chicken Fajita Bowl",c:"Dinner",sv:1,cal:262,p:27,cb:34,f:2,m:"Stovetop",mp:false,no:true,
- ig:["4 oz chicken breast","1/4 cup sliced bell peppers","1/4 cup onions","1/4 cup salsa (Mateos)","1/2 cup brown rice (cooked)"],
- st:["Grill chicken.","Sauté peppers and onions.","Serve over brown rice with salsa."],nt:"Very low fat."},
+ ig:["115g chicken breast", "40g sliced bell peppers", "40g onions", "60g salsa", "100g brown rice (cooked)"],
+ st:["Grill chicken.", "Saut\u00e9 peppers and onions.", "Serve over brown rice with salsa."],nt:"Very low fat."},
 {n:"High Protein Tacorritos",c:"Dinner",sv:8,cal:470,p:59,cb:52,f:12,m:"Stovetop",mp:true,no:true,
- ig:["1 lb 93/7 ground beef","450g bell peppers","1 can corn","1 cup nonfat greek yogurt","1 packet taco seasoning","1/2 bottle Taco Bell hot sauce (0 cal)","1 bag fat-free cheddar","Cilantro & lime","8 Xtreme Wellness wraps"],
- st:["Chop onions & peppers, sauté 5 min.","Add beef + taco seasoning, brown.","Add hot sauce, corn, cilantro, lime, yogurt, garlic.","Spread meat over 8 wraps. Wrap.","Toast on pan at high heat if desired."],nt:"Serving = 2 tacorritos."},
+ ig:["450g 93/7 ground beef", "450g bell peppers", "300g corn", "245g nonfat greek yogurt", "1 packet taco seasoning (35g)", "120ml Taco Bell hot sauce", "225g fat-free cheddar", "15g cilantro", "1 lime", "8 Xtreme Wellness wraps"],
+ st:["Chop onions & peppers, saut\u00e9 5 min.", "Add beef + taco seasoning, brown.", "Add hot sauce, corn, cilantro, lime, yogurt, garlic.", "Spread meat over 8 wraps. Wrap.", "Toast on pan at high heat if desired."],nt:"Serving = 2 tacorritos."},
 {n:"Loaded Taco Bowls",c:"Dinner",sv:3,cal:498,p:52,cb:46,f:12,m:"Stovetop + Air Fryer",mp:true,no:true,
- ig:["1 lb 93/7 ground beef","1 tbsp pepper, garlic, onion powder","1/2 packet taco seasoning","1/2 onion, 2 bell peppers","1 lime","450g russet potatoes","3/4 can corn","1 can no-salt-added diced tomatoes","1/2 bag fat-free cheddar","Shredded lettuce","50g nonfat greek yogurt (sour cream sub)"],
- st:["Chop potatoes, air fry 400°F 22 min (shake halfway).","Mix meat with seasonings.","Sauté onions & peppers, add meat. Brown ~7 min.","Add corn, tomatoes, lime juice. Cook 5-7 min.","Add cheese, cover to melt.","Plate: potatoes, then taco mix."],nt:"Air fry potatoes 400°F 22 min."},
+ ig:["450g 93/7 ground beef", "15g pepper, garlic, onion powder", "1/2 packet taco seasoning (18g)", "75g onion", "300g bell peppers", "1 lime", "450g russet potatoes", "225g corn", "1 can diced tomatoes (400g, no salt added)", "113g fat-free cheddar", "75g shredded lettuce", "50g nonfat greek yogurt"],
+ st:["Chop potatoes, air fry 400\u00b0F 22 min (shake halfway).", "Mix meat with seasonings.", "Saut\u00e9 onions & peppers, add meat. Brown ~7 min.", "Add corn, tomatoes, lime juice. Cook 5-7 min.", "Add cheese, cover to melt.", "Plate: potatoes, then taco mix."],nt:"Air fry potatoes 400°F 22 min."},
 {n:"Parmesan Chicken Pasta",c:"Dinner",sv:6,cal:514,p:58,cb:52,f:11,m:"Stovetop",mp:true,no:true,
- ig:["2 lb chicken breast","1.5 tbsp paprika, 1/2 tbsp each: salt, pepper, garlic, onion powder","16 oz protein pasta","Sauce: 200g nonfat greek yogurt, 120g fat-free cottage cheese, 25g parm, 1 tbsp garlic, 1/2 block 1/3 fat cream cheese, 1 tsp salt, 1/4 tsp nutmeg, pepper, 1/4 cup water","Chopped parsley"],
- st:["Season chicken. Pan cook 5-7 min each side (lid on, 165°F).","Boil pasta ~10 min.","Blend all sauce ingredients.","Chop chicken. Drain pasta.","Add chicken, sauce, parsley to pot. Mix.","Split into 6 containers."],nt:"Blended sauce."},
+ ig:["900g chicken breast", "22g paprika", "8g each: salt, pepper, garlic, onion powder", "450g protein pasta", "200g nonfat greek yogurt", "120g fat-free cottage cheese", "25g grated parmesan", "15g minced garlic", "38g 1/3 fat cream cheese", "5g salt", "1g nutmeg", "1g pepper", "60ml water", "15g chopped parsley"],
+ st:["Season chicken. Pan cook 5-7 min each side (lid on, 165\u00b0F).", "Boil pasta ~10 min.", "Blend all sauce ingredients.", "Chop chicken. Drain pasta.", "Add chicken, sauce, parsley to pot. Mix.", "Split into 6 containers."],nt:"Blended sauce."},
 {n:"Marry Me Chicken Pasta",c:"Dinner",sv:6,cal:436,p:34,cb:48,f:13,m:"Stovetop",mp:true,no:true,
- ig:["13 oz chicken breast","2 tsp each: salt, pepper, garlic, onion powder","1 tbsp paprika","10 oz protein pasta (Penne Barilla)","1 tbsp Italian seasoning","1 tbsp olive oil","2 tsp crushed red pepper","1 tbsp minced garlic","Handful sundried tomatoes","1/2 cup chicken broth","3/4 cup half & half","25g fresh parm"],
- st:["Chop & season chicken.","Heat pan med-high with olive oil. Start pasta.","Cook chicken 3-4 min.","Add Italian seasoning, red pepper, sundried tomatoes, garlic. 3-4 min.","Add broth, half & half, parm. Thicken 4-5 min.","Add pasta, split into containers."],nt:""},
+ ig:["370g chicken breast", "10g each: salt, pepper, garlic, onion powder", "15g paprika", "285g protein pasta (Penne Barilla)", "15g Italian seasoning", "15ml olive oil", "10g crushed red pepper", "15g minced garlic", "40g sundried tomatoes", "120ml chicken broth", "180ml half & half", "25g fresh parmesan"],
+ st:["Chop & season chicken.", "Heat pan med-high with olive oil. Start pasta.", "Cook chicken 3-4 min.", "Add Italian seasoning, red pepper, sundried tomatoes, garlic. 3-4 min.", "Add broth, half & half, parm. Thicken 4-5 min.", "Add pasta, split into containers."],nt:""},
 {n:"Bang Bang Shrimp",c:"Dinner",sv:1,cal:210,p:26,cb:15,f:6,m:"Air Fryer",mp:false,no:true,
- ig:["10 raw/peeled/deveined shrimp","1/2 tsp each: salt, pepper, onion, garlic powder, smoked paprika","Crushed corn flakes","Flour","1 egg (egg wash)","Sauce: 30g light mayo, 30g nonfat greek yogurt, 1 tbsp chili sauce, 1 tbsp sriracha, 1 tsp rice vinegar"],
- st:["Season shrimp.","Dredge: flour → egg wash → crushed corn flakes.","Air fry 400°F 8-10 min (flip halfway).","Mix sauce ingredients.","Brush chili sauce on shrimp. Dip in bang bang sauce."],nt:"Air fry 400°F 8-10 min."},
+ ig:["10 raw shrimp (200g, peeled/deveined)", "3g each: salt, pepper, onion, garlic powder, smoked paprika", "15g crushed corn flakes", "10g flour", "1 large egg", "30g light mayo", "30g nonfat greek yogurt", "15ml chili sauce", "15ml sriracha", "5ml rice vinegar"],
+ st:["Season shrimp.", "Dredge: flour \u2192 egg wash \u2192 crushed corn flakes.", "Air fry 400\u00b0F 8-10 min (flip halfway).", "Mix sauce ingredients.", "Brush chili sauce on shrimp. Dip in bang bang sauce."],nt:"Air fry 400°F 8-10 min."},
 {n:"Chicken Alfredo (v2)",c:"Dinner",sv:8,cal:384,p:40,cb:41,f:7,m:"Crockpot + Stovetop",mp:true,no:true,
- ig:["32 oz chicken breast","1 tsp each: salt, pepper, onion, garlic, smoked paprika, Italian","1/2 cup chicken broth","Sauce: 2 cups 2% cottage cheese, 1/2 cup half & half, 1/2 cup shredded parm, 1/4 tsp garlic, 1/2 tsp salt, pepper","16 oz fettuccine pasta"],
- st:["Crockpot: chicken + seasonings + broth. High 3 hours.","Boil pasta 10-12 min.","Blend all sauce ingredients.","Chop chicken. Add pasta & sauce to crockpot. Mix.","Portion into 8 containers."],nt:"Crockpot 3 hrs."},
+ ig:["900g chicken breast", "5g each: salt, pepper, onion, garlic, smoked paprika, Italian", "120ml chicken broth", "450g 2% cottage cheese", "120ml half & half", "50g shredded parmesan", "1g garlic powder", "3g salt", "450g fettuccine pasta"],
+ st:["Crockpot: chicken + seasonings + broth. High 3 hours.", "Boil pasta 10-12 min.", "Blend all sauce ingredients.", "Chop chicken. Add pasta & sauce to crockpot. Mix.", "Portion into 8 containers."],nt:"Crockpot 3 hrs."},
 {n:"Spaghetti & Chicken Meatballs",c:"Dinner",sv:4,cal:420,p:54,cb:38,f:8,m:"Air Fryer + Stovetop",mp:true,no:true,
- ig:["2 chicken breasts","1 tsp each: salt, pepper, garlic, onion, Italian","1-2 tbsp smoked paprika","1/2 cup panko","6 oz dry protein spaghetti (Brami)","258g lemon ricotta pasta sauce (Sonoma) — 62g/meal"],
- st:["Mince chicken to ground consistency.","Boil water for pasta.","Mix chicken with seasonings + breadcrumbs. Form 16 balls (4/meal).","Air fry 375°F 16 min (flip halfway).","Cook pasta 10 min.","Plate: pasta, 62g sauce, 4 meatballs."],nt:"Air fry meatballs 375°F 16 min."},
+ ig:["450g chicken breast (minced)", "5g each: salt, pepper, garlic, onion, Italian", "15g smoked paprika", "30g panko breadcrumbs", "170g dry protein spaghetti (Brami)", "258g lemon ricotta pasta sauce (Sonoma)"],
+ st:["Mince chicken to ground consistency.", "Boil water for pasta.", "Mix chicken with seasonings + breadcrumbs. Form 16 balls (4/meal).", "Air fry 375\u00b0F 16 min (flip halfway).", "Cook pasta 10 min.", "Plate: pasta, 65g sauce, 4 meatballs."],nt:"Air fry meatballs 375°F 16 min."},
 {n:"Creamy Garlic Beef Pasta",c:"Dinner",sv:5,cal:551,p:45,cb:49,f:18,m:"Stovetop",mp:true,no:true,
- ig:["1 lb 93/7 ground beef","1 tsp each: paprika, Italian, pepper, salt","1 tbsp minced garlic","1/2 onion","2 tbsp flour","1.5 cup fat-free milk (Fairlife)","1/2 cup half & half","1 cup part-skim mozzarella","1/2 cup fresh parm","10 oz shell pasta","Fresh parsley"],
- st:["Heat pan med-high. Brown meat with seasonings & onion.","Mix in flour to coat meat.","Pour in milk & half & half. Stir until simmering.","Let sit 4 min. Cook pasta meanwhile.","Add mozzarella & parm, mix.","Dump pasta on top, add parsley. Split into 5."],nt:""},
+ ig:["450g 93/7 ground beef", "5g each: paprika, Italian, pepper, salt", "15g minced garlic", "75g onion", "16g flour", "360ml fat-free milk (Fairlife)", "120ml half & half", "113g part-skim mozzarella", "50g fresh parmesan", "285g shell pasta", "10g fresh parsley"],
+ st:["Heat pan med-high. Brown meat with seasonings & onion.", "Mix in flour to coat meat.", "Pour in milk & half & half. Stir until simmering.", "Let sit 4 min. Cook pasta meanwhile.", "Add mozzarella & parm, mix.", "Dump pasta on top, add parsley. Split into 5."],nt:""},
 {n:"Smoked Lemon Pepper Chicken Pasta",c:"Dinner",sv:6,cal:383,p:35,cb:24,f:17,m:"Smoker + Stovetop",mp:true,no:false,
- ig:["32 oz chicken breast","8 oz protein pasta (Brami)","10g fresh parm","1 tbsp butter","Lemon pepper seasoning"],
- st:["Set smoker to 315°F.","Season chicken with lemon pepper.","Smoke: 8 min/side x 2 (32 min total).","Boil pasta 10 min.","Chop chicken, add to pasta with butter & parm.","Mix, split into 6 meals."],nt:"Requires smoker."},
+ ig:["900g chicken breast", "225g protein pasta (dry, Brami)", "10g fresh parmesan", "14g butter", "15g lemon pepper seasoning"],
+ st:["Set smoker to 315\u00b0F.", "Season chicken with lemon pepper.", "Smoke: 8 min/side x 2 (32 min total).", "Boil pasta 10 min.", "Chop chicken, add to pasta with butter & parm.", "Mix, split into 6 meals."],nt:"Requires smoker."},
 {n:"Creamy Baked Chicken Tacos",c:"Dinner",sv:3,cal:535,p:50,cb:40,f:18,m:"Stovetop + Oven",mp:true,no:false,
- ig:["16 oz chicken tenderloins","McCormick taco seasoning (30% less sodium)","1.5 tbsp smoked paprika","1/2 small onion, 2 bell peppers, 1 jalapeño","1 lime, cilantro","1 tbsp minced garlic","Half block 1/3 fat cream cheese","1/4 cup water","6 Mission street tacos","98g Mexican-style cheese"],
- st:["Chop tenders & season. Chop veggies.","Cook chicken 2-3 min each side med-high.","Add veggies, lime, cilantro. 2 more min.","Add garlic, cream cheese, water. 3 more min.","Assemble tacos in baking pan (spray backs).","Top with cheese. Bake 400°F 15 min."],nt:"Requires oven @ 400°F."},
+ ig:["450g chicken tenderloins", "1 packet taco seasoning (35g, 30% less sodium)", "22g smoked paprika", "75g onion", "300g bell peppers", "15g jalape\u00f1o", "1 lime", "10g cilantro", "15g minced garlic", "113g 1/3 fat cream cheese", "60ml water", "6 Mission street tacos", "98g Mexican-style cheese"],
+ st:["Chop tenders & season. Chop veggies.", "Cook chicken 2-3 min each side med-high.", "Add veggies, lime, cilantro. 2 more min.", "Add garlic, cream cheese, water. 3 more min.", "Assemble tacos in baking pan (spray backs).", "Top with cheese. Bake 400\u00b0F 15 min."],nt:"Requires oven @ 400°F."},
 {n:"Protein Brownies",c:"Dessert",sv:1,cal:411,p:32,cb:28,f:19,m:"Oven",mp:false,no:false,
- ig:["1 scoop chocolate brownie protein powder","1/4 cup almond flour","1/4 cup unsweetened cocoa powder","1/4 cup unsweetened applesauce","1/4 tsp vanilla extract"],
- st:["Preheat oven 350°F.","Mix all ingredients smooth.","Pour into greased dish.","Bake 20-25 min. Cool before slicing."],nt:"Requires oven."},
+ ig:["1 scoop chocolate brownie protein powder", "28g almond flour", "20g unsweetened cocoa powder", "60g unsweetened applesauce", "1g vanilla extract"],
+ st:["Preheat oven 350\u00b0F.", "Mix all ingredients smooth.", "Pour into greased dish.", "Bake 20-25 min. Cool before slicing."],nt:"Requires oven."},
 {n:"Greek Yogurt Chocolate Mousse",c:"Dessert",sv:1,cal:173,p:28,cb:13,f:1,m:"No Cook",mp:false,no:true,
- ig:["1 cup plain Greek yogurt","1 tbsp cocoa powder","1 tsp vanilla extract","1 tbsp stevia"],
- st:["Mix all ingredients smooth.","Chill 30 min or spread on rice cakes."],nt:"Excellent low-cal option."},
+ ig:["245g plain Greek yogurt", "7g cocoa powder", "5ml vanilla extract", "4g stevia"],
+ st:["Mix all ingredients smooth.", "Chill 30 min or spread on rice cakes."],nt:"Excellent low-cal option."},
 {n:"PB Protein Cookies",c:"Dessert",sv:1,cal:327,p:44,cb:13,f:11,m:"Oven",mp:false,no:false,
- ig:["4 tbsp PB Fit","1 scoop protein powder","1 egg","1/4 cup stevia"],
- st:["Preheat oven 350°F.","Mix all ingredients smooth.","Form small balls on baking sheet.","Bake 8-10 min until golden."],nt:"Requires oven."},
+ ig:["24g PB Fit", "1 scoop protein powder", "1 large egg", "50g stevia"],
+ st:["Preheat oven 350\u00b0F.", "Mix all ingredients smooth.", "Form small balls on baking sheet.", "Bake 8-10 min until golden."],nt:"Requires oven."},
 {n:"High Protein Rootbeer Float",c:"Dessert",sv:1,cal:169,p:23,cb:14,f:4,m:"Ninja Creami",mp:false,no:true,
- ig:["1 scoop vanilla protein","1 cup unsweetened almond milk","1/2 serving raw honey","1/2 tsp vanilla extract","Zero-calorie root beer"],
- st:["Add all to Ninja Creami tub (fill line).","Freeze at least 12 hours.","Run Creami cycle.","Scoop into frozen mug.","Pour zero-cal root beer over top."],nt:"Requires Ninja Creami."},
+ ig:["1 scoop vanilla protein", "240ml unsweetened almond milk", "10g raw honey", "3ml vanilla extract", "360ml zero-calorie root beer"],
+ st:["Add all (except root beer) to Ninja Creami tub (fill line).", "Freeze at least 12 hours.", "Run Creami cycle.", "Scoop into frozen mug.", "Pour zero-cal root beer over top."],nt:"Requires Ninja Creami."},
 {n:"Apple Pie A La Mode",c:"Dessert",sv:1,cal:138,p:5,cb:10,f:0,m:"Air Fryer",mp:false,no:true,
- ig:["1 honeycrisp apple","10g raw honey","50g nonfat greek yogurt","Cinnamon"],
- st:["Core and halve apple.","Drizzle honey, sprinkle cinnamon.","Air fry 350°F 20 min.","Mix honey + greek yogurt.","Pour yogurt icing on top."],nt:"Air fry 350°F 20 min."},
+ ig:["1 honeycrisp apple (200g)", "10g raw honey", "50g nonfat greek yogurt", "3g cinnamon"],
+ st:["Core and halve apple.", "Drizzle honey, sprinkle cinnamon.", "Air fry 350\u00b0F 20 min.", "Mix honey + greek yogurt.", "Pour yogurt icing on top."],nt:"Air fry 350°F 20 min."},
 {n:"High Protein Fudge Cake",c:"Dessert",sv:1,cal:395,p:39,cb:36,f:12,m:"Oven",mp:false,no:false,
- ig:["100g sweet potatoes","1/3 cup fat-free cottage cheese","1 scoop chocolate protein powder","1 tbsp baking cocoa","1 packet stevia","1 egg","1 serving sugar-free chocolate chips"],
- st:["Peel & boil sweet potatoes until soft.","Place all except chips in oven-safe container.","Sprinkle chips on top.","Bake 350°F 35 min. Cool 3-5 min."],nt:"Requires oven. Optional: drizzle PB Fit."},
+ ig:["100g sweet potatoes", "80g fat-free cottage cheese", "1 scoop chocolate protein powder", "7g baking cocoa", "1 packet stevia (1g)", "1 large egg", "28g sugar-free chocolate chips"],
+ st:["Peel & boil sweet potatoes until soft.", "Place all except chips in oven-safe container.", "Sprinkle chips on top.", "Bake 350\u00b0F 35 min. Cool 3-5 min."],nt:"Requires oven. Optional: drizzle PB Fit."},
 {n:"Caramelized Apple Yogurt Bowl",c:"Dessert",sv:1,cal:224,p:10,cb:33,f:9,m:"Stovetop",mp:false,no:true,
- ig:["1/2 gala apple","10g honey","Cinnamon","80g greek yogurt","3 crushed walnuts","15g zero-sugar chocolate chips"],
- st:["Heat 5g honey & cinnamon on pan.","Chop apple, add to pan.","Caramelize ~5 min.","Put yogurt in bowl.","Top with apples, walnuts, chocolate chips, 5g honey."],nt:""},
+ ig:["100g gala apple", "10g honey", "3g cinnamon", "80g greek yogurt", "9g walnuts (3 crushed)", "15g zero-sugar chocolate chips"],
+ st:["Heat 5g honey & cinnamon on pan.", "Chop apple, add to pan.", "Caramelize ~5 min.", "Put yogurt in bowl.", "Top with apples, walnuts, chocolate chips, 5g honey."],nt:""},
 {n:"Dark Chocolate Blueberry Muffins",c:"Dessert",sv:6,cal:197,p:14,cb:22,f:7,m:"Oven",mp:false,no:false,
- ig:["2 bananas","2 eggs","1 cup PB Fit powder","1/2 cup water","1 tsp vanilla","3/4 cup blueberries","42g 60% dark chocolate"],
- st:["Mash bananas, add eggs, PB Fit, water, vanilla. Stir.","Pour into greased muffin pan.","Top with blueberries and dark chocolate.","Bake 350°F 25-30 min."],nt:"Requires oven."},
+ ig:["240g bananas (2 medium)", "2 large eggs", "64g PB Fit powder", "120ml water", "5ml vanilla", "115g blueberries", "42g 60% dark chocolate"],
+ st:["Mash bananas, add eggs, PB Fit, water, vanilla. Stir.", "Pour into greased muffin pan.", "Top with blueberries and dark chocolate.", "Bake 350\u00b0F 25-30 min."],nt:"Requires oven."},
 {n:"Protein Bar (Homemade)",c:"Snack",sv:2,cal:154,p:15,cb:10,f:6,m:"No Cook",mp:false,no:true,
- ig:["1 scoop protein powder","1/4 cup oats","1 tbsp almond butter"],
- st:["Mix all until dough forms.","Press into pan.","Freeze 30 min.","Slice into bars."],nt:"Per serving (makes 2)."},
+ ig:["1 scoop protein powder", "20g oats", "16g almond butter"],
+ st:["Mix all until dough forms.", "Press into pan.", "Freeze 30 min.", "Slice into bars."],nt:"Per serving (makes 2)."},
 {n:"Cottage Cheese & Fruit",c:"Snack",sv:1,cal:115,p:12,cb:10,f:3,m:"No Cook",mp:false,no:true,
- ig:["1/2 cup low-fat cottage cheese","1/4 cup pineapple chunks"],
- st:["Combine and stir.","Add raw honey if desired."],nt:""},
+ ig:["113g low-fat cottage cheese", "40g pineapple chunks"],
+ st:["Combine and stir.", "Add raw honey if desired."],nt:""},
 {n:"Hard-Boiled Eggs",c:"Snack",sv:1,cal:138,p:12,cb:0,f:10,m:"Stovetop",mp:false,no:true,
- ig:["2 eggs"],
- st:["Boil eggs 8-10 min.","Peel and eat."],nt:""},
+ ig:["2 large eggs"],
+ st:["Boil eggs 8-10 min.", "Peel and eat."],nt:""},
 {n:"Almonds & Apple",c:"Snack",sv:1,cal:305,p:6,cb:26,f:13,m:"No Cook",mp:false,no:true,
- ig:["1 oz almonds","1 medium apple"],
- st:["Slice apple.","Eat with almonds."],nt:"Higher fat snack."},
+ ig:["28g almonds", "180g apple"],
+ st:["Slice apple.", "Eat with almonds."],nt:"Higher fat snack."},
 {n:"Rice Cakes & PB Fit",c:"Snack",sv:1,cal:138,p:9,cb:21,f:2,m:"No Cook",mp:false,no:true,
- ig:["2 rice cakes","2 tbsp PB Fit"],
+ ig:["2 rice cakes (18g)", "12g PB Fit"],
  st:["Spread PB Fit on rice cakes."],nt:""},
 {n:"Easy 30g Protein Taco Snack",c:"Snack",sv:1,cal:217,p:30,cb:16,f:6,m:"Stovetop",mp:false,no:true,
- ig:["1 tortilla (La Banderita flour)","100g 96/4 ground beef","15g fat-free cheese","4 cherry tomatoes","Shredded lettuce","0-cal Taco Bell sauce"],
- st:["Roll meat flat onto tortilla.","Pan press meat-side down until browned.","Flip, add toppings.","Brown tortilla, fold like a taco."],nt:""},
+ ig:["1 flour tortilla", "100g 96/4 ground beef", "15g fat-free cheese", "60g cherry tomatoes", "30g shredded lettuce", "15ml 0-cal Taco Bell sauce"],
+ st:["Roll meat flat onto tortilla.", "Pan press meat-side down until browned.", "Flip, add toppings.", "Brown tortilla, fold like a taco."],nt:""},
 {n:"Chocolate PB Protein Shake",c:"Shake",sv:1,cal:283,p:32,cb:23,f:7,m:"Blender",mp:false,no:true,
- ig:["1 scoop chocolate protein powder","2 tbsp PB Fit","1 cup unsweetened almond milk","1/2 banana","5 ice cubes"],
+ ig:["1 scoop chocolate protein powder", "12g PB Fit", "240ml unsweetened almond milk", "60g banana", "5 ice cubes"],
  st:["Add all to blender. Blend smooth."],nt:""},
 {n:"Vanilla Berry Protein Shake",c:"Shake",sv:1,cal:240,p:26,cb:16,f:8,m:"Blender",mp:false,no:true,
- ig:["1 scoop vanilla protein powder","1/2 cup mixed berries","1 cup unsweetened almond milk","1 tbsp chia seeds","5 ice cubes"],
+ ig:["1 scoop vanilla protein powder", "75g mixed berries", "240ml unsweetened almond milk", "10g chia seeds", "5 ice cubes"],
  st:["Combine all. Blend smooth."],nt:""},
 {n:"Green Power Protein Shake",c:"Shake",sv:1,cal:296,p:25,cb:13,f:16,m:"Blender",mp:false,no:true,
- ig:["1 scoop vanilla protein powder","1/2 cup spinach","1/2 avocado","1/2 cup cucumber","1 cup unsweetened almond milk","5 ice cubes"],
+ ig:["1 scoop vanilla protein powder", "15g spinach", "70g avocado", "75g cucumber", "240ml unsweetened almond milk", "5 ice cubes"],
  st:["Add all to blender. Blend smooth."],nt:"Higher fat from avocado."},
 {n:"Cinnamon Roll Protein Shake",c:"Shake",sv:1,cal:166,p:23,cb:5,f:6,m:"Blender",mp:false,no:true,
- ig:["1 scoop cinnamon cereal protein powder","1/2 cup unsweetened almond milk","1/4 tsp ground cinnamon","1/2 tsp vanilla extract","5 ice cubes"],
+ ig:["1 scoop cinnamon cereal protein powder", "120ml unsweetened almond milk", "1g ground cinnamon", "3ml vanilla extract", "5 ice cubes"],
  st:["Combine all. Blend smooth."],nt:"Very low cal."},
 {n:"Tropical Protein Shake",c:"Shake",sv:1,cal:279,p:25,cb:38,f:3,m:"Blender",mp:false,no:true,
- ig:["1 scoop fruity cereal protein powder (MyProtein)","1/2 cup pineapple chunks","1/2 cup mango chunks","1 cup unsweetened coconut water","5 ice cubes"],
+ ig:["1 scoop fruity cereal protein powder (MyProtein)", "75g pineapple chunks", "75g mango chunks", "240ml unsweetened coconut water", "5 ice cubes"],
  st:["Add all to blender. Blend smooth."],nt:"Higher carb."},
 {n:"High Protein Ranch",c:"Dip/Sauce",sv:1,cal:120,p:14,cb:12,f:1,m:"No Cook",mp:false,no:true,
- ig:["1/2 cup plain Greek yogurt","1/2 packet ranch powder","1 tbsp dill weed"],
- st:["Mix all smooth.","Serve as dip or topping."],nt:""},
+ ig:["120g plain Greek yogurt", "7g ranch powder", "3g dill weed"],
+ st:["Mix all smooth.", "Serve as dip or topping."],nt:""},
 {n:"Low-Cal BBQ Sauce",c:"Dip/Sauce",sv:1,cal:149,p:6,cb:29,f:1,m:"Stovetop",mp:false,no:true,
- ig:["1/2 cup tomato paste","2 tbsp apple cider vinegar","1 tbsp Worcestershire sauce","1 tbsp Dijon mustard","1/2 tsp smoked paprika"],
- st:["Combine all in saucepan.","Simmer low 5-10 min, stirring occasionally."],nt:""},
+ ig:["130g tomato paste", "30ml apple cider vinegar", "15ml Worcestershire sauce", "15g Dijon mustard", "3g smoked paprika"],
+ st:["Combine all in saucepan.", "Simmer low 5-10 min, stirring occasionally."],nt:""},
 {n:"Avocado Lime Dressing",c:"Dip/Sauce",sv:1,cal:202,p:2,cb:8,f:18,m:"Blender",mp:false,no:true,
- ig:["1/2 avocado","1 tbsp lime juice","1/2 tbsp olive oil","1 clove garlic, minced","1/4 tsp salt","1/4 tsp black pepper"],
+ ig:["70g avocado", "15ml lime juice", "7ml olive oil", "5g garlic, minced", "1g salt", "1g black pepper"],
  st:["Blend all until smooth."],nt:"Higher fat."},
 {n:"Spicy Sriracha Mayo",c:"Dip/Sauce",sv:1,cal:56,p:7,cb:7,f:0,m:"No Cook",mp:false,no:true,
- ig:["1/4 cup nonfat greek yogurt","1 tbsp sriracha","1 tsp Dijon mustard","1/4 tsp garlic powder"],
- st:["Mix all smooth.","Use as dip or topping."],nt:"Very low cal."},
+ ig:["60g nonfat greek yogurt", "15ml sriracha", "5g Dijon mustard", "1g garlic powder"],
+ st:["Mix all smooth.", "Use as dip or topping."],nt:"Very low cal."},
 {n:"Sugar-Free Honey Mustard",c:"Dip/Sauce",sv:1,cal:25,p:1,cb:3,f:1,m:"No Cook",mp:false,no:true,
- ig:["2 tbsp Dijon mustard","1 tbsp apple cider vinegar","1 tbsp stevia honey"],
+ ig:["30g Dijon mustard", "15ml apple cider vinegar", "15g stevia honey"],
  st:["Combine all. Stir smooth."],nt:"Minimal macros."},
 {n:"High Protein Street Corn Dip",c:"Dip/Sauce",sv:1,cal:497,p:70,cb:24,f:15,m:"No Cook",mp:false,no:true,
- ig:["3/4 cup whole kernel corn","9 oz chicken breast","50g nonfat greek yogurt","15g light mayo","1 lime","1-2 tbsp Tajin","1/4 cup cotija cheese"],
- st:["Add all to tupperware. Cap and shake.","Serve with chips (Siete recommended) or veggies."],nt:"Great party dip — 70g protein."},
+ ig:["130g whole kernel corn", "255g chicken breast", "50g nonfat greek yogurt", "15g light mayo", "1 lime (30ml juice)", "10g Tajin", "28g cotija cheese"],
+ st:["Add all to tupperware. Cap and shake.", "Serve with chips (Siete recommended) or veggies."],nt:"Great party dip — 70g protein."},
 {n:"Paleo Banana Bread",c:"Dessert",sv:10,cal:248,p:6,cb:20,f:16,m:"Oven",mp:false,no:false,
- ig:["4 medium overripe bananas (mashed)","4 large eggs (room temp)","2 tsp vanilla extract","1/4 cup refined coconut oil (melted)","1 3/4 cups blanched almond flour","1/2 cup tapioca flour","1 tsp baking soda","1 tsp baking powder","1 tsp cinnamon","1/4 tsp fine sea salt"],
- st:["Preheat oven to 350°F. Line loaf pan with parchment.","Mash bananas, whisk in eggs, vanilla, & melted coconut oil.","Add almond flour, tapioca flour, baking soda, baking powder, cinnamon, salt — stir to combine.","Pour into pan. Bake 50-60 min until golden.","Cool, slice, serve with sugar-free syrup."],nt:"No added sugar — sweetened only by bananas. Low protein (6g)."},
+ ig:["4 medium overripe bananas (480g, mashed)", "4 large eggs", "10ml vanilla extract", "55g refined coconut oil (melted)", "175g blanched almond flour", "60g tapioca flour", "5g baking soda", "5g baking powder", "5g cinnamon", "1g fine sea salt"],
+ st:["Preheat oven to 350\u00b0F. Line loaf pan with parchment.", "Mash bananas, whisk in eggs, vanilla, & melted coconut oil.", "Add almond flour, tapioca flour, baking soda, baking powder, cinnamon, salt \u2014 stir to combine.", "Pour into pan. Bake 50-60 min until golden.", "Cool, slice, serve with sugar-free syrup."],nt:"No added sugar — sweetened only by bananas. Low protein (6g)."}
 ];
 
 
@@ -791,6 +830,49 @@ window.addEventListener('scroll', () => {
 
 // Accent class map
 const accentMap = {"Breakfast":"accent-breakfast","Lunch":"accent-lunch","Dinner":"accent-dinner","Dessert":"accent-dessert","Snack":"accent-snack","Shake":"accent-shake","Dip/Sauce":"accent-dip"};
+
+
+// Serving scaler
+function parseIngredient(str) {
+  const match = str.match(/^([\d.]+)(g|ml|kg|l)\s+(.+)$/);
+  if (match) return { a: parseFloat(match[1]), u: match[2], n: match[3] };
+  const match2 = str.match(/^([\d.]+)(g|ml|kg|l)$/);
+  if (match2) return { a: parseFloat(match2[1]), u: match2[2], n: '' };
+  return null;
+}
+
+function scaleIngredient(str, ratio) {
+  const parsed = parseIngredient(str);
+  if (parsed) {
+    const scaled = Math.round(parsed.a * ratio * 10) / 10;
+    const display = scaled % 1 === 0 ? scaled.toFixed(0) : scaled.toFixed(1);
+    return display + parsed.u + (parsed.n ? ' ' + parsed.n : '');
+  }
+  const countMatch = str.match(/^([\d.]+)\s+(.+)$/);
+  if (countMatch) {
+    const num = parseFloat(countMatch[1]);
+    const scaled = Math.round(num * ratio * 10) / 10;
+    const display = scaled % 1 === 0 ? scaled.toFixed(0) : scaled.toFixed(1);
+    return display + ' ' + countMatch[2];
+  }
+  return str;
+}
+
+function adjustServings(idx, delta, e) {
+  e.stopPropagation();
+  const card = document.querySelector('[data-ridx="'+idx+'"]');
+  if (!card) return;
+  const countEl = card.querySelector('.sv-count');
+  const baseSv = R[idx].sv;
+  let current = parseInt(countEl.textContent);
+  current = Math.max(1, current + delta);
+  countEl.textContent = current;
+  const ratio = current / baseSv;
+  const lis = card.querySelectorAll('.ing-list li');
+  R[idx].ig.forEach((orig, i) => {
+    if (lis[i]) lis[i].textContent = scaleIngredient(orig, ratio);
+  });
+}
 
 const cats=["All","Favorites","Breakfast","Lunch","Dinner","Dessert","Snack","Shake","Dip/Sauce"];
 const badgeMap={"Breakfast":"badge-breakfast","Lunch":"badge-lunch","Dinner":"badge-dinner","Dessert":"badge-dessert","Snack":"badge-snack","Shake":"badge-shake","Dip/Sauce":"badge-dip"};
@@ -877,7 +959,8 @@ function render(){
     const ac=accentMap[r.c]||'';
     const isFav=favs.includes(r.n);
     const safeName=r.n.replace(/'/g,"\\'");
-    return `<div class="card ${ac}" style="animation-delay:${Math.min(i*0.03,0.3)}s" onclick="this.classList.toggle('open')">
+    const origIdx=R.indexOf(r);
+    return `<div class="card ${ac}" data-ridx="${origIdx}" style="animation-delay:${Math.min(i*0.03,0.3)}s" onclick="this.classList.toggle('open')">
       <div class="card-main">
         <div class="card-row1">
           <div class="card-name">${r.n}</div>
@@ -898,6 +981,12 @@ function render(){
       <div class="card-detail">
         <div class="detail-body">
           <div class="detail-divider"></div>
+          <div class="serving-adjuster">
+            <span>Servings</span>
+            <button class="sv-btn" onclick="adjustServings(${origIdx},-1,event)">&#8722;</button>
+            <span class="sv-count">${r.sv}</span>
+            <button class="sv-btn" onclick="adjustServings(${origIdx},1,event)">+</button>
+          </div>
           <div class="detail-block">
             <div class="detail-heading">Ingredients</div>
             <ul class="ing-list">${r.ig.map(x=>`<li>${x}</li>`).join('')}</ul>
