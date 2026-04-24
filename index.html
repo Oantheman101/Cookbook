@@ -5,926 +5,611 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#111111">
-<title>The Snack Box</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🍱</text></svg>">
-<meta property="og:title" content="The Snack Box">
-<meta property="og:description" content="The Snack Box">
-<meta property="og:image" content="https://oantheman101.github.io/Cookbook/og_image.png">
-<meta property="og:image:width" content="1280">
-<meta property="og:image:height" content="640">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Snack Box">
-<meta name="twitter:description" content="The Snack Box">
-<meta name="twitter:image" content="https://oantheman101.github.io/Cookbook/og_image.png">
+<meta name="theme-color" content="#0F0C1C">
+<title>SnackBox</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #111111;
-  --surface: #1C1C1E;
-  --surface2: #252528;
-  --surface3: #2F2F34;
-  --border: rgba(255,255,255,0.08);
-  --border-light: rgba(255,255,255,0.12);
-  --text: #F5F5F7;
-  --text-secondary: #98989F;
-  --text-dim: #636366;
-
-  --fire: #FF6B35;
-  --fire-soft: rgba(255,107,53,0.12);
-  --fire-mid: rgba(255,107,53,0.25);
-  --lime: #32D74B;
-  --lime-soft: rgba(50,215,75,0.12);
-  --sky: #64D2FF;
-  --sky-soft: rgba(100,210,255,0.12);
-  --gold: #FFD60A;
-  --gold-soft: rgba(255,214,10,0.12);
-  --grape: #BF5AF2;
-  --grape-soft: rgba(191,90,242,0.12);
-  --coral: #FF6482;
-  --coral-soft: rgba(255,100,130,0.12);
-  --mint: #66D4CF;
-  --mint-soft: rgba(102,212,207,0.12);
-
-  --radius: 16px;
-  --radius-sm: 10px;
-  --radius-xs: 6px;
-  --safe-top: env(safe-area-inset-top, 0px);
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
-
-body {
-  font-family: 'Outfit', -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  overscroll-behavior-y: contain;
-  padding-top: var(--safe-top);
-  padding-bottom: var(--safe-bottom);
-}
-
-/* ─── HERO ─── */
-.hero {
-  padding: 48px 20px 28px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -80px; left: 50%;
-  transform: translateX(-50%);
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(255,107,53,0.10) 0%, transparent 65%);
-  pointer-events: none;
-}
-.hero-emoji {
-  font-size: 3rem;
-  display: block;
-  margin-bottom: 8px;
-  animation: bounce 2s ease-in-out infinite;
-}
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-.hero h1 {
-  font-size: 2.2rem;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  position: relative;
-}
-.hero h1 .accent { color: var(--fire); }
-.hero .subtitle {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  margin-top: 6px;
-  font-weight: 400;
-}
-
-
-/* ─── STICKY CONTROLS ─── */
-.controls {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(17,17,17,0.85);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  padding: 12px 16px 10px;
-  border-bottom: 1px solid var(--border);
-}
-
-/* Search */
-.search-wrap {
-  position: relative;
-  margin-bottom: 10px;
-}
-.search-icon {
-  position: absolute;
-  left: 12px; top: 50%;
-  transform: translateY(-50%);
-  width: 18px; height: 18px;
-  color: var(--text-dim);
-  pointer-events: none;
-}
-.search-input {
-  width: 100%;
-  padding: 11px 44px 11px 38px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--text);
-  font-family: 'Outfit', sans-serif;
-  font-size: 16px; /* prevents iOS zoom */
-  font-weight: 500;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.search-input:focus { border-color: var(--fire); }
-.search-input::placeholder { color: var(--text-dim); font-weight: 400; }
-.search-clear {
-  position: absolute;
-  right: 10px; top: 50%;
-  transform: translateY(-50%);
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  background: var(--surface2);
-  border: none;
-  color: var(--text-secondary);
-  font-size: 14px;
-  cursor: pointer;
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-.search-clear.show { display: flex; }
-
-/* Filter chips — horizontal scroll */
-.chips-scroll {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding: 2px 0;
-  margin-bottom: 8px;
-}
-.chips-scroll::-webkit-scrollbar { display: none; }
-
-.chip {
-  padding: 8px 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
-  user-select: none;
-  -webkit-user-select: none;
-}
-.chip:active { transform: scale(0.95); }
-.chip.active {
-  background: var(--fire);
-  border-color: var(--fire);
-  color: #fff;
-}
-
-/* Toggle bar */
-.toggles {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.toggle-pill {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 12px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  transition: all 0.2s;
-}
-.toggle-pill:active { transform: scale(0.95); }
-.toggle-pill input { display: none; }
-.toggle-pill.active {
-  background: var(--lime-soft);
-  border-color: var(--lime);
-  color: var(--lime);
-}
-.toggle-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--text-dim);
-  transition: background 0.2s;
-}
-.toggle-pill.active .toggle-dot { background: var(--lime); }
-
-.sort-pill {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.2s;
-}
-.sort-pill:active { transform: scale(0.95); }
-.sort-pill.active { border-color: var(--fire); color: var(--fire); }
-
-.result-tag {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  padding: 6px 0 0;
-  text-align: center;
-}
-
-/* ─── RECIPE LIST ─── */
-.recipe-list {
-  padding: 12px 16px 100px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* ─── CARD ─── */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: all 0.2s;
-  -webkit-user-select: none;
-  user-select: none;
-}
-.card:active { transform: scale(0.985); }
-.card.open { border-color: var(--border-light); }
-
-.card-main {
-  padding: 16px;
-  cursor: pointer;
-}
-.card-row1 {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-.card-name {
-  font-size: 1.05rem;
-  font-weight: 700;
-  line-height: 1.25;
-  flex: 1;
-}
-.card-badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 4px 10px;
-  border-radius: 100px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.badge-breakfast { background: var(--gold-soft); color: var(--gold); }
-.badge-lunch { background: var(--lime-soft); color: var(--lime); }
-.badge-dinner { background: var(--fire-soft); color: var(--fire); }
-.badge-dessert { background: var(--coral-soft); color: var(--coral); }
-.badge-snack { background: var(--sky-soft); color: var(--sky); }
-.badge-shake { background: var(--grape-soft); color: var(--grape); }
-.badge-dip { background: var(--mint-soft); color: var(--mint); }
-
-.macro-bar {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-.macro-tag {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  padding: 4px 8px;
-  border-radius: var(--radius-xs);
-  background: var(--surface2);
-}
-.m-cal { color: var(--fire); }
-.m-pro { color: var(--lime); }
-.m-carb { color: var(--sky); }
-.m-fat { color: var(--gold); }
-
-.card-meta {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.meta-tag {
-  font-size: 0.7rem;
-  font-weight: 500;
-  padding: 3px 8px;
-  border-radius: 100px;
-  background: var(--surface2);
-  color: var(--text-secondary);
-}
-.meta-tag.green { background: var(--lime-soft); color: var(--lime); }
-
-.card-expand-hint {
-  text-align: center;
-  padding: 6px 0 2px;
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  letter-spacing: 0.02em;
-}
-.card.open .card-expand-hint { display: none; }
-
-/* ─── DETAIL PANEL ─── */
-.card-detail {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease;
-}
-.card.open .card-detail { max-height: 5000px; }
-
-.detail-body {
-  padding: 0 16px 16px;
-}
-.detail-divider {
-  height: 1px;
-  background: var(--border);
-  margin-bottom: 16px;
-}
-.detail-block {
-  margin-bottom: 16px;
-}
-.detail-block:last-child { margin-bottom: 0; }
-.detail-heading {
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--fire);
-  margin-bottom: 8px;
-}
-
-.ing-list {
-  list-style: none;
-}
-.ing-list li {
-  padding: 6px 0;
-  padding-left: 18px;
-  position: relative;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: var(--text);
-  border-bottom: 1px solid var(--border);
-}
-.ing-list li:last-child { border-bottom: none; }
-.ing-list li::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 14px;
-  width: 7px; height: 7px;
-  border-radius: 2px;
-  background: var(--fire);
-  opacity: 0.4;
-}
-
-.step-list {
-  list-style: none;
-  counter-reset: steps;
-}
-.step-list li {
-  counter-increment: steps;
-  padding: 8px 0 8px 36px;
-  position: relative;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: var(--text);
-}
-.step-list li::before {
-  content: counter(steps);
-  position: absolute;
-  left: 0; top: 8px;
-  width: 24px; height: 24px;
-  border-radius: 8px;
-  background: var(--fire-soft);
-  color: var(--fire);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.detail-note {
-  background: var(--surface3);
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  border-left: 3px solid var(--fire);
-  line-height: 1.4;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 60px 24px;
-}
-.empty-state .emoji { font-size: 2.5rem; margin-bottom: 12px; }
-.empty-state h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
-.empty-state p { color: var(--text-dim); font-size: 0.9rem; }
-
-/* ─── FOOTER ─── */
-.footer {
-  text-align: center;
-  padding: 30px;
-  font-size: 4rem;
-  color: var(--text-dim);
-  border-top: 1px solid var(--border);
-}
-
-/* ─── DESKTOP (scales up nicely but mobile is primary) ─── */
-@media (min-width: 700px) {
-  .recipe-list {
-    max-width: 560px;
-    margin: 0 auto;
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body, #root { 
+    height:100%; width:100%; overflow:hidden;
+    -webkit-font-smoothing:antialiased; 
+    -moz-osx-font-smoothing:grayscale;
   }
-  .controls {
-    max-width: 560px;
-    margin: 0 auto;
-    border-left: 1px solid var(--border);
-    border-right: 1px solid var(--border);
+  body { 
+    background:#0F0C1C; 
+    font-family:'Outfit',sans-serif;
+    touch-action:manipulation;
   }
-  .hero { max-width: 560px; margin: 0 auto; }
-  .footer { max-width: 560px; margin: 0 auto; }
-  body { background: #0A0A0A; }
-}
-
-/* micro-animation for cards appearing */
-@keyframes cardIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.card { animation: cardIn 0.3s ease both; }
-
-/* ─── CARD ACCENT BORDERS ─── */
-.card.accent-breakfast { border-color: var(--gold); }
-.card.accent-lunch { border-color: var(--lime); }
-.card.accent-dinner { border-color: var(--fire); }
-.card.accent-dessert { border-color: var(--coral); }
-.card.accent-snack { border-color: var(--sky); }
-.card.accent-shake { border-color: var(--grape); }
-.card.accent-dip { border-color: var(--mint); }
-
-/* ─── FAVORITE BUTTON ─── */
-.fav-btn {
-  width: 32px; height: 32px;
-  border: none;
-  background: var(--surface2);
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1rem;
-  color: var(--text-dim);
-  transition: all 0.2s;
-  padding: 0;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.fav-btn:active { transform: scale(1.2); }
-.fav-btn.faved { background: var(--coral-soft); color: var(--coral); }
-
-/* ─── SCROLL TO TOP ─── */
-.scroll-top {
-  position: fixed;
-  bottom: 24px;
-  right: 20px;
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  background: var(--fire);
-  border: none;
-  color: #fff;
-  font-size: 1.2rem;
-  cursor: pointer;
-  z-index: 200;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.3s;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 16px rgba(255,107,53,0.3);
-}
-.scroll-top.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-.scroll-top:active { transform: scale(0.9); }
+  input { -webkit-appearance:none; appearance:none; }
+  ::-webkit-scrollbar { display:none; }
+  * { scrollbar-width:none; }
+  /* Safe areas for notch devices */
+  :root {
+    --sat: env(safe-area-inset-top, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --sal: env(safe-area-inset-left, 0px);
+    --sar: env(safe-area-inset-right, 0px);
+  }
 </style>
 </head>
 <body>
+<div id="root"></div>
 
-<div class="hero">
-  <span class="hero-emoji">🍱</span>
-  <h1>The Snack <span class="accent">Box</span></h1>
-  <div class="subtitle">Your meal prep cheat code.</div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
-</div>
-
-<div class="controls">
-  <div class="search-wrap">
-    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input class="search-input" type="text" id="searchInput" placeholder="Search recipes or ingredients…">
-    <button class="search-clear" id="clearBtn" onclick="clearSearch()">✕</button>
-  </div>
-  <div class="chips-scroll" id="chipBar"></div>
-  <div class="toggles">
-    <div class="toggle-pill" id="tPrep" onclick="toggleFilter('tPrep')"><span class="toggle-dot"></span>Meal Prep</div>
-    <div class="toggle-pill" id="tOven" onclick="toggleFilter('tOven')"><span class="toggle-dot"></span>No Oven</div>
-    <div class="sort-pill" id="sortPill" onclick="cycleSort()"><span id="sortLabel">Sort</span> ↕</div>
-  </div>
-  <div class="result-tag" id="resultTag"></div>
-</div>
-
-<div class="recipe-list" id="recipeList"></div>
-
-<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-<div class="footer">👹</div>
-
+<!-- Recipe data -->
 <script>
-const R=[
-{n:"Protein Pancakes",c:"Breakfast",sv:1,cal:355,p:33,cb:31,f:11,m:"Stovetop",mp:false,no:true,
- ig:["1/2 cup rolled oats","1 scoop whey protein (vanilla)","1 egg","1/2 tsp baking powder","1/4 cup unsweetened almond milk","1/4 tsp cinnamon"],
- st:["Blend oats into flour.","Combine oat flour, protein powder, egg, baking powder, almond milk, cinnamon. Whisk smooth.","Preheat non-stick pan over medium heat, lightly coat with cooking spray.","Pour 1/4 cup batter per pancake. Cook 2-3 min each side.","Serve with sugar-free syrup or fresh fruit."],nt:""},
-{n:"Matcha Overnight Oats",c:"Breakfast",sv:1,cal:276,p:8,cb:43,f:8,m:"No Cook",mp:false,no:true,
- ig:["1/2 cup rolled oats","1 tbsp chia seeds","1 tsp cinnamon","1 tsp matcha","1/2 serving raw honey","1/2 cup unsweetened almond milk"],
- st:["Fill mason jar with all ingredients.","Stir until thick green oatmeal consistency.","Refrigerate at least 2 hours.","Top with raspberries & coconut flakes."],nt:"Low protein — add whey to boost."},
-{n:"Greek Yogurt Parfait",c:"Breakfast",sv:1,cal:320,p:32,cb:21,f:12,m:"No Cook",mp:false,no:true,
- ig:["1 cup plain Greek yogurt","1/4 cup mixed berries","1 tbsp chia seeds","1 tbsp almond butter"],
- st:["Layer Greek yogurt, berries, chia seeds, and almond butter in a glass.","Repeat layers as desired.","Top with extra berries or cinnamon."],nt:""},
-{n:"High Protein Egg Bake",c:"Breakfast",sv:4,cal:454,p:59,cb:12,f:17,m:"Oven",mp:true,no:false,
- ig:["8 eggs","2 cups egg whites","2 cups lowfat cottage cheese","3 bell peppers","1/2 onion","1/2 tbsp each: salt, pepper, garlic powder","8 slices turkey bacon","1 cup fat-free shredded cheddar"],
- st:["Chop & sauté onion, bell peppers, & turkey bacon.","Mix eggs, egg whites, cottage cheese, & seasonings.","Pour into 4 glass meal prep containers on baking sheet.","Add sautéed veggies & turkey bacon evenly.","Portion cheese on top.","Bake @ 400°F for 30 minutes.","Top with hot sauce, green onions."],nt:"Requires oven @ 400°F"},
-{n:"Oats & Whey Protein Bowl",c:"Breakfast",sv:1,cal:385,p:36,cb:49,f:5,m:"Microwave / Stovetop",mp:false,no:true,
- ig:["1/2 cup oats","1 scoop whey protein (chocolate)","1 tbsp PB Fit peanut butter powder","1/2 banana"],
- st:["Cook oats per package (add water, microwave 1-2 min).","Stir in protein powder and PB Fit.","Slice banana on top."],nt:""},
-{n:"High Protein Crepes",c:"Breakfast",sv:1,cal:477,p:40,cb:50,f:12,m:"Stovetop",mp:false,no:true,
- ig:["1/4 cup flour","1 scoop vanilla whey protein","1 egg","1/4 cup almond milk","1/2 tbsp melted butter","1/4 cup nonfat plain greek yogurt","3 diced strawberries","50g blueberries","1 tbsp sugar-free maple syrup"],
- st:["Mix egg & almond milk first, then add flour, protein powder, & melted butter. Whisk thin.","Heat pan to high heat.","Pour 1/2 cup portions, tilt to spread. Cook 1-1.5 min each side.","Fold and top with yogurt, fruits, syrup, cinnamon."],nt:"Makes 2 crepes per serving."},
-{n:"High Protein Mug Cake",c:"Breakfast",sv:1,cal:424,p:32,cb:50,f:11,m:"Microwave",mp:false,no:true,
- ig:["1 egg","1 scoop vanilla protein powder","2 tbsp flour","1/4 tsp baking powder","2 tbsp unsweetened almond milk","4 tbsp sugar-free syrup","1/4 tsp vanilla extract","Cinnamon to taste","10g chocolate chips","~4 tbsp Redi Whip"],
- st:["Add everything except Redi Whip into one mug. Mix thoroughly.","Microwave 45 sec at a time — max 1.5 min total.","Do NOT overcook. Use enough sweetener & cinnamon.","Top with Redi Whip & more cinnamon."],nt:"Watch microwave time carefully."},
-{n:"Loaded Sweet Potato Egg Bake",c:"Breakfast",sv:4,cal:387,p:27,cb:36,f:15,m:"Oven",mp:true,no:false,
- ig:["754g sweet potato","8 whole eggs","1/2 tsp each: salt, pepper, garlic, smoked paprika","1 cup cottage cheese","1 jalapeño","1/4 onion","1 bell pepper","3 slices turkey bacon","Handful of spinach","56g fat-free mozzarella","14g fresh parmesan"],
- st:["Preheat oven to 400°F.","Chop & boil sweet potatoes until soft.","Blend eggs with seasonings and cottage cheese.","Grease pan, mash sweet potatoes as crust.","Bake crust alone 20 min.","Add egg mixture, veggies, turkey bacon, spinach. Mix.","Top with cheeses. Bake 400°F 30-40 min.","Cut into 9 squares (serving = 2)."],nt:"Requires oven @ 400°F"},
-{n:"Buffalo Ranch Chicken Pasta",c:"Lunch",sv:6,cal:464,p:63,cb:42,f:7,m:"Stovetop",mp:true,no:true,
- ig:["2 lb chicken breast","12 oz Banza rotini pasta","1 pack fat-free shredded cheddar","2 cups fat-free cottage cheese","1/2 cup Frank's Hot Buffalo","4 tbsp ranch seasoning","1 cup unsweetened almond milk"],
- st:["Pan fry seasoned chicken (~7 min/side). Chop into chunks.","Blend cottage cheese, buffalo sauce, & almond milk.","Boil pasta 6-8 min.","Combine chicken, cheddar, ranch seasoning, & sauce with noodles.","Portion into 6 containers."],nt:""},
-{n:"Tuna Salad Lettuce Wraps",c:"Lunch",sv:1,cal:213,p:36,cb:6,f:5,m:"No Cook",mp:false,no:true,
- ig:["1 can tuna (in water)","1.5 tbsp light mayo (Hellmann's)","1 tbsp mustard","1/4 red onion, diced","4 large lettuce leaves"],
- st:["Drain tuna. Mix with mayo, mustard, diced onion.","Spoon onto lettuce leaves and wrap."],nt:"Very low cal — pair with a side."},
-{n:"High Protein Chicken Alfredo",c:"Lunch",sv:10,cal:559,p:67,cb:39,f:15,m:"Crockpot + Stovetop",mp:true,no:true,
- ig:["15 oz (dry) Banza pasta","2 jars alfredo sauce","1 sleeve 1/3 fat cream cheese","Boneless skinless chicken breast","1 bag nonfat shredded cheddar","1 bag/63 oz broccoli","1 tbsp each: salt, pepper, garlic, onion powder","Chopped parsley"],
- st:["Season chicken, crockpot with 1/2 cup water. High 3 hours.","Boil pasta 8-10 min.","Chop parsley & microwave broccoli.","Shred chicken in crockpot.","Add pasta, cream cheese, cheddar, broccoli, alfredo.","Stir & split into 10 meals."],nt:"Big batch — crockpot 3 hrs."},
-{n:"Chicken & Sweet Potato Bowl",c:"Lunch",sv:1,cal:324,p:32,cb:31,f:8,m:"Stovetop / Oven",mp:false,no:false,
- ig:["4 oz grilled chicken","1/2 cup roasted sweet potato","1 cup steamed broccoli","1/2 tbsp olive oil"],
- st:["Grill or bake chicken.","Roast sweet potato 400°F 20-25 min (or air fry).","Steam broccoli 5-7 min.","Assemble and drizzle olive oil."],nt:"Can sub air fryer for oven."},
-{n:"Salmon & Avocado Salad",c:"Lunch",sv:1,cal:320,p:27,cb:8,f:20,m:"Stovetop",mp:false,no:true,
- ig:["4 oz salmon","1/4 avocado","1 cup mixed greens","1 tbsp balsamic vinegar"],
- st:["Grill salmon 5-7 min per side.","Toss greens, top with avocado.","Drizzle balsamic, place salmon on top."],nt:"Higher fat — good omega-3s."},
-{n:"In-N-Out Burger Bowls",c:"Lunch",sv:6,cal:550,p:61,cb:29,f:22,m:"Stovetop + Air Fryer",mp:true,no:true,
- ig:["3 lb 93/7 ground beef","1.5 tsp each: salt, pepper, garlic, onion powder","1 tbsp paprika","1 bag fat-free cheddar","20 oz russet potatoes","Spread: 120g light mayo, 100g nonfat greek yogurt, 40g zero-sugar ketchup, 20g mustard, 2g garlic & onion powder, 1 tsp white vinegar, 4 chopped pickle chips, salt","Sides: onions, lettuce, pickles, 24 cherry tomatoes"],
- st:["Chop potatoes, spray & season. Air fry 400°F 22 min (shake halfway).","Brown seasoned beef med-high. Less stirring = more char.","Mix all spread ingredients.","Spread cheese over done meat, cover to melt.","Portion 6 containers: potatoes, meat, spread.","Keep sides in separate bag."],nt:""},
-{n:"Buffalo Ranch Chicken Wrap",c:"Lunch",sv:1,cal:247,p:42,cb:26,f:5,m:"Air Fryer + Stovetop",mp:false,no:true,
- ig:["4 oz cooked chicken breast","Seasonings: 1/4 tsp salt, pepper, garlic, onion powder, 1 tsp paprika","1 carb balance tortilla","1 cup coleslaw mix","1/4 cup nonfat greek yogurt","1 tsp ranch seasoning","20 ml Frank's hot buffalo","1/4 cup fat-free cheddar","4 pickle chips (halved)"],
- st:["Combine coleslaw, chicken, yogurt, buffalo, ranch, cheese, pickles in container.","Cap and shake.","Lay tortilla, add mix, wrap.","Pan sear until browned each side."],nt:""},
-{n:"Buffalo Chicken Mac",c:"Lunch",sv:8,cal:485,p:62,cb:42,f:9,m:"Crockpot + Stovetop",mp:true,no:true,
- ig:["3 lb chicken breast","2 tsp each: garlic, onion, salt, pepper, Italian seasoning","1.5 tbsp smoked paprika","2 cups chicken broth","16 oz protein pasta","1 lb broccoli florets","Sauce: 1 cup fat-free cottage cheese, 3/4 cup Frank's buffalo, 1 block 1/3 fat cream cheese, 1/2 bag fat-free cheddar, 1 tsp each: garlic, onion, smoked paprika, salt","Other half bag fat-free cheddar"],
- st:["Chicken + seasonings + broth in crockpot. High 3 hours.","Blend all sauce ingredients.","20 min left: add broccoli to crockpot & boil pasta.","Chop chicken. Add pasta, sauce, remaining cheddar. Stir.","Split into 8 containers."],nt:"Crockpot 3 hrs."},
-{n:"Sushi Bowl",c:"Lunch",sv:1,cal:481,p:35,cb:28,f:26,m:"Stovetop + Air Fryer",mp:false,no:true,
- ig:["4.5 oz salmon","Seasonings: 1/4 tsp salt, pepper, garlic, onion, paprika","1/4 tbsp olive oil","1/2 cup cooked jasmine rice","1 tsp wasabi","Sushi ginger","Chopped cucumber","Seaweed","Spicy mayo: 1/2 cup nonfat greek yogurt, 1 tsp sriracha, 1 tsp soy sauce, 1/2 tsp rice vinegar, 1/2 tsp sesame oil, 1/4 tsp garlic powder, salt"],
- st:["Cook rice: 1 cup dry + 2 cups water, oil & salt. Boil, low heat 10 min.","Cube salmon, air fry 400°F 6-8 min.","Mix spicy mayo ingredients.","Chop cucumber.","Assemble: rice, salmon, cucumber, sauce, wasabi, ginger, seaweed."],nt:"Sub tuna or lean fish to cut fat."},
-{n:"Air Fryer Teriyaki Chicken Bowl",c:"Lunch",sv:1,cal:484,p:60,cb:55,f:2,m:"Air Fryer",mp:false,no:true,
- ig:["8 oz chicken breast","1 tsp each: salt, pepper, garlic, onion powder","1 tbsp smoked paprika","150g jasmine rice","150g broccoli","3 tbsp zero-sugar teriyaki sauce"],
- st:["Cut chicken, add broccoli — both in air fryer.","Add seasonings and teriyaki.","Air fry 375°F 16 min, mix halfway.","Serve over 150g cooked jasmine rice."],nt:"Very low fat."},
-{n:"Cilantro Lime Crockpot Chicken",c:"Lunch",sv:6,cal:457,p:44,cb:52,f:7,m:"Crockpot + Stovetop",mp:true,no:true,
- ig:["2 lb chicken breast","1 can diced tomatoes (no salt added)","1 medium white onion","2 bell peppers","1 packet taco sauce","1 can diced green chiles","1 can whole kernel corn (strained)","1 can pinto beans (strained)","1 cup Mexican four cheese","1 cup jasmine rice (dry)"],
- st:["All ingredients (minus rice & cheese) in crockpot. High 3 hours.","Cook rice with ~20 min left.","Shred chicken.","Portion rice into 6 containers, top with mix, sprinkle cheese."],nt:"Simple crockpot dump."},
-{n:"Mediterranean Chicken Bowl",c:"Lunch",sv:6,cal:373,p:49,cb:30,f:8,m:"Air Fryer / Oven + Stovetop",mp:true,no:true,
- ig:["32 oz chicken breast","Marinade: 1 cup nonfat greek yogurt, 1 tbsp olive oil, juice of 1/2 lemon, 1 tsp garlic, 1 tbsp paprika, 1 tsp cumin, 1 tsp salt, 1/2 tsp pepper, 1 tsp honey","1 cup quinoa (dry)","2 bell peppers, 2 zucchini, 1 large red onion","1 tbsp olive oil, salt & pepper","Tzatziki: 1.5 cup nonfat greek yogurt, 1/2 cucumber, 1 tsp garlic, 1 tbsp lemon juice, 1 tbsp dill, salt"],
- st:["Dice chicken, marinate 30+ min. Air fry 400°F 16 min to 165°F.","Chop veggies, roast or air fry 400°F 20-25 min.","Rinse quinoa, boil 2 cups water, simmer 15 min, rest 5.","Mix tzatziki.","Split into 6 containers."],nt:"Can air fry chicken 400°F 16 min."},
-{n:"Taco Lime Bowl",c:"Lunch",sv:4,cal:680,p:0,cb:0,f:0,m:"Stovetop",mp:true,no:true,
- ig:["2 lb 93/7 ground beef","DIY taco seasoning: 1 tbsp chili powder, 1 tsp cumin, paprika, 1/2 tsp garlic & onion powder, salt, 1/4 tsp pepper & oregano","1 can black beans","1 cup jasmine rice (dry)","2 limes","Cilantro","200g cherry tomatoes","1/2 red onion","1 can whole kernel corn"],
- st:["Brown beef, add taco seasonings.","Cook rice: 1 cup dry + 2 cups water. Boil, low 10 min.","Mix strained beans with meat at end.","Chop tomatoes & onion, mix with corn, half a lime, salt.","Add cilantro, salt, lime juice to rice.","Split into 4-5 containers with lime wedge."],nt:"Macro data incomplete in source — estimate ~50P/60C/18F."},
-{n:"Grilled Chicken & Veggie Stir Fry",c:"Dinner",sv:1,cal:233,p:33,cb:17,f:5,m:"Stovetop",mp:false,no:true,
- ig:["4 oz chicken breast","1 cup mixed bell peppers","1/2 cup broccoli","1/4 cup soy sauce","1/4 tbsp sesame oil"],
- st:["Grill chicken until cooked.","Heat sesame oil, stir-fry peppers & broccoli ~5 min.","Add soy sauce and chicken, cook 2-3 min."],nt:"Low cal — pair with rice."},
-{n:"High Protein Loaded Chili Bowl",c:"Dinner",sv:6,cal:383,p:41,cb:30,f:11,m:"Stovetop / Oven",mp:true,no:false,
- ig:["2 lb 93/7 ground beef","340g nonfat greek yogurt","1 can no-salt-added tomato sauce","1 whole onion","3 tomatoes","3 yellow potatoes","1 tbsp each: chili powder, salt, pepper","Heaping scoop minced garlic"],
- st:["Bake diced potatoes 400°F ~35 min (or air fry).","Dice onion & tomatoes.","Sauté onions, add garlic, stir in tomatoes.","Brown beef, add seasonings.","Add tomato sauce, yogurt, potatoes. Simmer 20 min.","Portion into 6 containers."],nt:"Can air fry potatoes instead of oven."},
-{n:"Salmon w/ Lemon Garlic Asparagus",c:"Dinner",sv:1,cal:333,p:28,cb:8,f:21,m:"Stovetop",mp:false,no:true,
- ig:["4 oz salmon","1 cup asparagus","1/2 tbsp olive oil","1/2 lemon","1 clove garlic"],
- st:["Grill salmon 5-7 min per side.","Sauté asparagus with garlic and olive oil ~5-7 min.","Squeeze lemon over everything."],nt:""},
-{n:"Lemon Tahini Chicken Quinoa Bowl",c:"Dinner",sv:6,cal:348,p:29,cb:26,f:8,m:"Oven + Stovetop",mp:true,no:false,
- ig:["1/2 red onion, 1 zucchini, 340g cauliflower, 340g brussels sprouts","Dressing (use half): 1/4 cup olive oil, 1/4 cup tahini, 1/4 cup ACV, 2 tbsp dijon, 1 tbsp honey, 1 tsp dill, salt, pepper","24 oz chicken breast","Quinoa"],
- st:["Chop veggies, roast 400°F 25-30 min (or air fry).","Mix dressing.","Toast quinoa med-high 2 min, cool 2 min.","Rinse, boil with 1 1/4 cup water, low heat 10 min.","Portion into 6 with 4 oz chicken each."],nt:"Can sub air fryer for oven."},
-{n:"Chicken Fajita Bowl",c:"Dinner",sv:1,cal:262,p:27,cb:34,f:2,m:"Stovetop",mp:false,no:true,
- ig:["4 oz chicken breast","1/4 cup sliced bell peppers","1/4 cup onions","1/4 cup salsa (Mateos)","1/2 cup brown rice (cooked)"],
- st:["Grill chicken.","Sauté peppers and onions.","Serve over brown rice with salsa."],nt:"Very low fat."},
-{n:"High Protein Tacorritos",c:"Dinner",sv:8,cal:470,p:59,cb:52,f:12,m:"Stovetop",mp:true,no:true,
- ig:["1 lb 93/7 ground beef","450g bell peppers","1 can corn","1 cup nonfat greek yogurt","1 packet taco seasoning","1/2 bottle Taco Bell hot sauce (0 cal)","1 bag fat-free cheddar","Cilantro & lime","8 Xtreme Wellness wraps"],
- st:["Chop onions & peppers, sauté 5 min.","Add beef + taco seasoning, brown.","Add hot sauce, corn, cilantro, lime, yogurt, garlic.","Spread meat over 8 wraps. Wrap.","Toast on pan at high heat if desired."],nt:"Serving = 2 tacorritos."},
-{n:"Loaded Taco Bowls",c:"Dinner",sv:3,cal:498,p:52,cb:46,f:12,m:"Stovetop + Air Fryer",mp:true,no:true,
- ig:["1 lb 93/7 ground beef","1 tbsp pepper, garlic, onion powder","1/2 packet taco seasoning","1/2 onion, 2 bell peppers","1 lime","450g russet potatoes","3/4 can corn","1 can no-salt-added diced tomatoes","1/2 bag fat-free cheddar","Shredded lettuce","50g nonfat greek yogurt (sour cream sub)"],
- st:["Chop potatoes, air fry 400°F 22 min (shake halfway).","Mix meat with seasonings.","Sauté onions & peppers, add meat. Brown ~7 min.","Add corn, tomatoes, lime juice. Cook 5-7 min.","Add cheese, cover to melt.","Plate: potatoes, then taco mix."],nt:"Air fry potatoes 400°F 22 min."},
-{n:"Parmesan Chicken Pasta",c:"Dinner",sv:6,cal:514,p:58,cb:52,f:11,m:"Stovetop",mp:true,no:true,
- ig:["2 lb chicken breast","1.5 tbsp paprika, 1/2 tbsp each: salt, pepper, garlic, onion powder","16 oz protein pasta","Sauce: 200g nonfat greek yogurt, 120g fat-free cottage cheese, 25g parm, 1 tbsp garlic, 1/2 block 1/3 fat cream cheese, 1 tsp salt, 1/4 tsp nutmeg, pepper, 1/4 cup water","Chopped parsley"],
- st:["Season chicken. Pan cook 5-7 min each side (lid on, 165°F).","Boil pasta ~10 min.","Blend all sauce ingredients.","Chop chicken. Drain pasta.","Add chicken, sauce, parsley to pot. Mix.","Split into 6 containers."],nt:"Blended sauce."},
-{n:"Marry Me Chicken Pasta",c:"Dinner",sv:6,cal:436,p:34,cb:48,f:13,m:"Stovetop",mp:true,no:true,
- ig:["13 oz chicken breast","2 tsp each: salt, pepper, garlic, onion powder","1 tbsp paprika","10 oz protein pasta (Penne Barilla)","1 tbsp Italian seasoning","1 tbsp olive oil","2 tsp crushed red pepper","1 tbsp minced garlic","Handful sundried tomatoes","1/2 cup chicken broth","3/4 cup half & half","25g fresh parm"],
- st:["Chop & season chicken.","Heat pan med-high with olive oil. Start pasta.","Cook chicken 3-4 min.","Add Italian seasoning, red pepper, sundried tomatoes, garlic. 3-4 min.","Add broth, half & half, parm. Thicken 4-5 min.","Add pasta, split into containers."],nt:""},
-{n:"Bang Bang Shrimp",c:"Dinner",sv:1,cal:210,p:26,cb:15,f:6,m:"Air Fryer",mp:false,no:true,
- ig:["10 raw/peeled/deveined shrimp","1/2 tsp each: salt, pepper, onion, garlic powder, smoked paprika","Crushed corn flakes","Flour","1 egg (egg wash)","Sauce: 30g light mayo, 30g nonfat greek yogurt, 1 tbsp chili sauce, 1 tbsp sriracha, 1 tsp rice vinegar"],
- st:["Season shrimp.","Dredge: flour → egg wash → crushed corn flakes.","Air fry 400°F 8-10 min (flip halfway).","Mix sauce ingredients.","Brush chili sauce on shrimp. Dip in bang bang sauce."],nt:"Air fry 400°F 8-10 min."},
-{n:"Chicken Alfredo (v2)",c:"Dinner",sv:8,cal:384,p:40,cb:41,f:7,m:"Crockpot + Stovetop",mp:true,no:true,
- ig:["32 oz chicken breast","1 tsp each: salt, pepper, onion, garlic, smoked paprika, Italian","1/2 cup chicken broth","Sauce: 2 cups 2% cottage cheese, 1/2 cup half & half, 1/2 cup shredded parm, 1/4 tsp garlic, 1/2 tsp salt, pepper","16 oz fettuccine pasta"],
- st:["Crockpot: chicken + seasonings + broth. High 3 hours.","Boil pasta 10-12 min.","Blend all sauce ingredients.","Chop chicken. Add pasta & sauce to crockpot. Mix.","Portion into 8 containers."],nt:"Crockpot 3 hrs."},
-{n:"Spaghetti & Chicken Meatballs",c:"Dinner",sv:4,cal:420,p:54,cb:38,f:8,m:"Air Fryer + Stovetop",mp:true,no:true,
- ig:["2 chicken breasts","1 tsp each: salt, pepper, garlic, onion, Italian","1-2 tbsp smoked paprika","1/2 cup panko","6 oz dry protein spaghetti (Brami)","258g lemon ricotta pasta sauce (Sonoma) — 62g/meal"],
- st:["Mince chicken to ground consistency.","Boil water for pasta.","Mix chicken with seasonings + breadcrumbs. Form 16 balls (4/meal).","Air fry 375°F 16 min (flip halfway).","Cook pasta 10 min.","Plate: pasta, 62g sauce, 4 meatballs."],nt:"Air fry meatballs 375°F 16 min."},
-{n:"Creamy Garlic Beef Pasta",c:"Dinner",sv:5,cal:551,p:45,cb:49,f:18,m:"Stovetop",mp:true,no:true,
- ig:["1 lb 93/7 ground beef","1 tsp each: paprika, Italian, pepper, salt","1 tbsp minced garlic","1/2 onion","2 tbsp flour","1.5 cup fat-free milk (Fairlife)","1/2 cup half & half","1 cup part-skim mozzarella","1/2 cup fresh parm","10 oz shell pasta","Fresh parsley"],
- st:["Heat pan med-high. Brown meat with seasonings & onion.","Mix in flour to coat meat.","Pour in milk & half & half. Stir until simmering.","Let sit 4 min. Cook pasta meanwhile.","Add mozzarella & parm, mix.","Dump pasta on top, add parsley. Split into 5."],nt:""},
-{n:"Smoked Lemon Pepper Chicken Pasta",c:"Dinner",sv:6,cal:383,p:35,cb:24,f:17,m:"Smoker + Stovetop",mp:true,no:false,
- ig:["32 oz chicken breast","8 oz protein pasta (Brami)","10g fresh parm","1 tbsp butter","Lemon pepper seasoning"],
- st:["Set smoker to 315°F.","Season chicken with lemon pepper.","Smoke: 8 min/side x 2 (32 min total).","Boil pasta 10 min.","Chop chicken, add to pasta with butter & parm.","Mix, split into 6 meals."],nt:"Requires smoker."},
-{n:"Creamy Baked Chicken Tacos",c:"Dinner",sv:3,cal:535,p:50,cb:40,f:18,m:"Stovetop + Oven",mp:true,no:false,
- ig:["16 oz chicken tenderloins","McCormick taco seasoning (30% less sodium)","1.5 tbsp smoked paprika","1/2 small onion, 2 bell peppers, 1 jalapeño","1 lime, cilantro","1 tbsp minced garlic","Half block 1/3 fat cream cheese","1/4 cup water","6 Mission street tacos","98g Mexican-style cheese"],
- st:["Chop tenders & season. Chop veggies.","Cook chicken 2-3 min each side med-high.","Add veggies, lime, cilantro. 2 more min.","Add garlic, cream cheese, water. 3 more min.","Assemble tacos in baking pan (spray backs).","Top with cheese. Bake 400°F 15 min."],nt:"Requires oven @ 400°F."},
-{n:"Protein Brownies",c:"Dessert",sv:1,cal:411,p:32,cb:28,f:19,m:"Oven",mp:false,no:false,
- ig:["1 scoop chocolate brownie protein powder","1/4 cup almond flour","1/4 cup unsweetened cocoa powder","1/4 cup unsweetened applesauce","1/4 tsp vanilla extract"],
- st:["Preheat oven 350°F.","Mix all ingredients smooth.","Pour into greased dish.","Bake 20-25 min. Cool before slicing."],nt:"Requires oven."},
-{n:"Greek Yogurt Chocolate Mousse",c:"Dessert",sv:1,cal:173,p:28,cb:13,f:1,m:"No Cook",mp:false,no:true,
- ig:["1 cup plain Greek yogurt","1 tbsp cocoa powder","1 tsp vanilla extract","1 tbsp stevia"],
- st:["Mix all ingredients smooth.","Chill 30 min or spread on rice cakes."],nt:"Excellent low-cal option."},
-{n:"PB Protein Cookies",c:"Dessert",sv:1,cal:327,p:44,cb:13,f:11,m:"Oven",mp:false,no:false,
- ig:["4 tbsp PB Fit","1 scoop protein powder","1 egg","1/4 cup stevia"],
- st:["Preheat oven 350°F.","Mix all ingredients smooth.","Form small balls on baking sheet.","Bake 8-10 min until golden."],nt:"Requires oven."},
-{n:"High Protein Rootbeer Float",c:"Dessert",sv:1,cal:169,p:23,cb:14,f:4,m:"Ninja Creami",mp:false,no:true,
- ig:["1 scoop vanilla protein","1 cup unsweetened almond milk","1/2 serving raw honey","1/2 tsp vanilla extract","Zero-calorie root beer"],
- st:["Add all to Ninja Creami tub (fill line).","Freeze at least 12 hours.","Run Creami cycle.","Scoop into frozen mug.","Pour zero-cal root beer over top."],nt:"Requires Ninja Creami."},
-{n:"Apple Pie A La Mode",c:"Dessert",sv:1,cal:138,p:5,cb:10,f:0,m:"Air Fryer",mp:false,no:true,
- ig:["1 honeycrisp apple","10g raw honey","50g nonfat greek yogurt","Cinnamon"],
- st:["Core and halve apple.","Drizzle honey, sprinkle cinnamon.","Air fry 350°F 20 min.","Mix honey + greek yogurt.","Pour yogurt icing on top."],nt:"Air fry 350°F 20 min."},
-{n:"High Protein Fudge Cake",c:"Dessert",sv:1,cal:395,p:39,cb:36,f:12,m:"Oven",mp:false,no:false,
- ig:["100g sweet potatoes","1/3 cup fat-free cottage cheese","1 scoop chocolate protein powder","1 tbsp baking cocoa","1 packet stevia","1 egg","1 serving sugar-free chocolate chips"],
- st:["Peel & boil sweet potatoes until soft.","Place all except chips in oven-safe container.","Sprinkle chips on top.","Bake 350°F 35 min. Cool 3-5 min."],nt:"Requires oven. Optional: drizzle PB Fit."},
-{n:"Caramelized Apple Yogurt Bowl",c:"Dessert",sv:1,cal:224,p:10,cb:33,f:9,m:"Stovetop",mp:false,no:true,
- ig:["1/2 gala apple","10g honey","Cinnamon","80g greek yogurt","3 crushed walnuts","15g zero-sugar chocolate chips"],
- st:["Heat 5g honey & cinnamon on pan.","Chop apple, add to pan.","Caramelize ~5 min.","Put yogurt in bowl.","Top with apples, walnuts, chocolate chips, 5g honey."],nt:""},
-{n:"Dark Chocolate Blueberry Muffins",c:"Dessert",sv:6,cal:197,p:14,cb:22,f:7,m:"Oven",mp:false,no:false,
- ig:["2 bananas","2 eggs","1 cup PB Fit powder","1/2 cup water","1 tsp vanilla","3/4 cup blueberries","42g 60% dark chocolate"],
- st:["Mash bananas, add eggs, PB Fit, water, vanilla. Stir.","Pour into greased muffin pan.","Top with blueberries and dark chocolate.","Bake 350°F 25-30 min."],nt:"Requires oven."},
-{n:"Protein Bar (Homemade)",c:"Snack",sv:2,cal:154,p:15,cb:10,f:6,m:"No Cook",mp:false,no:true,
- ig:["1 scoop protein powder","1/4 cup oats","1 tbsp almond butter"],
- st:["Mix all until dough forms.","Press into pan.","Freeze 30 min.","Slice into bars."],nt:"Per serving (makes 2)."},
-{n:"Cottage Cheese & Fruit",c:"Snack",sv:1,cal:115,p:12,cb:10,f:3,m:"No Cook",mp:false,no:true,
- ig:["1/2 cup low-fat cottage cheese","1/4 cup pineapple chunks"],
- st:["Combine and stir.","Add raw honey if desired."],nt:""},
-{n:"Hard-Boiled Eggs",c:"Snack",sv:1,cal:138,p:12,cb:0,f:10,m:"Stovetop",mp:false,no:true,
- ig:["2 eggs"],
- st:["Boil eggs 8-10 min.","Peel and eat."],nt:""},
-{n:"Almonds & Apple",c:"Snack",sv:1,cal:305,p:6,cb:26,f:13,m:"No Cook",mp:false,no:true,
- ig:["1 oz almonds","1 medium apple"],
- st:["Slice apple.","Eat with almonds."],nt:"Higher fat snack."},
-{n:"Rice Cakes & PB Fit",c:"Snack",sv:1,cal:138,p:9,cb:21,f:2,m:"No Cook",mp:false,no:true,
- ig:["2 rice cakes","2 tbsp PB Fit"],
- st:["Spread PB Fit on rice cakes."],nt:""},
-{n:"Easy 30g Protein Taco Snack",c:"Snack",sv:1,cal:217,p:30,cb:16,f:6,m:"Stovetop",mp:false,no:true,
- ig:["1 tortilla (La Banderita flour)","100g 96/4 ground beef","15g fat-free cheese","4 cherry tomatoes","Shredded lettuce","0-cal Taco Bell sauce"],
- st:["Roll meat flat onto tortilla.","Pan press meat-side down until browned.","Flip, add toppings.","Brown tortilla, fold like a taco."],nt:""},
-{n:"Chocolate PB Protein Shake",c:"Shake",sv:1,cal:283,p:32,cb:23,f:7,m:"Blender",mp:false,no:true,
- ig:["1 scoop chocolate protein powder","2 tbsp PB Fit","1 cup unsweetened almond milk","1/2 banana","5 ice cubes"],
- st:["Add all to blender. Blend smooth."],nt:""},
-{n:"Vanilla Berry Protein Shake",c:"Shake",sv:1,cal:240,p:26,cb:16,f:8,m:"Blender",mp:false,no:true,
- ig:["1 scoop vanilla protein powder","1/2 cup mixed berries","1 cup unsweetened almond milk","1 tbsp chia seeds","5 ice cubes"],
- st:["Combine all. Blend smooth."],nt:""},
-{n:"Green Power Protein Shake",c:"Shake",sv:1,cal:296,p:25,cb:13,f:16,m:"Blender",mp:false,no:true,
- ig:["1 scoop vanilla protein powder","1/2 cup spinach","1/2 avocado","1/2 cup cucumber","1 cup unsweetened almond milk","5 ice cubes"],
- st:["Add all to blender. Blend smooth."],nt:"Higher fat from avocado."},
-{n:"Cinnamon Roll Protein Shake",c:"Shake",sv:1,cal:166,p:23,cb:5,f:6,m:"Blender",mp:false,no:true,
- ig:["1 scoop cinnamon cereal protein powder","1/2 cup unsweetened almond milk","1/4 tsp ground cinnamon","1/2 tsp vanilla extract","5 ice cubes"],
- st:["Combine all. Blend smooth."],nt:"Very low cal."},
-{n:"Tropical Protein Shake",c:"Shake",sv:1,cal:279,p:25,cb:38,f:3,m:"Blender",mp:false,no:true,
- ig:["1 scoop fruity cereal protein powder (MyProtein)","1/2 cup pineapple chunks","1/2 cup mango chunks","1 cup unsweetened coconut water","5 ice cubes"],
- st:["Add all to blender. Blend smooth."],nt:"Higher carb."},
-{n:"High Protein Ranch",c:"Dip/Sauce",sv:1,cal:120,p:14,cb:12,f:1,m:"No Cook",mp:false,no:true,
- ig:["1/2 cup plain Greek yogurt","1/2 packet ranch powder","1 tbsp dill weed"],
- st:["Mix all smooth.","Serve as dip or topping."],nt:""},
-{n:"Low-Cal BBQ Sauce",c:"Dip/Sauce",sv:1,cal:149,p:6,cb:29,f:1,m:"Stovetop",mp:false,no:true,
- ig:["1/2 cup tomato paste","2 tbsp apple cider vinegar","1 tbsp Worcestershire sauce","1 tbsp Dijon mustard","1/2 tsp smoked paprika"],
- st:["Combine all in saucepan.","Simmer low 5-10 min, stirring occasionally."],nt:""},
-{n:"Avocado Lime Dressing",c:"Dip/Sauce",sv:1,cal:202,p:2,cb:8,f:18,m:"Blender",mp:false,no:true,
- ig:["1/2 avocado","1 tbsp lime juice","1/2 tbsp olive oil","1 clove garlic, minced","1/4 tsp salt","1/4 tsp black pepper"],
- st:["Blend all until smooth."],nt:"Higher fat."},
-{n:"Spicy Sriracha Mayo",c:"Dip/Sauce",sv:1,cal:56,p:7,cb:7,f:0,m:"No Cook",mp:false,no:true,
- ig:["1/4 cup nonfat greek yogurt","1 tbsp sriracha","1 tsp Dijon mustard","1/4 tsp garlic powder"],
- st:["Mix all smooth.","Use as dip or topping."],nt:"Very low cal."},
-{n:"Sugar-Free Honey Mustard",c:"Dip/Sauce",sv:1,cal:25,p:1,cb:3,f:1,m:"No Cook",mp:false,no:true,
- ig:["2 tbsp Dijon mustard","1 tbsp apple cider vinegar","1 tbsp stevia honey"],
- st:["Combine all. Stir smooth."],nt:"Minimal macros."},
-{n:"High Protein Street Corn Dip",c:"Dip/Sauce",sv:1,cal:497,p:70,cb:24,f:15,m:"No Cook",mp:false,no:true,
- ig:["3/4 cup whole kernel corn","9 oz chicken breast","50g nonfat greek yogurt","15g light mayo","1 lime","1-2 tbsp Tajin","1/4 cup cotija cheese"],
- st:["Add all to tupperware. Cap and shake.","Serve with chips (Siete recommended) or veggies."],nt:"Great party dip — 70g protein."},
-{n:"Paleo Banana Bread",c:"Dessert",sv:10,cal:248,p:6,cb:20,f:16,m:"Oven",mp:false,no:false,
- ig:["4 medium overripe bananas (mashed)","4 large eggs (room temp)","2 tsp vanilla extract","1/4 cup refined coconut oil (melted)","1 3/4 cups blanched almond flour","1/2 cup tapioca flour","1 tsp baking soda","1 tsp baking powder","1 tsp cinnamon","1/4 tsp fine sea salt"],
- st:["Preheat oven to 350°F. Line loaf pan with parchment.","Mash bananas, whisk in eggs, vanilla, & melted coconut oil.","Add almond flour, tapioca flour, baking soda, baking powder, cinnamon, salt — stir to combine.","Pour into pan. Bake 50-60 min until golden.","Cool, slice, serve with sugar-free syrup."],nt:"No added sugar — sweetened only by bananas. Low protein (6g)."},
+window.RECIPES=[
+{n:"Protein Pancakes",c:"Breakfast",sv:1,cal:355,p:33,cb:31,f:11,m:"Stovetop",mp:false,no:true,ig:["40g rolled oats","1 scoop whey protein (vanilla)","1 large egg","2g baking powder","60ml unsweetened almond milk","1g cinnamon"],st:["Blend oats into flour.","Combine oat flour, protein powder, egg, baking powder, almond milk, cinnamon. Whisk smooth.","Preheat non-stick pan over medium heat with cooking spray.","Pour 60ml batter per pancake. Cook 2–3 min each side.","Serve with sugar-free syrup or fresh fruit."],nt:""},
+{n:"Matcha Overnight Oats",c:"Breakfast",sv:1,cal:276,p:8,cb:43,f:8,m:"No Cook",mp:false,no:true,ig:["40g rolled oats","10g chia seeds","3g cinnamon","3g matcha","10g raw honey","120ml unsweetened almond milk"],st:["Add all ingredients to mason jar.","Stir until thick green oatmeal consistency.","Refrigerate at least 2 hours.","Top with raspberries & coconut flakes."],nt:"Low protein — add whey to boost."},
+{n:"Greek Yogurt Parfait",c:"Breakfast",sv:1,cal:320,p:32,cb:21,f:12,m:"No Cook",mp:false,no:true,ig:["245g plain Greek yogurt","40g mixed berries","10g chia seeds","16g almond butter"],st:["Layer Greek yogurt, berries, chia seeds, and almond butter in a glass.","Repeat layers as desired.","Top with extra berries or cinnamon."],nt:""},
+{n:"High Protein Egg Bake",c:"Breakfast",sv:4,cal:454,p:59,cb:12,f:17,m:"Oven",mp:true,no:false,ig:["8 large eggs","480ml egg whites","450g lowfat cottage cheese","3 bell peppers (450g)","75g onion","8g salt, pepper, garlic powder","8 slices turkey bacon","113g fat-free shredded cheddar"],st:["Chop & sauté onion, bell peppers, & turkey bacon.","Mix eggs, egg whites, cottage cheese, & seasonings.","Pour into 4 glass meal prep containers on baking sheet.","Add sautéed veggies & turkey bacon evenly.","Portion cheese on top.","Bake @ 400°F for 30 minutes.","Top with hot sauce, green onions."],nt:"Requires oven @ 400°F"},
+{n:"Oats & Whey Protein Bowl",c:"Breakfast",sv:1,cal:385,p:36,cb:49,f:5,m:"Microwave",mp:false,no:true,ig:["40g oats","1 scoop whey protein (chocolate)","8g PB Fit peanut butter powder","60g banana"],st:["Cook oats per package (add water, microwave 1–2 min).","Stir in protein powder and PB Fit.","Slice banana on top."],nt:""},
+{n:"High Protein Crepes",c:"Breakfast",sv:1,cal:477,p:40,cb:50,f:12,m:"Stovetop",mp:false,no:true,ig:["30g flour","1 scoop vanilla whey protein","1 large egg","60ml almond milk","7g melted butter","60g nonfat plain greek yogurt","45g diced strawberries","50g blueberries","15ml sugar-free maple syrup"],st:["Mix egg & almond milk first, then add flour, protein powder, & melted butter. Whisk thin.","Heat pan to high heat.","Pour 120ml portions, tilt to spread. Cook 1–1.5 min each side.","Fold and top with yogurt, fruits, syrup, cinnamon."],nt:"Makes 2 crepes per serving."},
+{n:"High Protein Mug Cake",c:"Breakfast",sv:1,cal:424,p:32,cb:50,f:11,m:"Microwave",mp:false,no:true,ig:["1 large egg","1 scoop vanilla protein powder","16g flour","1g baking powder","30ml unsweetened almond milk","60ml sugar-free syrup","1g vanilla extract","2g cinnamon","10g chocolate chips","30g Redi Whip"],st:["Add everything except Redi Whip into one mug. Mix thoroughly.","Microwave 45 sec at a time — max 1.5 min total.","Do NOT overcook. Use enough sweetener & cinnamon.","Top with Redi Whip & more cinnamon."],nt:"Watch microwave time carefully."},
+{n:"Loaded Sweet Potato Egg Bake",c:"Breakfast",sv:4,cal:387,p:27,cb:36,f:15,m:"Oven",mp:true,no:false,ig:["754g sweet potato","8 large eggs","8g salt, pepper, garlic, smoked paprika","245g cottage cheese","1 jalapeño (15g)","40g onion","150g bell pepper","3 slices turkey bacon","30g spinach","56g fat-free mozzarella","14g fresh parmesan"],st:["Preheat oven to 400°F.","Chop & boil sweet potatoes until soft.","Blend eggs with seasonings and cottage cheese.","Grease pan, mash sweet potatoes as crust.","Bake crust alone 20 min.","Add egg mixture, veggies, turkey bacon, spinach. Mix.","Top with cheeses. Bake 400°F 30–40 min.","Cut into 9 squares (serving = 2)."],nt:"Requires oven @ 400°F"},
+{n:"Buffalo Ranch Chicken Pasta",c:"Lunch",sv:6,cal:464,p:63,cb:42,f:7,m:"Stovetop",mp:true,no:true,ig:["900g chicken breast","340g Banza rotini pasta","225g fat-free shredded cheddar","450g fat-free cottage cheese","120ml Frank's Hot Buffalo","30g ranch seasoning","240ml unsweetened almond milk"],st:["Pan fry seasoned chicken (~7 min/side). Chop into chunks.","Blend cottage cheese, buffalo sauce, & almond milk.","Boil pasta 6–8 min.","Combine chicken, cheddar, ranch seasoning, & sauce with noodles.","Portion into 6 containers."],nt:""},
+{n:"Tuna Salad Lettuce Wraps",c:"Lunch",sv:1,cal:213,p:36,cb:6,f:5,m:"No Cook",mp:false,no:true,ig:["1 can tuna in water (140g drained)","22g light mayo","15g mustard","40g red onion, diced","4 large lettuce leaves (120g)"],st:["Drain tuna. Mix with mayo, mustard, diced onion.","Spoon onto lettuce leaves and wrap."],nt:"Very low cal — pair with a side."},
+{n:"High Protein Chicken Alfredo",c:"Lunch",sv:10,cal:559,p:67,cb:39,f:15,m:"Crockpot + Stovetop",mp:true,no:true,ig:["425g Banza pasta (dry)","2 jars alfredo sauce (850g)","75g 1/3 fat cream cheese","900g chicken breast","225g nonfat shredded cheddar","1.8kg broccoli","15g salt, pepper, garlic, onion powder","20g chopped parsley"],st:["Season chicken, crockpot with 120ml water. High 3 hours.","Boil pasta 8–10 min.","Chop parsley & microwave broccoli.","Shred chicken in crockpot.","Add pasta, cream cheese, cheddar, broccoli, alfredo.","Stir & split into 10 meals."],nt:"Big batch — crockpot 3 hrs."},
+{n:"Chicken & Sweet Potato Bowl",c:"Lunch",sv:1,cal:324,p:32,cb:31,f:8,m:"Stovetop / Oven",mp:false,no:false,ig:["115g chicken breast","100g sweet potato","150g broccoli","7ml olive oil"],st:["Grill or bake chicken.","Roast sweet potato 400°F 20–25 min (or air fry).","Steam broccoli 5–7 min.","Assemble and drizzle olive oil."],nt:"Can sub air fryer for oven."},
+{n:"Salmon & Avocado Salad",c:"Lunch",sv:1,cal:320,p:27,cb:8,f:20,m:"Stovetop",mp:false,no:true,ig:["115g salmon","35g avocado","30g mixed greens","15ml balsamic vinegar"],st:["Grill salmon 5–7 min per side.","Toss greens, top with avocado.","Drizzle balsamic, place salmon on top."],nt:"Higher fat — good omega-3s."},
+{n:"In-N-Out Burger Bowls",c:"Lunch",sv:6,cal:550,p:61,cb:29,f:22,m:"Stovetop + Air Fryer",mp:true,no:true,ig:["1360g 93/7 ground beef","8g each: salt, pepper, garlic powder, onion powder","15g paprika","225g fat-free cheddar","570g russet potatoes","120g light mayo","100g nonfat greek yogurt","40g zero-sugar ketchup","20g mustard","2g garlic powder","2g onion powder","5ml white vinegar","30g chopped pickle chips","100g onion, 150g lettuce, 60g pickles, 350g cherry tomatoes"],st:["Chop potatoes, spray & season. Air fry 400°F 22 min (shake halfway).","Brown seasoned beef med-high. Less stirring = more char.","Mix all spread ingredients.","Spread cheese over done meat, cover to melt.","Portion 6 containers: potatoes, meat, spread.","Keep sides in separate bag."],nt:""},
+{n:"Buffalo Ranch Chicken Wrap",c:"Lunch",sv:1,cal:247,p:42,cb:26,f:5,m:"Air Fryer + Stovetop",mp:false,no:true,ig:["115g cooked chicken breast","3g each: salt, pepper, garlic, onion powder","5g paprika","1 carb balance tortilla","75g coleslaw mix","60g nonfat greek yogurt","5g ranch seasoning","20ml Frank's hot buffalo","28g fat-free cheddar","30g pickle chips"],st:["Combine coleslaw, chicken, yogurt, buffalo, ranch, cheese, pickles in container.","Cap and shake.","Lay tortilla, add mix, wrap.","Pan sear until browned each side."],nt:""},
+{n:"Buffalo Chicken Mac",c:"Lunch",sv:8,cal:485,p:62,cb:42,f:9,m:"Crockpot + Stovetop",mp:true,no:true,ig:["1360g chicken breast","10g each: garlic, onion, salt, pepper, Italian seasoning","22g smoked paprika","480ml chicken broth","450g protein pasta","450g broccoli florets","245g fat-free cottage cheese","180ml Frank's buffalo","75g 1/3 fat cream cheese","113g fat-free cheddar (sauce)","113g fat-free cheddar (topping)","5g each: garlic, onion, smoked paprika, salt"],st:["Chicken + seasonings + broth in crockpot. High 3 hours.","Blend all sauce ingredients.","20 min left: add broccoli to crockpot & boil pasta.","Chop chicken. Add pasta, sauce, remaining cheddar. Stir.","Split into 8 containers."],nt:"Crockpot 3 hrs."},
+{n:"Sushi Bowl",c:"Lunch",sv:1,cal:481,p:35,cb:28,f:26,m:"Stovetop + Air Fryer",mp:false,no:true,ig:["130g salmon","3g each: salt, pepper, garlic, onion powder, paprika","4ml olive oil","100g cooked jasmine rice","5g wasabi","15g sushi ginger","75g cucumber","2 sheets seaweed","120g nonfat greek yogurt","5ml sriracha","5ml low-sodium soy sauce","3ml rice vinegar","3ml sesame oil","1g garlic powder"],st:["Cook rice: 185g dry + 480ml water, oil & salt. Boil, low heat 10 min.","Cube salmon, air fry 400°F 6–8 min.","Mix spicy mayo ingredients.","Chop cucumber.","Assemble: rice, salmon, cucumber, sauce, wasabi, ginger, seaweed."],nt:"Sub tuna or lean fish to cut fat."},
+{n:"Air Fryer Teriyaki Chicken Bowl",c:"Lunch",sv:1,cal:484,p:60,cb:55,f:2,m:"Air Fryer",mp:false,no:true,ig:["225g chicken breast","5g each: salt, pepper, garlic, onion powder","15g smoked paprika","150g jasmine rice (cooked)","150g broccoli","45ml zero-sugar teriyaki sauce"],st:["Cut chicken, add broccoli — both in air fryer.","Add seasonings and teriyaki.","Air fry 375°F 16 min, mix halfway.","Serve over cooked jasmine rice."],nt:"Very low fat."},
+{n:"Cilantro Lime Crockpot Chicken",c:"Lunch",sv:6,cal:457,p:44,cb:52,f:7,m:"Crockpot + Stovetop",mp:true,no:true,ig:["900g chicken breast","1 can diced tomatoes (400g, no salt added)","150g white onion","300g bell peppers","1 packet taco sauce (35g)","1 can diced green chiles (120g)","300g whole kernel corn (strained)","440g pinto beans (strained)","113g Mexican four cheese","185g jasmine rice (dry)"],st:["All ingredients (minus rice & cheese) in crockpot. High 3 hours.","Cook rice with ~20 min left.","Shred chicken.","Portion rice into 6 containers, top with mix, sprinkle cheese."],nt:"Simple crockpot dump."},
+{n:"Mediterranean Chicken Bowl",c:"Lunch",sv:6,cal:373,p:49,cb:30,f:8,m:"Air Fryer + Stovetop",mp:true,no:true,ig:["900g chicken breast","245g nonfat greek yogurt (marinade)","15ml olive oil","15ml lemon juice","5g garlic","15g paprika","5g cumin","5g salt","3g pepper","5g honey","185g quinoa (dry)","300g bell peppers","300g zucchini","150g red onion","370g nonfat greek yogurt","75g cucumber","5g garlic","15ml lemon juice","5g dill"],st:["Dice chicken, marinate 30+ min. Air fry 400°F 16 min to 165°F.","Chop veggies, roast or air fry 400°F 20–25 min.","Rinse quinoa, boil 480ml water, simmer 15 min, rest 5.","Mix tzatziki.","Split into 6 containers."],nt:"Can air fry chicken 400°F 16 min."},
+{n:"Taco Lime Bowl",c:"Lunch",sv:4,cal:680,p:50,cb:60,f:18,m:"Stovetop",mp:true,no:true,ig:["900g 93/7 ground beef","15g chili powder","5g cumin","5g paprika","3g garlic powder","3g onion powder","3g salt","1g pepper","1g oregano","1 can black beans (425g)","185g jasmine rice (dry)","2 limes","15g cilantro","200g cherry tomatoes","75g red onion","300g whole kernel corn"],st:["Brown beef, add taco seasonings.","Cook rice: 185g dry + 370ml water. Boil, low 10 min.","Mix strained beans with meat at end.","Chop tomatoes & onion, mix with corn, half a lime, salt.","Add cilantro, salt, lime juice to rice.","Split into 4–5 containers with lime wedge."],nt:""},
+{n:"Grilled Chicken & Veggie Stir Fry",c:"Dinner",sv:1,cal:233,p:33,cb:17,f:5,m:"Stovetop",mp:false,no:true,ig:["115g chicken breast","150g mixed bell peppers","75g broccoli","60ml soy sauce","4ml sesame oil"],st:["Grill chicken until cooked.","Heat sesame oil, stir-fry peppers & broccoli ~5 min.","Add soy sauce and chicken, cook 2–3 min."],nt:"Low cal — pair with rice."},
+{n:"High Protein Loaded Chili Bowl",c:"Dinner",sv:6,cal:383,p:41,cb:30,f:11,m:"Stovetop",mp:true,no:true,ig:["900g 93/7 ground beef","340g nonfat greek yogurt","1 can tomato sauce (425g, no salt added)","150g onion","450g tomatoes","450g yellow potatoes","15g chili powder","15g salt","15g pepper","15g minced garlic"],st:["Bake diced potatoes 400°F ~35 min (or air fry).","Dice onion & tomatoes.","Sauté onions, add garlic, stir in tomatoes.","Brown beef, add seasonings.","Add tomato sauce, yogurt, potatoes. Simmer 20 min.","Portion into 6 containers."],nt:"Can air fry potatoes instead of oven."},
+{n:"Salmon w/ Lemon Garlic Asparagus",c:"Dinner",sv:1,cal:333,p:28,cb:8,f:21,m:"Stovetop",mp:false,no:true,ig:["115g salmon","150g asparagus","7ml olive oil","15ml lemon juice","5g garlic"],st:["Grill salmon 5–7 min per side.","Sauté asparagus with garlic and olive oil ~5–7 min.","Squeeze lemon over everything."],nt:""},
+{n:"Lemon Tahini Chicken Quinoa Bowl",c:"Dinner",sv:6,cal:348,p:29,cb:26,f:8,m:"Oven + Stovetop",mp:true,no:false,ig:["75g red onion","200g zucchini","340g cauliflower","340g brussels sprouts","60ml olive oil","60g tahini","60ml apple cider vinegar","30g dijon","15g honey","5g dried dill","680g chicken breast","185g quinoa (dry)"],st:["Chop veggies, roast 400°F 25–30 min (or air fry).","Mix dressing.","Toast quinoa med-high 2 min, cool 2 min.","Rinse, boil with 300ml water, low heat 10 min.","Portion into 6 with 115g chicken each."],nt:"Can sub air fryer for oven."},
+{n:"Chicken Fajita Bowl",c:"Dinner",sv:1,cal:262,p:27,cb:34,f:2,m:"Stovetop",mp:false,no:true,ig:["115g chicken breast","40g sliced bell peppers","40g onions","60g salsa","100g brown rice (cooked)"],st:["Grill chicken.","Sauté peppers and onions.","Serve over brown rice with salsa."],nt:"Very low fat."},
+{n:"High Protein Tacorritos",c:"Dinner",sv:8,cal:470,p:59,cb:52,f:12,m:"Stovetop",mp:true,no:true,ig:["450g 93/7 ground beef","450g bell peppers","300g corn","245g nonfat greek yogurt","1 packet taco seasoning (35g)","120ml Taco Bell hot sauce","225g fat-free cheddar","15g cilantro","1 lime","8 Xtreme Wellness wraps"],st:["Chop onions & peppers, sauté 5 min.","Add beef + taco seasoning, brown.","Add hot sauce, corn, cilantro, lime, yogurt, garlic.","Spread meat over 8 wraps. Wrap.","Toast on pan at high heat if desired."],nt:"Serving = 2 tacorritos."},
+{n:"Loaded Taco Bowls",c:"Dinner",sv:3,cal:498,p:52,cb:46,f:12,m:"Stovetop + Air Fryer",mp:true,no:true,ig:["450g 93/7 ground beef","15g pepper, garlic, onion powder","18g taco seasoning","75g onion","300g bell peppers","1 lime","450g russet potatoes","225g corn","1 can diced tomatoes (400g)","113g fat-free cheddar","75g shredded lettuce","50g nonfat greek yogurt"],st:["Chop potatoes, air fry 400°F 22 min (shake halfway).","Mix meat with seasonings.","Sauté onions & peppers, add meat. Brown ~7 min.","Add corn, tomatoes, lime juice. Cook 5–7 min.","Add cheese, cover to melt.","Plate: potatoes, then taco mix."],nt:"Air fry potatoes 400°F 22 min."},
+{n:"Parmesan Chicken Pasta",c:"Dinner",sv:6,cal:514,p:58,cb:52,f:11,m:"Stovetop",mp:true,no:true,ig:["900g chicken breast","22g paprika","8g each: salt, pepper, garlic, onion powder","450g protein pasta","200g nonfat greek yogurt","120g fat-free cottage cheese","25g grated parmesan","15g minced garlic","38g 1/3 fat cream cheese","5g salt","1g nutmeg","1g pepper","60ml water","15g chopped parsley"],st:["Season chicken. Pan cook 5–7 min each side (lid on, 165°F).","Boil pasta ~10 min.","Blend all sauce ingredients.","Chop chicken. Drain pasta.","Add chicken, sauce, parsley to pot. Mix.","Split into 6 containers."],nt:"Blended sauce."},
+{n:"Marry Me Chicken Pasta",c:"Dinner",sv:6,cal:436,p:34,cb:48,f:13,m:"Stovetop",mp:true,no:true,ig:["370g chicken breast","10g each: salt, pepper, garlic, onion powder","15g paprika","285g protein pasta","15g Italian seasoning","15ml olive oil","10g crushed red pepper","15g minced garlic","40g sundried tomatoes","120ml chicken broth","180ml half & half","25g fresh parmesan"],st:["Chop & season chicken.","Heat pan med-high with olive oil. Start pasta.","Cook chicken 3–4 min.","Add Italian seasoning, red pepper, sundried tomatoes, garlic. 3–4 min.","Add broth, half & half, parm. Thicken 4–5 min.","Add pasta, split into containers."],nt:""},
+{n:"Bang Bang Shrimp",c:"Dinner",sv:1,cal:210,p:26,cb:15,f:6,m:"Air Fryer",mp:false,no:true,ig:["10 raw shrimp (200g, peeled/deveined)","3g each: salt, pepper, onion, garlic powder, smoked paprika","15g crushed corn flakes","10g flour","1 large egg","30g light mayo","30g nonfat greek yogurt","15ml chili sauce","15ml sriracha","5ml rice vinegar"],st:["Season shrimp.","Dredge: flour → egg wash → crushed corn flakes.","Air fry 400°F 8–10 min (flip halfway).","Mix sauce ingredients.","Brush chili sauce on shrimp. Dip in bang bang sauce."],nt:"Air fry 400°F 8–10 min."},
+{n:"Chicken Alfredo (v2)",c:"Dinner",sv:8,cal:384,p:40,cb:41,f:7,m:"Crockpot + Stovetop",mp:true,no:true,ig:["900g chicken breast","5g each: salt, pepper, onion, garlic, smoked paprika, Italian","120ml chicken broth","450g 2% cottage cheese","120ml half & half","50g shredded parmesan","1g garlic powder","3g salt","450g fettuccine pasta"],st:["Crockpot: chicken + seasonings + broth. High 3 hours.","Boil pasta 10–12 min.","Blend all sauce ingredients.","Chop chicken. Add pasta & sauce to crockpot. Mix.","Portion into 8 containers."],nt:"Crockpot 3 hrs."},
+{n:"Spaghetti & Chicken Meatballs",c:"Dinner",sv:4,cal:420,p:54,cb:38,f:8,m:"Air Fryer + Stovetop",mp:true,no:true,ig:["450g chicken breast (minced)","5g each: salt, pepper, garlic, onion, Italian","15g smoked paprika","30g panko breadcrumbs","170g dry protein spaghetti","258g lemon ricotta pasta sauce"],st:["Mince chicken to ground consistency.","Boil water for pasta.","Mix chicken with seasonings + breadcrumbs. Form 16 balls (4/meal).","Air fry 375°F 16 min (flip halfway).","Cook pasta 10 min.","Plate: pasta, 65g sauce, 4 meatballs."],nt:"Air fry meatballs 375°F 16 min."},
+{n:"Creamy Garlic Beef Pasta",c:"Dinner",sv:5,cal:551,p:45,cb:49,f:18,m:"Stovetop",mp:true,no:true,ig:["450g 93/7 ground beef","5g each: paprika, Italian, pepper, salt","15g minced garlic","75g onion","16g flour","360ml fat-free milk","120ml half & half","113g part-skim mozzarella","50g fresh parmesan","285g shell pasta","10g fresh parsley"],st:["Heat pan med-high. Brown meat with seasonings & onion.","Mix in flour to coat meat.","Pour in milk & half & half. Stir until simmering.","Let sit 4 min. Cook pasta meanwhile.","Add mozzarella & parm, mix.","Dump pasta on top, add parsley. Split into 5."],nt:""},
+{n:"Smoked Lemon Pepper Chicken Pasta",c:"Dinner",sv:6,cal:383,p:35,cb:24,f:17,m:"Smoker + Stovetop",mp:true,no:false,ig:["900g chicken breast","225g protein pasta (dry)","10g fresh parmesan","14g butter","15g lemon pepper seasoning"],st:["Set smoker to 315°F.","Season chicken with lemon pepper.","Smoke: 8 min/side x 2 (32 min total).","Boil pasta 10 min.","Chop chicken, add to pasta with butter & parm.","Mix, split into 6 meals."],nt:"Requires smoker."},
+{n:"Creamy Baked Chicken Tacos",c:"Dinner",sv:3,cal:535,p:50,cb:40,f:18,m:"Stovetop + Oven",mp:true,no:false,ig:["450g chicken tenderloins","1 packet taco seasoning (35g)","22g smoked paprika","75g onion","300g bell peppers","15g jalapeño","1 lime","10g cilantro","15g minced garlic","113g 1/3 fat cream cheese","60ml water","6 Mission street tacos","98g Mexican-style cheese"],st:["Chop tenders & season. Chop veggies.","Cook chicken 2–3 min each side med-high.","Add veggies, lime, cilantro. 2 more min.","Add garlic, cream cheese, water. 3 more min.","Assemble tacos in baking pan (spray backs).","Top with cheese. Bake 400°F 15 min."],nt:"Requires oven @ 400°F."},
+{n:"Protein Brownies",c:"Dessert",sv:1,cal:411,p:32,cb:28,f:19,m:"Oven",mp:false,no:false,ig:["1 scoop chocolate brownie protein powder","28g almond flour","20g unsweetened cocoa powder","60g unsweetened applesauce","1g vanilla extract"],st:["Preheat oven 350°F.","Mix all ingredients smooth.","Pour into greased dish.","Bake 20–25 min. Cool before slicing."],nt:"Requires oven."},
+{n:"Greek Yogurt Chocolate Mousse",c:"Dessert",sv:1,cal:173,p:28,cb:13,f:1,m:"No Cook",mp:false,no:true,ig:["245g plain Greek yogurt","7g cocoa powder","5ml vanilla extract","4g stevia"],st:["Mix all ingredients smooth.","Chill 30 min or spread on rice cakes."],nt:"Excellent low-cal option."},
+{n:"PB Protein Cookies",c:"Dessert",sv:1,cal:327,p:44,cb:13,f:11,m:"Oven",mp:false,no:false,ig:["24g PB Fit","1 scoop protein powder","1 large egg","50g stevia"],st:["Preheat oven 350°F.","Mix all ingredients smooth.","Form small balls on baking sheet.","Bake 8–10 min until golden."],nt:"Requires oven."},
+{n:"High Protein Rootbeer Float",c:"Dessert",sv:1,cal:169,p:23,cb:14,f:4,m:"Ninja Creami",mp:false,no:true,ig:["1 scoop vanilla protein","240ml unsweetened almond milk","10g raw honey","3ml vanilla extract","360ml zero-calorie root beer"],st:["Add all (except root beer) to Ninja Creami tub (fill line).","Freeze at least 12 hours.","Run Creami cycle.","Scoop into frozen mug.","Pour zero-cal root beer over top."],nt:"Requires Ninja Creami."},
+{n:"Apple Pie A La Mode",c:"Dessert",sv:1,cal:138,p:5,cb:10,f:0,m:"Air Fryer",mp:false,no:true,ig:["1 honeycrisp apple (200g)","10g raw honey","50g nonfat greek yogurt","3g cinnamon"],st:["Core and halve apple.","Drizzle honey, sprinkle cinnamon.","Air fry 350°F 20 min.","Mix honey + greek yogurt.","Pour yogurt icing on top."],nt:"Air fry 350°F 20 min."},
+{n:"High Protein Fudge Cake",c:"Dessert",sv:1,cal:395,p:39,cb:36,f:12,m:"Oven",mp:false,no:false,ig:["100g sweet potatoes","80g fat-free cottage cheese","1 scoop chocolate protein powder","7g baking cocoa","1 packet stevia (1g)","1 large egg","28g sugar-free chocolate chips"],st:["Peel & boil sweet potatoes until soft.","Place all except chips in oven-safe container.","Sprinkle chips on top.","Bake 350°F 35 min. Cool 3–5 min."],nt:"Requires oven. Optional: drizzle PB Fit."},
+{n:"Caramelized Apple Yogurt Bowl",c:"Dessert",sv:1,cal:224,p:10,cb:33,f:9,m:"Stovetop",mp:false,no:true,ig:["100g gala apple","10g honey","3g cinnamon","80g greek yogurt","9g walnuts (3 crushed)","15g zero-sugar chocolate chips"],st:["Heat 5g honey & cinnamon on pan.","Chop apple, add to pan.","Caramelize ~5 min.","Put yogurt in bowl.","Top with apples, walnuts, chocolate chips, 5g honey."],nt:""},
+{n:"Dark Chocolate Blueberry Muffins",c:"Dessert",sv:6,cal:197,p:14,cb:22,f:7,m:"Oven",mp:false,no:false,ig:["240g bananas (2 medium)","2 large eggs","64g PB Fit powder","120ml water","5ml vanilla","115g blueberries","42g 60% dark chocolate"],st:["Mash bananas, add eggs, PB Fit, water, vanilla. Stir.","Pour into greased muffin pan.","Top with blueberries and dark chocolate.","Bake 350°F 25–30 min."],nt:"Requires oven."},
+{n:"Paleo Banana Bread",c:"Dessert",sv:10,cal:248,p:6,cb:20,f:16,m:"Oven",mp:false,no:false,ig:["480g overripe bananas (mashed)","4 large eggs","10ml vanilla extract","55g refined coconut oil (melted)","175g blanched almond flour","60g tapioca flour","5g baking soda","5g baking powder","5g cinnamon","1g fine sea salt"],st:["Preheat oven to 350°F. Line loaf pan with parchment.","Mash bananas, whisk in eggs, vanilla, & melted coconut oil.","Add almond flour, tapioca flour, baking soda, baking powder, cinnamon, salt — stir to combine.","Pour into pan. Bake 50–60 min until golden.","Cool, slice, serve with sugar-free syrup."],nt:"No added sugar — sweetened only by bananas. Low protein (6g)."},
+{n:"Protein Bar (Homemade)",c:"Snack",sv:2,cal:154,p:15,cb:10,f:6,m:"No Cook",mp:false,no:true,ig:["1 scoop protein powder","20g oats","16g almond butter"],st:["Mix all until dough forms.","Press into pan.","Freeze 30 min.","Slice into bars."],nt:"Per serving (makes 2)."},
+{n:"Cottage Cheese & Fruit",c:"Snack",sv:1,cal:115,p:12,cb:10,f:3,m:"No Cook",mp:false,no:true,ig:["113g low-fat cottage cheese","40g pineapple chunks"],st:["Combine and stir.","Add raw honey if desired."],nt:""},
+{n:"Hard-Boiled Eggs",c:"Snack",sv:1,cal:138,p:12,cb:0,f:10,m:"Stovetop",mp:false,no:true,ig:["2 large eggs"],st:["Boil eggs 8–10 min.","Peel and eat."],nt:""},
+{n:"Almonds & Apple",c:"Snack",sv:1,cal:305,p:6,cb:26,f:13,m:"No Cook",mp:false,no:true,ig:["28g almonds","180g apple"],st:["Slice apple.","Eat with almonds."],nt:"Higher fat snack."},
+{n:"Rice Cakes & PB Fit",c:"Snack",sv:1,cal:138,p:9,cb:21,f:2,m:"No Cook",mp:false,no:true,ig:["2 rice cakes (18g)","12g PB Fit"],st:["Spread PB Fit on rice cakes."],nt:""},
+{n:"Easy 30g Protein Taco Snack",c:"Snack",sv:1,cal:217,p:30,cb:16,f:6,m:"Stovetop",mp:false,no:true,ig:["1 flour tortilla","100g 96/4 ground beef","15g fat-free cheese","60g cherry tomatoes","30g shredded lettuce","15ml 0-cal Taco Bell sauce"],st:["Roll meat flat onto tortilla.","Pan press meat-side down until browned.","Flip, add toppings.","Brown tortilla, fold like a taco."],nt:""},
+{n:"Chocolate PB Protein Shake",c:"Shake",sv:1,cal:283,p:32,cb:23,f:7,m:"Blender",mp:false,no:true,ig:["1 scoop chocolate protein powder","12g PB Fit","240ml unsweetened almond milk","60g banana","5 ice cubes"],st:["Add all to blender. Blend smooth."],nt:""},
+{n:"Vanilla Berry Protein Shake",c:"Shake",sv:1,cal:240,p:26,cb:16,f:8,m:"Blender",mp:false,no:true,ig:["1 scoop vanilla protein powder","75g mixed berries","240ml unsweetened almond milk","10g chia seeds","5 ice cubes"],st:["Combine all. Blend smooth."],nt:""},
+{n:"Green Power Protein Shake",c:"Shake",sv:1,cal:296,p:25,cb:13,f:16,m:"Blender",mp:false,no:true,ig:["1 scoop vanilla protein powder","15g spinach","70g avocado","75g cucumber","240ml unsweetened almond milk","5 ice cubes"],st:["Add all to blender. Blend smooth."],nt:"Higher fat from avocado."},
+{n:"Cinnamon Roll Protein Shake",c:"Shake",sv:1,cal:166,p:23,cb:5,f:6,m:"Blender",mp:false,no:true,ig:["1 scoop cinnamon cereal protein powder","120ml unsweetened almond milk","1g ground cinnamon","3ml vanilla extract","5 ice cubes"],st:["Combine all. Blend smooth."],nt:"Very low cal."},
+{n:"Tropical Protein Shake",c:"Shake",sv:1,cal:279,p:25,cb:38,f:3,m:"Blender",mp:false,no:true,ig:["1 scoop fruity cereal protein powder","75g pineapple chunks","75g mango chunks","240ml unsweetened coconut water","5 ice cubes"],st:["Add all to blender. Blend smooth."],nt:"Higher carb."},
+{n:"High Protein Ranch",c:"Dip/Sauce",sv:1,cal:120,p:14,cb:12,f:1,m:"No Cook",mp:false,no:true,ig:["120g plain Greek yogurt","7g ranch powder","3g dill weed"],st:["Mix all smooth.","Serve as dip or topping."],nt:""},
+{n:"Low-Cal BBQ Sauce",c:"Dip/Sauce",sv:1,cal:149,p:6,cb:29,f:1,m:"Stovetop",mp:false,no:true,ig:["130g tomato paste","30ml apple cider vinegar","15ml Worcestershire sauce","15g Dijon mustard","3g smoked paprika"],st:["Combine all in saucepan.","Simmer low 5–10 min, stirring occasionally."],nt:""},
+{n:"Avocado Lime Dressing",c:"Dip/Sauce",sv:1,cal:202,p:2,cb:8,f:18,m:"Blender",mp:false,no:true,ig:["70g avocado","15ml lime juice","7ml olive oil","5g garlic, minced","1g salt","1g black pepper"],st:["Blend all until smooth."],nt:"Higher fat."},
+{n:"Spicy Sriracha Mayo",c:"Dip/Sauce",sv:1,cal:56,p:7,cb:7,f:0,m:"No Cook",mp:false,no:true,ig:["60g nonfat greek yogurt","15ml sriracha","5g Dijon mustard","1g garlic powder"],st:["Mix all smooth.","Use as dip or topping."],nt:"Very low cal."},
+{n:"Sugar-Free Honey Mustard",c:"Dip/Sauce",sv:1,cal:25,p:1,cb:3,f:1,m:"No Cook",mp:false,no:true,ig:["30g Dijon mustard","15ml apple cider vinegar","15g stevia honey"],st:["Combine all. Stir smooth."],nt:"Minimal macros."},
+{n:"High Protein Street Corn Dip",c:"Dip/Sauce",sv:1,cal:497,p:70,cb:24,f:15,m:"No Cook",mp:false,no:true,ig:["130g whole kernel corn","255g chicken breast","50g nonfat greek yogurt","15g light mayo","30ml lime juice","10g Tajin","28g cotija cheese"],st:["Add all to tupperware. Cap and shake.","Serve with chips (Siete recommended) or veggies."],nt:"Great party dip — 70g protein."},
 ];
+</script>
 
+<!-- Main app -->
+<script type="text/babel">
 
-// Favorites
-let favs = JSON.parse(localStorage.getItem('snackbox-favs') || '[]');
-let showFavsOnly = false;
+const { useState, useEffect } = React;
 
-function toggleFav(name, e) {
-  e.stopPropagation();
-  const idx = favs.indexOf(name);
-  if (idx > -1) favs.splice(idx, 1);
-  else favs.push(name);
-  localStorage.setItem('snackbox-favs', JSON.stringify(favs));
-  render();
+const THEMES = {
+  ember: { name:'Ember', bg:'#111111', surface:'#1C1C1E', surface2:'#252528', surface3:'#2F2F34', border:'rgba(255,255,255,0.08)', borderLight:'rgba(255,255,255,0.15)', text:'#F5F5F7', textSec:'#98989F', textDim:'#52525A', accent:'#FF6B35', accentSoft:'rgba(255,107,53,0.12)', accentMid:'rgba(255,107,53,0.25)' },
+  forge: { name:'Forge', bg:'#0C1510', surface:'#141F18', surface2:'#1C2A20', surface3:'#243328', border:'rgba(255,255,255,0.07)', borderLight:'rgba(255,255,255,0.13)', text:'#EFF5F0', textSec:'#7EA888', textDim:'#4D6B55', accent:'#30D158', accentSoft:'rgba(48,209,88,0.12)', accentMid:'rgba(48,209,88,0.25)' },
+  void:  { name:'Void',  bg:'#0F0C1C', surface:'#181428', surface2:'#201C32', surface3:'#28233E', border:'rgba(255,255,255,0.08)', borderLight:'rgba(255,255,255,0.15)', text:'#F2EFFF', textSec:'#9A93C0', textDim:'#605888', accent:'#BF5AF2', accentSoft:'rgba(191,90,242,0.12)', accentMid:'rgba(191,90,242,0.25)' },
+};
+
+const CAT_COLOR = { Breakfast:'#FFD60A', Lunch:'#32D74B', Dinner:'#FF6B35', Dessert:'#FF6482', Snack:'#64D2FF', Shake:'#BF5AF2', 'Dip/Sauce':'#66D4CF' };
+const CATS  = ['All','Favorites','Breakfast','Lunch','Dinner','Dessert','Snack','Shake','Dip/Sauce'];
+const SORTS = [{ k:'default', l:'Sort' },{ k:'p-desc', l:'Protein ↓' },{ k:'p-asc', l:'Protein ↑' },{ k:'c-asc', l:'Cal ↑' },{ k:'c-desc', l:'Cal ↓' }];
+
+// ── ATOMS ────────────────────────────────────────────────────
+function CatBadge({ cat }) {
+  const c = CAT_COLOR[cat] || '#999';
+  return <span style={{ fontSize:10, fontWeight:700, textTransform:'uppercase', letterSpacing:'0.08em', padding:'4px 10px', borderRadius:100, background:`${c}18`, color:c, whiteSpace:'nowrap', flexShrink:0 }}>{cat}</span>;
 }
 
-// Scroll to top button
-window.addEventListener('scroll', () => {
-  document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 600);
-});
-
-// Accent class map
-const accentMap = {"Breakfast":"accent-breakfast","Lunch":"accent-lunch","Dinner":"accent-dinner","Dessert":"accent-dessert","Snack":"accent-snack","Shake":"accent-shake","Dip/Sauce":"accent-dip"};
-
-const cats=["All","Favorites","Breakfast","Lunch","Dinner","Dessert","Snack","Shake","Dip/Sauce"];
-const badgeMap={"Breakfast":"badge-breakfast","Lunch":"badge-lunch","Dinner":"badge-dinner","Dessert":"badge-dessert","Snack":"badge-snack","Shake":"badge-shake","Dip/Sauce":"badge-dip"};
-
-let activeCat="All";
-let sortIdx=0;
-const sorts=[{k:"default",l:"Sort"},{k:"p-desc",l:"Protein ↓"},{k:"p-asc",l:"Protein ↑"},{k:"c-asc",l:"Cal ↑"},{k:"c-desc",l:"Cal ↓"}];
-let toggles={tPrep:false,tOven:false};
-
-// Build chips
-const chipBar=document.getElementById('chipBar');
-cats.forEach(cat=>{
-  const el=document.createElement('span');
-  el.className='chip'+(cat==='All'?' active':'');
-  el.textContent=cat==='Favorites'?'♥ Favs':cat;
-  el.onclick=()=>{
-    activeCat=cat;
-    showFavsOnly=(cat==='Favorites');
-    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-    el.classList.add('active');
-    render();
-  };
-  chipBar.appendChild(el);
-});
-
-function toggleFilter(id){
-  toggles[id]=!toggles[id];
-  document.getElementById(id).classList.toggle('active',toggles[id]);
-  render();
-}
-function cycleSort(){
-  sortIdx=(sortIdx+1)%sorts.length;
-  const pill=document.getElementById('sortPill');
-  document.getElementById('sortLabel').textContent=sorts[sortIdx].l;
-  pill.classList.toggle('active',sorts[sortIdx].k!=='default');
-  render();
-}
-function clearSearch(){
-  document.getElementById('searchInput').value='';
-  document.getElementById('clearBtn').classList.remove('show');
-  render();
+function MacroBar({ r, T }) {
+  return (
+    <div style={{ display:'flex', gap:12 }}>
+      {[{l:'Protein',v:`${r.p}g`,c:'#32D74B'},{l:'Carbs',v:`${r.cb}g`,c:'#64D2FF'},{l:'Fat',v:`${r.f}g`,c:'#FFD60A'}].map(({l,v,c}) => (
+        <div key={l} style={{ flex:1, textAlign:'center' }}>
+          <div style={{ fontFamily:"'Space Mono',monospace", fontSize:14, fontWeight:700, color:c }}>{v}</div>
+          <div style={{ fontSize:10, color:T.textDim, marginTop:2 }}>{l}</div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
-function getList(){
-  const q=document.getElementById('searchInput').value.toLowerCase().trim();
-  let list=R.filter(r=>{
-    if(showFavsOnly&&!favs.includes(r.n))return false;
-    if(!showFavsOnly&&activeCat!=="All"&&activeCat!=="Favorites"&&r.c!==activeCat)return false;
-    if(toggles.tPrep&&!r.mp)return false;
-    if(toggles.tOven&&!r.no)return false;
-    if(q){
-      const blob=[r.n,r.c,r.m,...r.ig,r.nt].join(' ').toLowerCase();
-      return blob.includes(q);
-    }
-    return true;
-  });
-  const sk=sorts[sortIdx].k;
-  if(sk==='p-desc')list.sort((a,b)=>b.p-a.p);
-  else if(sk==='p-asc')list.sort((a,b)=>a.p-b.p);
-  else if(sk==='c-asc')list.sort((a,b)=>a.cal-b.cal);
-  else if(sk==='c-desc')list.sort((a,b)=>b.cal-a.cal);
-  return list;
+// ── BLOCK CARD ───────────────────────────────────────────────
+function BlockCard({ r, T, isFav, onFav, inGrocery, onGrocery, onOpen }) {
+  const cc = CAT_COLOR[r.c];
+  return (
+    <div onClick={() => onOpen(r)} style={{ background:T.surface, border:`1px solid ${T.border}`, borderRadius:18, padding:'15px 16px', cursor:'pointer', transition:'transform 0.1s', WebkitTapHighlightColor:'transparent' }}>
+      <div style={{ display:'flex', alignItems:'flex-start', gap:10, marginBottom:8 }}>
+        <div style={{ flex:1, fontFamily:"'Outfit',sans-serif", fontSize:16, fontWeight:700, color:T.text, lineHeight:1.25 }}>{r.n}</div>
+        <div style={{ textAlign:'right', flexShrink:0 }}>
+          <div style={{ fontFamily:"'Space Mono',monospace", fontSize:22, fontWeight:700, color:cc, lineHeight:1 }}>{r.cal}</div>
+          <div style={{ fontSize:9, color:cc, opacity:0.6, fontWeight:700, textAlign:'center' }}>kcal</div>
+        </div>
+      </div>
+      <div style={{ display:'flex', alignItems:'center', gap:6, marginBottom:11, flexWrap:'wrap' }}>
+        <CatBadge cat={r.c} />
+        {r.mp && <span style={{ fontSize:10, padding:'4px 10px', borderRadius:100, background:T.accentSoft, color:T.accent, fontWeight:700 }}>Meal Prep</span>}
+        {r.no && <span style={{ fontSize:10, padding:'4px 10px', borderRadius:100, background:T.surface2, color:T.textSec, fontWeight:600 }}>No Oven</span>}
+        <span style={{ fontSize:10, color:T.textDim, marginLeft:2 }}>{r.m}</span>
+        <div style={{ flex:1 }} />
+        <button
+          onClick={e => { e.stopPropagation(); onGrocery(r.n); }}
+          title={inGrocery ? 'Remove from grocery list' : 'Add to grocery list'}
+          style={{ background: inGrocery ? 'rgba(100,210,255,0.15)' : T.surface2, border:'none', borderRadius:50, width:30, height:30, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', transition:'all 0.15s', flexShrink:0 }}>
+          {inGrocery
+            ? <svg width="11" height="11" viewBox="0 0 10 10"><path d="M1 1l8 8M9 1l-8 8" stroke="#64D2FF" strokeWidth="2" strokeLinecap="round"/></svg>
+            : <svg width="11" height="11" viewBox="0 0 10 10"><path d="M5 1v8M1 5h8" stroke={T.textDim} strokeWidth="2" strokeLinecap="round"/></svg>
+          }
+        </button>
+        <button
+          onClick={e => { e.stopPropagation(); onFav(r.n); }}
+          style={{ background: isFav ? 'rgba(255,100,130,0.15)' : T.surface2, border:'none', borderRadius:50, width:30, height:30, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', transition:'all 0.15s', flexShrink:0 }}>
+          <svg width="14" height="13" viewBox="0 0 24 22" fill={isFav?'#FF6482':'none'} stroke={isFav?'#FF6482':T.textDim} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+      </div>
+      <div style={{ height:1, background:T.border, marginBottom:10 }} />
+      <MacroBar r={r} T={T} />
+    </div>
+  );
 }
 
-function render(){
-  const list=getList();
-  const el=document.getElementById('recipeList');
-  document.getElementById('resultTag').textContent=list.length+' recipe'+(list.length!==1?'s':'');
-
-  if(!list.length){
-    el.innerHTML=showFavsOnly?'<div class="empty-state"><div class="emoji">♡</div><h3>No favorites yet</h3><p>Tap the heart on any recipe to save it.</p></div>':'<div class="empty-state"><div class="emoji">🔍</div><h3>No recipes found</h3><p>Try different filters or search terms.</p></div>';
-    return;
+// ── SERVING ADJUSTER ─────────────────────────────────────────
+function ServingAdjuster({ r, T }) {
+  const [sv, setSv] = useState(r.sv);
+  const ratio = sv / r.sv;
+  function scaleIng(str) {
+    const m1 = str.match(/^([\d.]+)(g|ml|kg|l)\s+(.+)$/);
+    if (m1) { const s=Math.round(parseFloat(m1[1])*ratio*10)/10; return `${s%1===0?s.toFixed(0):s.toFixed(1)}${m1[2]} ${m1[3]}`; }
+    const m2 = str.match(/^([\d.]+)\s+(.+)$/);
+    if (m2) { const s=Math.round(parseFloat(m2[1])*ratio*10)/10; return `${s%1===0?s.toFixed(0):s.toFixed(1)} ${m2[2]}`; }
+    return str;
   }
-
-  el.innerHTML=list.map((r,i)=>{
-    const bc=badgeMap[r.c]||'';
-    const pp=r.cal>0?Math.round((r.p*4/r.cal)*100):0;
-    let tags=[];
-    if(r.mp)tags.push({l:'Meal Prep',g:true});
-    if(r.no)tags.push({l:'No Oven',g:true});
-    tags.push({l:r.m,g:false});
-    if(r.sv>1)tags.push({l:r.sv+' servings',g:false});
-
-    const ac=accentMap[r.c]||'';
-    const isFav=favs.includes(r.n);
-    const safeName=r.n.replace(/'/g,"\\'");
-    return `<div class="card ${ac}" style="animation-delay:${Math.min(i*0.03,0.3)}s" onclick="this.classList.toggle('open')">
-      <div class="card-main">
-        <div class="card-row1">
-          <div class="card-name">${r.n}</div>
-          <span class="card-badge ${bc}">${r.c}</span>
-          <button class="fav-btn ${isFav?'faved':''}" onclick="toggleFav('${safeName}',event)">${isFav?'♥':'♡'}</button>
-        </div>
-        <div class="macro-bar">
-          <span class="macro-tag m-cal">${r.cal} cal</span>
-          <span class="macro-tag m-pro">${r.p}g P · ${pp}%</span>
-          <span class="macro-tag m-carb">${r.cb}g C</span>
-          <span class="macro-tag m-fat">${r.f}g F</span>
-        </div>
-        <div class="card-meta">
-          ${tags.map(t=>`<span class="meta-tag${t.g?' green':''}">${t.l}</span>`).join('')}
-        </div>
-        <div class="card-expand-hint">tap for recipe ▾</div>
+  return (
+    <div>
+      <div style={{ margin:'14px 20px 0', background:T.surface2, borderRadius:14, padding:'12px 16px', display:'flex', alignItems:'center', gap:12 }}>
+        <span style={{ fontSize:13, fontWeight:600, color:T.textSec, flex:1 }}>Servings</span>
+        <button onClick={()=>setSv(s=>Math.max(1,s-1))} style={{ width:32, height:32, borderRadius:50, border:`1px solid ${T.borderLight}`, background:T.surface3, color:T.text, fontSize:18, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}>−</button>
+        <span style={{ fontFamily:"'Space Mono',monospace", fontSize:18, fontWeight:700, color:T.accent, minWidth:28, textAlign:'center' }}>{sv}</span>
+        <button onClick={()=>setSv(s=>s+1)} style={{ width:32, height:32, borderRadius:50, border:`1px solid ${T.borderLight}`, background:T.surface3, color:T.text, fontSize:18, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}>+</button>
       </div>
-      <div class="card-detail">
-        <div class="detail-body">
-          <div class="detail-divider"></div>
-          <div class="detail-block">
-            <div class="detail-heading">Ingredients</div>
-            <ul class="ing-list">${r.ig.map(x=>`<li>${x}</li>`).join('')}</ul>
-          </div>
-          <div class="detail-block">
-            <div class="detail-heading">Instructions</div>
-            <ol class="step-list">${r.st.map(x=>`<li>${x}</li>`).join('')}</ol>
-          </div>
-          ${r.nt?`<div class="detail-note">💡 ${r.nt}</div>`:''}
+      {ratio !== 1 && (
+        <div style={{ padding:'12px 20px 0' }}>
+          {r.ig.map((ing,i) => <div key={i} style={{ fontSize:13, color:T.textSec, padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>{scaleIng(ing)}</div>)}
         </div>
-      </div>
-    </div>`;
-  }).join('');
+      )}
+    </div>
+  );
 }
 
-// Search input handling
-const si=document.getElementById('searchInput');
-const cb=document.getElementById('clearBtn');
-si.addEventListener('input',()=>{
-  cb.classList.toggle('show',si.value.length>0);
-  render();
-});
+// ── RECIPE MODAL ─────────────────────────────────────────────
+function RecipeModal({ r, T, isFav, onFav, inGrocery, onGrocery, onClose }) {
+  if (!r) return null;
+  const cc = CAT_COLOR[r.c];
+  return (
+    <div style={{ position:'fixed', inset:0, zIndex:200, background:'rgba(0,0,0,0.65)', display:'flex', alignItems:'flex-end' }} onClick={onClose}>
+      <div onClick={e=>e.stopPropagation()} style={{ background:T.surface, borderRadius:'24px 24px 0 0', width:'100%', maxWidth:600, margin:'0 auto', maxHeight:'92vh', display:'flex', flexDirection:'column' }}>
+        <div style={{ padding:'12px 0 0', textAlign:'center', flexShrink:0 }}>
+          <div style={{ width:40, height:5, borderRadius:3, background:T.border, display:'inline-block' }} />
+        </div>
+        <div style={{ overflowY:'auto', paddingBottom:`calc(40px + var(--sab))` }}>
+          <div style={{ padding:'16px 20px 18px', borderBottom:`1px solid ${T.border}` }}>
+            <div style={{ display:'flex', alignItems:'flex-start', gap:12, marginBottom:12 }}>
+              <div style={{ flex:1, fontFamily:"'Outfit',sans-serif", fontSize:22, fontWeight:800, color:T.text, lineHeight:1.2 }}>{r.n}</div>
+              <div style={{ display:'flex', gap:8, flexShrink:0 }}>
+                <button onClick={()=>onGrocery(r.n)} title={inGrocery?'Remove from grocery':'Add to grocery'} style={{ background:inGrocery?'rgba(100,210,255,0.15)':T.surface2, border:'none', borderRadius:50, width:38, height:38, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', transition:'all 0.15s' }}>
+                  {inGrocery
+                    ? <svg width="13" height="13" viewBox="0 0 10 10"><path d="M1 1l8 8M9 1l-8 8" stroke="#64D2FF" strokeWidth="2" strokeLinecap="round"/></svg>
+                    : <svg width="13" height="13" viewBox="0 0 10 10"><path d="M5 1v8M1 5h8" stroke={T.textSec} strokeWidth="2" strokeLinecap="round"/></svg>
+                  }
+                </button>
+                <button onClick={()=>onFav(r.n)} style={{ background:isFav?'rgba(255,100,130,0.15)':T.surface2, border:'none', borderRadius:50, width:38, height:38, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', flexShrink:0 }}>
+                  <svg width="18" height="17" viewBox="0 0 24 22" fill={isFav?'#FF6482':'none'} stroke={isFav?'#FF6482':T.textDim} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div style={{ display:'flex', gap:7, flexWrap:'wrap', marginBottom:14 }}>
+              <CatBadge cat={r.c} />
+              {r.mp && <span style={{ fontSize:10, padding:'4px 10px', borderRadius:100, background:T.accentSoft, color:T.accent, fontWeight:700 }}>Meal Prep</span>}
+              {inGrocery && <span style={{ fontSize:10, padding:'4px 10px', borderRadius:100, background:'rgba(100,210,255,0.12)', color:'#64D2FF', fontWeight:700 }}>On Grocery List</span>}
+            </div>
+            <div style={{ display:'flex', background:T.surface2, borderRadius:14, overflow:'hidden', marginBottom:12 }}>
+              {[{l:'Calories',v:r.cal,c:cc},{l:'Protein',v:`${r.p}g`,c:'#32D74B'},{l:'Carbs',v:`${r.cb}g`,c:'#64D2FF'},{l:'Fat',v:`${r.f}g`,c:'#FFD60A'}].map(({l,v,c},i,arr)=>(
+                <div key={l} style={{ flex:1, textAlign:'center', padding:'12px 0', borderRight:i<arr.length-1?`1px solid ${T.border}`:'none' }}>
+                  <div style={{ fontFamily:"'Space Mono',monospace", fontSize:15, fontWeight:700, color:c }}>{v}</div>
+                  <div style={{ fontSize:10, color:T.textDim, marginTop:3 }}>{l}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ fontSize:12, color:T.textSec }}>{r.m} · {r.sv} serving{r.sv>1?'s':''}</div>
+          </div>
+          <ServingAdjuster r={r} T={T} />
+          <div style={{ padding:'18px 20px 0' }}>
+            <div style={{ fontSize:11, fontWeight:800, textTransform:'uppercase', letterSpacing:'0.1em', color:cc, marginBottom:12 }}>Ingredients</div>
+            {r.ig.map((ing,i)=>(
+              <div key={i} style={{ display:'flex', alignItems:'flex-start', gap:12, padding:'9px 0', borderBottom:`1px solid ${T.border}` }}>
+                <div style={{ width:7, height:7, borderRadius:2, background:cc, opacity:0.5, marginTop:6, flexShrink:0 }} />
+                <span style={{ fontSize:14, color:T.text, lineHeight:1.4 }}>{ing}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ padding:'18px 20px 0' }}>
+            <div style={{ fontSize:11, fontWeight:800, textTransform:'uppercase', letterSpacing:'0.1em', color:cc, marginBottom:12 }}>Steps</div>
+            {r.st.map((step,i)=>(
+              <div key={i} style={{ display:'flex', gap:14, padding:'9px 0', borderBottom:`1px solid ${T.border}` }}>
+                <div style={{ width:26, height:26, borderRadius:8, background:`${cc}18`, color:cc, fontFamily:"'Space Mono',monospace", fontSize:12, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, marginTop:2 }}>{i+1}</div>
+                <span style={{ fontSize:14, color:T.text, lineHeight:1.5, flex:1, paddingTop:3 }}>{step}</span>
+              </div>
+            ))}
+          </div>
+          {r.nt && <div style={{ margin:'18px 20px 0', padding:'12px 16px', background:T.surface2, borderRadius:12, borderLeft:`3px solid ${cc}` }}><span style={{ fontSize:13, color:T.textSec, lineHeight:1.5 }}>{r.nt}</span></div>}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-// Stats
+// ── RECIPES VIEW ─────────────────────────────────────────────
+function RecipesView({ T, favs, toggleFav, groceryList, toggleGrocery }) {
+  const [search, setSearch]       = useState('');
+  const [activeCat, setActiveCat] = useState('All');
+  const [sortIdx, setSortIdx]     = useState(0);
+  const [showMP, setShowMP]       = useState(false);
+  const [showNO, setShowNO]       = useState(false);
+  const [selected, setSelected]   = useState(null);
 
+  const all = window.RECIPES || [];
+  const recipes = all.filter(r => {
+    if (activeCat==='Favorites' && !favs.includes(r.n)) return false;
+    if (activeCat!=='All' && activeCat!=='Favorites' && r.c!==activeCat) return false;
+    if (showMP && !r.mp) return false;
+    if (showNO && !r.no) return false;
+    if (search) return [r.n,r.c,r.m,...r.ig,r.nt].join(' ').toLowerCase().includes(search.toLowerCase());
+    return true;
+  }).sort((a,b)=>{
+    const sk=SORTS[sortIdx].k;
+    if(sk==='p-desc') return b.p-a.p; if(sk==='p-asc') return a.p-b.p;
+    if(sk==='c-asc')  return a.cal-b.cal; if(sk==='c-desc') return b.cal-a.cal;
+    return 0;
+  });
 
-render();
+  return (
+    <div style={{ display:'flex', flexDirection:'column', height:'100%' }}>
+      <div style={{ padding:'0 16px 12px', background:`${T.bg}E8`, backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)', borderBottom:`1px solid ${T.border}`, flexShrink:0 }}>
+        <div style={{ position:'relative', marginBottom:10 }}>
+          <svg style={{ position:'absolute', left:13, top:'50%', transform:'translateY(-50%)', color:T.textDim, pointerEvents:'none' }} width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search recipes or ingredients…" style={{ width:'100%', padding:'12px 14px 12px 38px', background:T.surface, border:`1px solid ${search?T.accent:T.border}`, borderRadius:14, color:T.text, fontFamily:"'Outfit',sans-serif", fontSize:15, fontWeight:500, outline:'none', boxSizing:'border-box', transition:'border-color 0.15s' }} />
+          {search && <button onClick={()=>setSearch('')} style={{ position:'absolute', right:10, top:'50%', transform:'translateY(-50%)', background:'none', border:'none', color:T.textDim, cursor:'pointer', fontSize:20 }}>×</button>}
+        </div>
+        <div style={{ display:'flex', gap:8, overflowX:'auto', scrollbarWidth:'none', paddingBottom:2, marginBottom:10 }}>
+          {CATS.map(cat=>(
+            <span key={cat} onClick={()=>setActiveCat(cat)} style={{ padding:'8px 16px', borderRadius:100, background:activeCat===cat?T.accent:T.surface, border:`1px solid ${activeCat===cat?T.accent:T.border}`, color:activeCat===cat?'#fff':T.textSec, fontSize:12, fontWeight:600, cursor:'pointer', whiteSpace:'nowrap', flexShrink:0, transition:'all 0.15s' }}>
+              {cat==='Favorites'?'♥ Favs':cat}
+            </span>
+          ))}
+        </div>
+        <div style={{ display:'flex', gap:7, alignItems:'center' }}>
+          {[{id:'mp',label:'Meal Prep',active:showMP,toggle:()=>setShowMP(s=>!s)},{id:'ov',label:'No Oven',active:showNO,toggle:()=>setShowNO(s=>!s)}].map(({id,label,active,toggle})=>(
+            <span key={id} onClick={toggle} style={{ display:'flex', alignItems:'center', gap:6, padding:'6px 14px', borderRadius:100, background:active?T.accentSoft:T.surface, border:`1px solid ${active?T.accent:T.border}`, color:active?T.accent:T.textSec, fontSize:12, fontWeight:600, cursor:'pointer', transition:'all 0.15s' }}>
+              <div style={{ width:8, height:8, borderRadius:50, background:active?T.accent:T.textDim }} />{label}
+            </span>
+          ))}
+          <span onClick={()=>setSortIdx(i=>(i+1)%SORTS.length)} style={{ marginLeft:'auto', padding:'6px 14px', borderRadius:100, background:sortIdx>0?T.accentSoft:T.surface, border:`1px solid ${sortIdx>0?T.accent:T.border}`, color:sortIdx>0?T.accent:T.textSec, fontSize:12, fontWeight:600, cursor:'pointer' }}>
+            {SORTS[sortIdx].l} ↕
+          </span>
+        </div>
+        <div style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:T.textDim, textAlign:'center', marginTop:8 }}>{recipes.length} recipe{recipes.length!==1?'s':''}</div>
+      </div>
+      <div style={{ flex:1, overflowY:'auto', padding:'14px 16px 20px', display:'flex', flexDirection:'column', gap:10 }}>
+        {recipes.length===0 ? (
+          <div style={{ textAlign:'center', padding:'60px 0' }}>
+            <div style={{ fontSize:40, marginBottom:14 }}>{activeCat==='Favorites'?'💔':'🔍'}</div>
+            <div style={{ fontFamily:"'Outfit',sans-serif", fontSize:16, fontWeight:700, color:T.textSec, marginBottom:6 }}>{activeCat==='Favorites'?'No favorites yet':'No recipes found'}</div>
+            <div style={{ fontSize:13, color:T.textDim }}>{activeCat==='Favorites'?'Tap ♥ on any recipe.':'Try a different search.'}</div>
+          </div>
+        ) : recipes.map(r=>(
+          <BlockCard key={r.n} r={r} T={T}
+            isFav={favs.includes(r.n)} onFav={toggleFav}
+            inGrocery={groceryList.includes(r.n)} onGrocery={toggleGrocery}
+            onOpen={setSelected} />
+        ))}
+      </div>
+      {selected && <RecipeModal r={selected} T={T} isFav={favs.includes(selected.n)} onFav={toggleFav} inGrocery={groceryList.includes(selected.n)} onGrocery={toggleGrocery} onClose={()=>setSelected(null)} />}
+    </div>
+  );
+}
+
+// ── GROCERY VIEW ─────────────────────────────────────────────
+function GroceryView({ T, favs, groceryList, toggleGrocery }) {
+  const [checked, setChecked]       = useState({});
+  const [showPicker, setShowPicker] = useState(false);
+  const [pickerSearch, setPSearch]  = useState('');
+
+  const all = window.RECIPES || [];
+  const favRecipes = all.filter(r => favs.includes(r.n));
+  const activeRecipes = all.filter(r => groceryList.includes(r.n));
+  const totalItems = activeRecipes.reduce((s,r)=>s+r.ig.length, 0);
+  const checkedCount = Object.values(checked).filter(Boolean).length;
+  const pickerFiltered = pickerSearch ? all.filter(r=>r.n.toLowerCase().includes(pickerSearch.toLowerCase())) : all;
+
+  const toggleCheck = key => setChecked(prev=>({...prev,[key]:!prev[key]}));
+
+  return (
+    <div style={{ display:'flex', flexDirection:'column', height:'100%', position:'relative' }}>
+      {activeRecipes.length > 0 && (
+        <div style={{ padding:'12px 18px', background:T.surface2, borderBottom:`1px solid ${T.border}`, flexShrink:0, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+          <div>
+            <div style={{ fontFamily:"'Outfit',sans-serif", fontSize:14, fontWeight:700, color:T.text }}>{checkedCount}/{totalItems} items</div>
+            <div style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:T.textSec }}>{activeRecipes.length} recipe{activeRecipes.length!==1?'s':''}</div>
+          </div>
+          <div style={{ display:'flex', gap:14 }}>
+            <span onClick={()=>setChecked({})} style={{ fontSize:12, color:T.textSec, cursor:'pointer', fontWeight:600 }}>Reset</span>
+            <span onClick={()=>{ const a={}; activeRecipes.forEach(r=>r.ig.forEach((_,i)=>{ a[`${r.n}-${i}`]=true; })); setChecked(a); }} style={{ fontSize:12, color:T.accent, cursor:'pointer', fontWeight:600 }}>Check All</span>
+          </div>
+        </div>
+      )}
+
+      <div style={{ flex:1, overflowY:'auto', paddingBottom:24 }}>
+        <div style={{ padding:'16px 18px 10px' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:7, marginBottom:12 }}>
+            <svg width="12" height="11" viewBox="0 0 24 22" fill="#FF6482"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span style={{ fontSize:11, fontWeight:800, textTransform:'uppercase', letterSpacing:'0.1em', color:'#FF6482' }}>Favorites</span>
+          </div>
+          {favRecipes.length===0
+            ? <div style={{ fontSize:13, color:T.textDim, padding:'4px 0 8px' }}>No favorites yet — heart a recipe first.</div>
+            : <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+                {favRecipes.map(r=>{
+                  const active=groceryList.includes(r.n);
+                  const cc=CAT_COLOR[r.c];
+                  return (
+                    <div key={r.n} onClick={()=>toggleGrocery(r.n)} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px', borderRadius:14, background:active?`${cc}14`:T.surface, border:`1.5px solid ${active?cc:T.border}`, cursor:'pointer', transition:'all 0.15s' }}>
+                      <div style={{ width:22, height:22, borderRadius:7, border:`1.5px solid ${active?cc:T.border}`, background:active?cc:'transparent', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all 0.15s' }}>
+                        {active && <svg width="12" height="10" viewBox="0 0 11 9"><path d="M1.5 4.5l3 3 5-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>}
+                      </div>
+                      <div style={{ flex:1, minWidth:0 }}>
+                        <div style={{ fontFamily:"'Outfit',sans-serif", fontSize:14, fontWeight:700, color:T.text }}>{r.n}</div>
+                        <div style={{ fontSize:11, color:T.textDim, marginTop:2 }}>{r.ig.length} ingredients · {r.cal} kcal</div>
+                      </div>
+                      <svg width="11" height="10" viewBox="0 0 24 22" fill="#FF6482"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                  );
+                })}
+              </div>
+          }
+        </div>
+
+        <div style={{ padding:'8px 18px 10px' }}>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:12 }}>
+            <div style={{ display:'flex', alignItems:'center', gap:7 }}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={T.textSec} strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <span style={{ fontSize:11, fontWeight:800, textTransform:'uppercase', letterSpacing:'0.1em', color:T.textSec }}>All Recipes</span>
+            </div>
+            <span onClick={()=>{ setPSearch(''); setShowPicker(true); }} style={{ fontSize:12, fontWeight:700, color:T.accent, cursor:'pointer', padding:'6px 14px', borderRadius:100, background:T.accentSoft }}>+ Add</span>
+          </div>
+          {(() => {
+            const nonFavAdded = groceryList.filter(n=>!favs.includes(n)).map(n=>all.find(r=>r.n===n)).filter(Boolean);
+            return nonFavAdded.length===0
+              ? <div style={{ fontSize:13, color:T.textDim, padding:'4px 0 8px' }}>Tap + Add to include any recipe.</div>
+              : <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+                  {nonFavAdded.map(r=>{
+                    const cc=CAT_COLOR[r.c];
+                    return (
+                      <div key={r.n} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px', borderRadius:14, background:`${cc}14`, border:`1.5px solid ${cc}40` }}>
+                        <div style={{ flex:1 }}>
+                          <div style={{ fontFamily:"'Outfit',sans-serif", fontSize:14, fontWeight:700, color:T.text }}>{r.n}</div>
+                          <div style={{ fontSize:11, color:T.textDim, marginTop:2 }}>{r.ig.length} ingredients · {r.cal} kcal</div>
+                        </div>
+                        <button onClick={()=>toggleGrocery(r.n)} style={{ background:'none', border:'none', cursor:'pointer', color:T.textDim, fontSize:22, lineHeight:1, padding:'0 4px' }}>×</button>
+                      </div>
+                    );
+                  })}
+                </div>;
+          })()}
+        </div>
+
+        {activeRecipes.length > 0 && (
+          <div style={{ padding:'8px 18px 0' }}>
+            <div style={{ fontSize:11, fontWeight:800, textTransform:'uppercase', letterSpacing:'0.1em', color:T.textDim, marginBottom:14 }}>Shopping List</div>
+            {activeRecipes.map(recipe=>{
+              const isFavR=favs.includes(recipe.n);
+              const cc=CAT_COLOR[recipe.c];
+              const allDone=recipe.ig.every((_,i)=>checked[`${recipe.n}-${i}`]);
+              return (
+                <div key={recipe.n} style={{ marginBottom:18 }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:10, padding:'8px 12px', borderRadius:10, background:T.surface2, marginBottom:6 }}>
+                    {isFavR
+                      ? <svg width="11" height="10" viewBox="0 0 24 22" fill="#FF6482"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                      : <div style={{ width:11, height:11, borderRadius:3, background:cc, opacity:0.7 }} />
+                    }
+                    <span style={{ flex:1, fontFamily:"'Outfit',sans-serif", fontSize:13, fontWeight:700, color:allDone?T.textDim:T.text, textDecoration:allDone?'line-through':'none' }}>{recipe.n}</span>
+                    <span style={{ fontSize:10, color:T.textDim }}>{recipe.ig.length} items</span>
+                  </div>
+                  {recipe.ig.map((ing,i)=>{
+                    const key=`${recipe.n}-${i}`;
+                    const done=checked[key];
+                    return (
+                      <div key={i} onClick={()=>toggleCheck(key)} style={{ display:'flex', alignItems:'center', gap:14, padding:'10px 12px', borderBottom:`1px solid ${T.border}`, cursor:'pointer' }}>
+                        <div style={{ width:20, height:20, borderRadius:6, border:`1.5px solid ${done?cc:T.border}`, background:done?cc:'transparent', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all 0.15s' }}>
+                          {done && <svg width="11" height="9" viewBox="0 0 11 9"><path d="M1.5 4.5l3 3 5-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>}
+                        </div>
+                        <span style={{ fontSize:14, color:done?T.textDim:T.text, textDecoration:done?'line-through':'none', lineHeight:1.4, transition:'color 0.15s' }}>{ing}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Picker sheet */}
+      {showPicker && (
+        <div style={{ position:'fixed', inset:0, zIndex:200, background:'rgba(0,0,0,0.65)', display:'flex', alignItems:'flex-end' }} onClick={()=>setShowPicker(false)}>
+          <div onClick={e=>e.stopPropagation()} style={{ background:T.surface, borderRadius:'24px 24px 0 0', width:'100%', maxWidth:600, margin:'0 auto', maxHeight:'80vh', display:'flex', flexDirection:'column' }}>
+            <div style={{ padding:'12px 18px 14px', borderBottom:`1px solid ${T.border}`, flexShrink:0 }}>
+              <div style={{ width:40, height:5, borderRadius:3, background:T.border, display:'block', margin:'0 auto 14px' }} />
+              <div style={{ fontFamily:"'Outfit',sans-serif", fontSize:16, fontWeight:700, color:T.text, marginBottom:12 }}>Add a recipe</div>
+              <input autoFocus value={pickerSearch} onChange={e=>setPSearch(e.target.value)} placeholder="Search…" style={{ width:'100%', padding:'10px 14px', background:T.surface2, border:`1px solid ${T.border}`, borderRadius:12, color:T.text, fontFamily:"'Outfit',sans-serif", fontSize:14, outline:'none', boxSizing:'border-box' }} />
+            </div>
+            <div style={{ overflowY:'auto' }}>
+              {pickerFiltered.map(r=>{
+                const active=groceryList.includes(r.n);
+                return (
+                  <div key={r.n} onClick={()=>{ toggleGrocery(r.n); if(!active) setShowPicker(false); }} style={{ display:'flex', alignItems:'center', gap:12, padding:'13px 18px', borderBottom:`1px solid ${T.border}`, cursor:'pointer', opacity:active?0.45:1 }}>
+                    <div style={{ width:8, height:8, borderRadius:2, background:CAT_COLOR[r.c], flexShrink:0 }} />
+                    <div style={{ flex:1 }}>
+                      <div style={{ fontFamily:"'Outfit',sans-serif", fontSize:14, fontWeight:600, color:T.text }}>{r.n}</div>
+                      <div style={{ fontFamily:"'Space Mono',monospace", fontSize:11, color:T.textSec }}>{r.cal} cal · {r.p}g P</div>
+                    </div>
+                    {favs.includes(r.n) && <svg width="11" height="10" viewBox="0 0 24 22" fill="#FF6482"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>}
+                    {active && <span style={{ fontSize:11, color:T.textDim }}>added</span>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── SETTINGS VIEW ────────────────────────────────────────────
+function SettingsView({ T, theme, setTheme }) {
+  return (
+    <div style={{ flex:1, overflowY:'auto', padding:'22px 18px' }}>
+      <div style={{ fontFamily:"'Outfit',sans-serif", fontSize:12, fontWeight:800, color:T.textDim, textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:16 }}>Theme</div>
+      <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+        {Object.entries(THEMES).map(([k,v])=>{
+          const active=theme===k;
+          return (
+            <div key={k} onClick={()=>setTheme(k)} style={{ display:'flex', alignItems:'center', gap:16, padding:'16px 18px', borderRadius:16, background:active?`${v.accent}18`:T.surface, border:`1.5px solid ${active?v.accent:T.border}`, cursor:'pointer', transition:'all 0.15s' }}>
+              <div style={{ width:36, height:36, borderRadius:12, background:v.bg, border:`2px solid ${v.accent}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                <div style={{ width:16, height:16, borderRadius:5, background:v.accent }} />
+              </div>
+              <div style={{ flex:1 }}>
+                <div style={{ fontFamily:"'Outfit',sans-serif", fontSize:15, fontWeight:700, color:T.text }}>{v.name}</div>
+                <div style={{ fontSize:12, color:T.textSec, marginTop:3 }}>{v.bg}</div>
+              </div>
+              {active && <div style={{ width:24, height:24, borderRadius:50, background:v.accent, display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="12" height="10" viewBox="0 0 11 9"><path d="M1.5 4.5l3 3 5-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg></div>}
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ marginTop:36, padding:'16px 18px', borderRadius:16, background:T.surface, border:`1px solid ${T.border}` }}>
+        <div style={{ fontFamily:"'Outfit',sans-serif", fontSize:14, fontWeight:700, color:T.text, marginBottom:5 }}>SnackBox</div>
+        <div style={{ fontSize:12, color:T.textSec }}>{(window.RECIPES||[]).length} recipes · Built with love</div>
+      </div>
+    </div>
+  );
+}
+
+// ── BOTTOM TAB BAR ───────────────────────────────────────────
+function BottomTabBar({ tab, setTab, T, groceryCount }) {
+  const tabs = [
+    { id:'recipes',  label:'Recipes',
+      icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg> },
+    { id:'grocery',  label:'Grocery',  badge: groceryCount > 0 ? groceryCount : null,
+      icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg> },
+    { id:'settings', label:'Settings',
+      icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> },
+  ];
+  return (
+    <div style={{ display:'flex', borderTop:`1px solid ${T.border}`, background:T.bg, paddingBottom:`calc(8px + var(--sab))`, flexShrink:0 }}>
+      {tabs.map(({ id, label, icon, badge })=>{
+        const active=tab===id;
+        return (
+          <div key={id} onClick={()=>setTab(id)} style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'12px 0 6px', cursor:'pointer', color:active?T.accent:T.textDim, transition:'color 0.15s', gap:4, position:'relative' }}>
+            <div style={{ position:'relative' }}>
+              {icon}
+              {badge && <div style={{ position:'absolute', top:-5, right:-8, background:T.accent, color:'#fff', fontFamily:"'Space Mono',monospace", fontSize:9, fontWeight:700, minWidth:16, height:16, borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', padding:'0 4px' }}>{badge}</div>}
+            </div>
+            <span style={{ fontSize:11, fontWeight:active?700:500, fontFamily:"'Outfit',sans-serif" }}>{label}</span>
+            {active && <div style={{ width:22, height:2.5, borderRadius:2, background:T.accent }} />}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── ROOT ─────────────────────────────────────────────────────
+function SnackBoxApp() {
+  const [theme, setTheme] = useState('void');
+  const [tab, setTab]     = useState('recipes');
+  const [favs, setFavs]   = useState(()=>{ try { return JSON.parse(localStorage.getItem('snackbox-favs')||'[]'); } catch { return []; } });
+  const [groceryList, setGrocery] = useState(()=>{ try { return JSON.parse(localStorage.getItem('snackbox-grocery')||'[]'); } catch { return []; } });
+
+  const T = THEMES[theme] || THEMES.void;
+  useEffect(()=>{ localStorage.setItem('snackbox-favs', JSON.stringify(favs)); }, [favs]);
+  useEffect(()=>{ localStorage.setItem('snackbox-grocery', JSON.stringify(groceryList)); }, [groceryList]);
+
+  // Update theme-color meta tag when theme changes
+  useEffect(()=>{
+    document.querySelector('meta[name="theme-color"]').content = T.bg;
+    document.body.style.background = T.bg;
+  }, [T.bg]);
+
+  const toggleFav     = name => setFavs(p => p.includes(name) ? p.filter(n=>n!==name) : [...p, name]);
+  const toggleGrocery = name => setGrocery(p => p.includes(name) ? p.filter(n=>n!==name) : [...p, name]);
+
+  return (
+    <div style={{ display:'flex', flexDirection:'column', height:'100%', width:'100%', maxWidth:600, margin:'0 auto', background:T.bg, overflow:'hidden', position:'relative', fontFamily:"'Outfit',sans-serif" }}>
+      {/* Header */}
+      <div style={{ paddingTop:`calc(16px + var(--sat))`, padding:`calc(16px + var(--sat)) 20px 18px`, textAlign:'center', position:'relative', flexShrink:0 }}>
+        <div style={{ position:'absolute', top:0, left:'50%', transform:'translateX(-50%)', width:360, height:360, background:`radial-gradient(circle, ${T.accentMid} 0%, transparent 65%)`, pointerEvents:'none' }} />
+        <div style={{ fontSize:42, marginBottom:8, display:'inline-block', animation:'bounce 2s ease-in-out infinite' }}>🍱</div>
+        <div style={{ fontFamily:"'Outfit',sans-serif", fontSize:30, fontWeight:900, letterSpacing:'-0.03em', lineHeight:1.1, color:T.text }}>
+          Snack<span style={{ color:T.accent }}>Box</span>
+        </div>
+        <div style={{ fontSize:12, color:T.textSec, marginTop:6 }}>Prep smarter. Eat better.</div>
+      </div>
+      {/* Tab content */}
+      <div style={{ flex:1, overflow:'hidden', display:'flex', flexDirection:'column' }}>
+        {tab==='recipes'  && <RecipesView T={T} favs={favs} toggleFav={toggleFav} groceryList={groceryList} toggleGrocery={toggleGrocery} />}
+        {tab==='grocery'  && <GroceryView T={T} favs={favs} groceryList={groceryList} toggleGrocery={toggleGrocery} />}
+        {tab==='settings' && <SettingsView T={T} theme={theme} setTheme={setTheme} />}
+      </div>
+      <BottomTabBar tab={tab} setTab={setTab} T={T} groceryCount={groceryList.length} />
+      <style>{`@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}`}</style>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<SnackBoxApp />);
+
 </script>
 </body>
 </html>
